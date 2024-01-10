@@ -1,8 +1,14 @@
 package project1.shop.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class Wishlist {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,10 +1,16 @@
 package project1.shop.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class Review {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
