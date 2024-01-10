@@ -23,8 +23,8 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
-  org.springframework: debug
-  org.springframework.web: debug
+#  org.springframework: debug
+#  org.springframework.web: debug
 
 server:
   servlet:
