@@ -5,19 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Level {
+public class Grade {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "level_id")
-    private Long levelId;
-    @OneToOne(mappedBy = "level")
-    private Member member;
-    private String level;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "grade_id")
+    private Long gradeId;
+    private String grade;
     private int rewardRate;
-
-
 }

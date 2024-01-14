@@ -17,9 +17,9 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long memberId;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "level_id")
-    private Level level;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grade_id")
+    private Grade grade;
     private String id;
     private String password;
     private String email;
