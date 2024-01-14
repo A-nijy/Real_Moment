@@ -20,7 +20,7 @@ public class QAComment {
     @JoinColumn(name = "admin_id")
     private Admin admin;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "itemQA_id")
+    @JoinColumn(name = "item_QA_id")
     private ItemQA itemQA;
     private String content;
     private LocalDateTime writtenDate;
