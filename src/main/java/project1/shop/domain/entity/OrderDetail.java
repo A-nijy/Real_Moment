@@ -1,30 +1,27 @@
-package project1.shop.domain;
+package project1.shop.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Review {
+public class OrderDetail {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
-    private Long reviewId;
+    @Column(name = "order_detail_id")
+    private Long orderDetailId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "order_id")
+    private Orders orders;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
-    private String title;
-    private String content;
-    private int star;
-    private LocalDateTime writtenDate;
-    private LocalDateTime editedDate;
+    private int fixedPrice;
+    private int discountRate;
+    private int sellPrice;
+    private int itemCount;
 }

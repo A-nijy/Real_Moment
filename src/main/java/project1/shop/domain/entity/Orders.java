@@ -1,26 +1,32 @@
-package project1.shop.domain;
+package project1.shop.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Address {
+public class Orders {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
-    private Long addressId;
+    @Column(name = "order_id")
+    private Long orderId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+    private LocalDateTime orderedDate;
+    private LocalDateTime shippedDate;
+    private int price;
     private String name;
     private String address;
     private String detAddress;
-    private boolean isDefAddress;
+    private String request;
+    private String tel;
+    private String status;
+    private String refoundText;
 }

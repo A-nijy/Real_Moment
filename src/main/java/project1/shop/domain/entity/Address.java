@@ -1,23 +1,25 @@
-package project1.shop.domain;
+package project1.shop.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Wishlist {
+public class Address {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "whishlist_id")
-    private Long whishlistId;
+    @Column(name = "address_id")
+    private Long addressId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private Item item;
+    private String name;
+    private String address;
+    private String detAddress;
+    private boolean isDefAddress;
 }

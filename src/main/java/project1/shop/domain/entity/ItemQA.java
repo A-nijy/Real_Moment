@@ -1,4 +1,4 @@
-package project1.shop.domain;
+package project1.shop.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,17 +11,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class QAComment {
+public class ItemQA {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "QA_comment_id")
-    private Long QACommentId;
+    @Column(name = "item_QA_id")
+    private Long itemQAId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
+    @JoinColumn(name = "member_id")
+    private Member member;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_QA_id")
-    private ItemQA itemQA;
+    @JoinColumn(name = "item_id")
+    private Item item;
+    private String title;
     private String content;
     private LocalDateTime writtenDate;
     private LocalDateTime editedDate;

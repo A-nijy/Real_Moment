@@ -4,7 +4,7 @@ package project1.shop.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project1.shop.domain.ItemQA;
+import project1.shop.domain.entity.ItemQA;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package project1.shop.domain;
+package project1.shop.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,19 +9,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class OrderDetail {
+public class Cart {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_detail_id")
-    private Long orderDetailId;
+    @Column(name = "cart_id")
+    private Long cartId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Orders orders;
+    @JoinColumn(name = "member_id")
+    private Member member;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
-    private int fixedPrice;
-    private int discountRate;
-    private int sellPrice;
-    private int itemCount;
+    private int stock;
+    private int price;
+    private boolean isCheck;
 }

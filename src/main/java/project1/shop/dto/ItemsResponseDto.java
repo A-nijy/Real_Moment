@@ -3,7 +3,7 @@ package project1.shop.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project1.shop.domain.Item;
+import project1.shop.domain.entity.Item;
 
 @AllArgsConstructor
 @NoArgsConstructor
