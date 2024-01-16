@@ -36,4 +36,7 @@ public class Member {
     private boolean isLoginStatus;
 
 
+
+
+
 }

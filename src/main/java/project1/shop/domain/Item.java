@@ -31,4 +31,7 @@ public class Item {
     private boolean isDeleteCheck;
     private String mainImg;
     private String serveImg;
+
+
+
 }

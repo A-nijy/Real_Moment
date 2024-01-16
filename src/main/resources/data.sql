@@ -97,20 +97,20 @@ INSERT INTO category (name, parent_id) VALUES
 INSERT INTO item (category_id, name, content, price, discount_rate, sell_price, created_date, modified_date, stock, is_sell_check, is_delete_check, main_img, serve_img)
 VALUES
 (3, 'A립스틱', 'item content1', 8000, 10, 7200, '2022-01-29 10:00:00', '2022-01-29 10:00:00', 50, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'B립스틱', 'item content2', 8000, 0, 8000, '2022-05-29 10:00:00', '2022-05-29 10:00:00', 10, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'C립스틱', 'item content3', 8000, 10, 7200, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 150, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'D립스틱', 'item content4', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 250, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'A틴트', 'item content5', 10000, 20, 8000, '2021-05-19 10:00:00', '2023-09-02 11:30:00', 40, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'B틴트', 'item content6', 8000, 10, 7200, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 240, FALSE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'A파우더', 'item content7', 8000, 10, 7200, '2021-03-29 10:00:00', '2023-09-02 11:30:00', 150, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'A마스크 팩', 'item content8', 8000, 10, 7200, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 360, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'B마스크 팩', 'item content9', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 420, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'A수분 크림', 'item content10', 8000, 0, 8000, '2021-08-29 10:00:00', '2021-08-29 10:00:00', 10, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'B수분 크림', 'item content11', 8000, 0, 8000, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 570, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'C수분 크림', 'item content12', 8000, 50, 4000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 0, FALSE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'A클랜징 오일', 'item content13', 8000, 90, 800, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 5, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'B클랜징 오일', 'item content14', 15000, 0, 15000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 10, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'C클랜징 오일', 'item content15', 5000, 0, 5000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 20, TRUE, FALSE, 'main1.jpg', 'serve1.jpg');
+(3, 'B립스틱', 'item content2', 8000, 0, 8000, '2022-05-29 10:00:00', '2022-05-29 10:00:00', 10, TRUE, FALSE, 'main2.jpg', 'serve2.jpg'),
+(3, 'C립스틱', 'item content3', 8000, 10, 7200, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 150, TRUE, FALSE, 'main3.jpg', 'serve3.jpg'),
+(3, 'D립스틱', 'item content4', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 250, TRUE, FALSE, 'main4.jpg', 'serve4.jpg'),
+(4, 'A틴트', 'item content5', 10000, 20, 8000, '2021-05-19 10:00:00', '2023-09-02 11:30:00', 40, TRUE, FALSE, 'main5.jpg', 'serve5.jpg'),
+(4, 'B틴트', 'item content6', 8000, 10, 7200, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 240, FALSE, FALSE, 'main6.jpg', 'serve6.jpg'),
+(5, 'A파우더', 'item content7', 8000, 10, 7200, '2021-03-29 10:00:00', '2023-09-02 11:30:00', 150, TRUE, FALSE, 'main7.jpg', 'serve7.jpg'),
+(6, 'A마스크 팩', 'item content8', 8000, 10, 7200, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 360, TRUE, FALSE, 'main8.jpg', 'serve8.jpg'),
+(6, 'B마스크 팩', 'item content9', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 420, TRUE, FALSE, 'main9.jpg', 'serve9.jpg'),
+(7, 'A수분 크림', 'item content10', 8000, 0, 8000, '2021-08-29 10:00:00', '2021-08-29 10:00:00', 10, TRUE, FALSE, 'main10.jpg', 'serve10.jpg'),
+(7, 'B수분 크림', 'item content11', 8000, 0, 8000, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 570, TRUE, FALSE, 'main11.jpg', 'serve11.jpg'),
+(7, 'C수분 크림', 'item content12', 8000, 50, 4000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 0, FALSE, FALSE, 'main12.jpg', 'serve12.jpg'),
+(8, 'A클랜징 오일', 'item content13', 8000, 90, 800, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 5, TRUE, FALSE, 'main13.jpg', 'serve13.jpg'),
+(8, 'B클랜징 오일', 'item content14', 15000, 0, 15000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 10, TRUE, FALSE, 'main14.jpg', 'serve14.jpg'),
+(8, 'C클랜징 오일', 'item content15', 5000, 0, 5000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 20, TRUE, FALSE, 'main15.jpg', 'serve15.jpg');
 
 
 
