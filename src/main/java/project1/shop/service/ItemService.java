@@ -25,6 +25,7 @@ public class ItemService {
     private final ReviewRepository reviewRepository;
     private final ItemQARepository itemQARepository;
 
+
     @Transactional
     public List<ItemsResponseDto> showItems(Long id) {
 
@@ -45,6 +46,7 @@ public class ItemService {
         return itemsDto;
     }
 
+    @Transactional
     public ItemViewResponseDto showItem(Long id) {
 
         Item item = itemRepository.findById(id).orElseThrow(IllegalArgumentException::new);

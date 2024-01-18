@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.dto.AddressRequestDto;
 
 
 @Entity
@@ -22,4 +23,19 @@ public class Address {
     private String address;
     private String detAddress;
     private boolean isDefAddress;
+
+    public Address(AddressRequestDto requestDto, Member member){
+        this.member = member;
+        name = requestDto.getName();
+        address = requestDto.getAddress();
+        detAddress = requestDto.getDetAddress();
+        isDefAddress = requestDto.isDefAddress();
+    }
+
+    public void update(AddressRequestDto requestDto){
+        name = requestDto.getName();
+        address = requestDto.getAddress();
+        detAddress = requestDto.getDetAddress();
+        isDefAddress = requestDto.isDefAddress();
+    }
 }
