@@ -38,11 +38,6 @@ public class WishListService {
         return wishListResponses;
     }
 
-
-
-
-
-
     // WishList엔티티 -> WishListDto 변환 과정 (WishListDto 내부에 ItemDto가 있는데 WishList엔티티의 Item을 ItemDto로 변환)
 
     public WishListDto.WishListResponse mapToDto(WishList wishList) {
