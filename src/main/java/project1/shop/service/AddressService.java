@@ -9,8 +9,7 @@ import project1.shop.domain.entity.Address;
 import project1.shop.domain.entity.Member;
 import project1.shop.domain.repository.AddressRepository;
 import project1.shop.domain.repository.MemberRepository;
-import project1.shop.dto.AddressRequestDto;
-import project1.shop.dto.AddressResponseDto;
+import project1.shop.dto.innerDto.AddressDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ public class AddressService {
 
 
     @Transactional
-    public List<AddressResponseDto> showAddresses(Long id) {
+    public List<AddressDto.AddressResponse> showAddresses(Long id) {
 
         log.info("id = {}", id);
         log.info("id로 데이터 가져오기");
@@ -33,8 +32,8 @@ public class AddressService {
 
         log.info("엔티티 리스트 = {}", addresses);
         log.info("엔티티 -> dto 변환");
-        List<AddressResponseDto> addressesDto = addresses.stream()
-                .map(AddressResponseDto::new)
+        List<AddressDto.AddressResponse> addressesDto = addresses.stream()
+                .map(AddressDto.AddressResponse::new)
                 .collect(Collectors.toList());
 
         log.info("dto 리스트 = {}", addressesDto);
@@ -44,7 +43,7 @@ public class AddressService {
     }
 
     @Transactional
-    public void saveAddress(Long id, AddressRequestDto requestDto) {
+    public void saveAddress(Long id, AddressDto.AddressRequest requestDto) {
 
         log.info("서비스 호출 -> member 엔티티 조회");
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -54,17 +53,17 @@ public class AddressService {
     }
 
     @Transactional
-    public void updateAddress(Long id, AddressRequestDto requestDto) {
+    public void updateAddress(Long id, AddressDto.AddressRequest requestDto) {
 
-        Address address = addressRepository.findById(requestDto.getAddressId()).orElseThrow(IllegalArgumentException::new);
+        Address address = addressRepository.findById(requestDto.getId()).orElseThrow(IllegalArgumentException::new);
 
         address.update(requestDto);
     }
 
     @Transactional
-    public void deleteAddress(Long id, AddressRequestDto requestDto) {
+    public void deleteAddress(Long id, AddressDto.AddressRequest requestDto) {
 
-        Address address = addressRepository.findById(requestDto.getAddressId()).orElseThrow(IllegalArgumentException::new);
+        Address address = addressRepository.findById(requestDto.getId()).orElseThrow(IllegalArgumentException::new);
 
         addressRepository.delete(address);
     }

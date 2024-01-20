@@ -10,7 +10,9 @@ import project1.shop.domain.entity.Review;
 import project1.shop.domain.repository.ItemQARepository;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.ReviewRepository;
-import project1.shop.dto.*;
+import project1.shop.dto.innerDto.ItemDto;
+import project1.shop.dto.innerDto.ItemQADto;
+import project1.shop.dto.innerDto.ReviewDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +29,7 @@ public class ItemService {
 
 
     @Transactional
-    public List<ItemsResponseDto> showItems(Long id) {
+    public List<ItemDto.SimpleItemResponse> showItems(Long id) {
 
         log.info("서비스 시작 -> repository에서 데이터 찾기");
         List<Item> items = itemRepository.findByCategory_CategoryId(id);
@@ -38,8 +40,8 @@ public class ItemService {
         }
 
         log.info("repositroy에서 데이터 찾음 -> entity를 dto로 변환");
-        List<ItemsResponseDto> itemsDto = items.stream()
-                .map(ItemsResponseDto::new)
+        List<ItemDto.SimpleItemResponse> itemsDto = items.stream()
+                .map(ItemDto.SimpleItemResponse::new)
                 .collect(Collectors.toList());
 
         log.info("dto를 컨트롤러에 반환");
@@ -47,7 +49,7 @@ public class ItemService {
     }
 
     @Transactional
-    public ItemViewResponseDto showItem(Long id) {
+    public ItemDto.ItemPageResponse showItem(Long id) {
 
         Item item = itemRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
@@ -55,19 +57,19 @@ public class ItemService {
 
         List<ItemQA> itemQAs = itemQARepository.findByItem_ItemId(id);
 
-        ItemResponseDto itemDto = new ItemResponseDto(item);
+        ItemDto.FullItemResponse itemDto = new ItemDto.FullItemResponse(item);
 
-        List<ReviewResponseDto> reviewDto = reviews.stream()
-                .map(ReviewResponseDto::new)
+        List<ReviewDto.ReviewResponse> reviewDto = reviews.stream()
+                .map(ReviewDto.ReviewResponse::new)
                 .collect(Collectors.toList());
 
-        List<ItemQAResponseDto> itemQADto = itemQAs.stream()
-                .map(ItemQAResponseDto::new)
+        List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
+                .map(ItemQADto.ItemQAResponse::new)
                 .collect(Collectors.toList());
 
-        ItemViewResponseDto itemViewDto = new ItemViewResponseDto(itemDto, reviewDto, itemQADto);
+        ItemDto.ItemPageResponse itemPageDto = new ItemDto.ItemPageResponse(itemDto, reviewDto, itemQADto);
 
-        return itemViewDto;
+        return itemPageDto;
 
     }
 }
