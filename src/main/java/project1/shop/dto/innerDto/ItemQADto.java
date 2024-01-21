@@ -16,6 +16,7 @@ public class ItemQADto {
     @Setter
     public static class ItemQAResponse {
         private Long id;
+        private String nickname;
         private String title;
         private String content;
         private LocalDateTime writtenDate;
@@ -24,6 +25,7 @@ public class ItemQADto {
 
         public ItemQAResponse(ItemQA itemQA){
             id = itemQA.getItemQAId();
+            nickname = itemQA.getMember().getNickname();
             title = itemQA.getTitle();
             content = itemQA.getContent();
             writtenDate = itemQA.getWrittenDate();
