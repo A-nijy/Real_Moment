@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.domain.AutoCheck.TimeCheck;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Member {
+public class Member extends TimeCheck {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -29,8 +30,6 @@ public class Member {
     private Date birthDate;
     private String gender;
     private int point;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
     private LocalDateTime recentlyLogin;
     private boolean isMemberStatus;
     private boolean isLoginStatus;

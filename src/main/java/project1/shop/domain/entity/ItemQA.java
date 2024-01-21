@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.domain.AutoCheck.TimeCheck;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class ItemQA {
+public class ItemQA extends TimeCheck {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_QA_id")
@@ -24,6 +25,4 @@ public class ItemQA {
     private Item item;
     private String title;
     private String content;
-    private LocalDateTime writtenDate;
-    private LocalDateTime editedDate;
 }

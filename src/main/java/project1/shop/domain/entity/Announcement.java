@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.domain.AutoCheck.TimeAndByCheck;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Announcement {
+public class Announcement extends TimeAndByCheck {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "announcement_id")
@@ -23,6 +24,4 @@ public class Announcement {
     private String content;
     private boolean isFix;
     private int viewCount;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
 }

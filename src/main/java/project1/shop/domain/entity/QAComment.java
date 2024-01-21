@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.domain.AutoCheck.TimeAndByCheck;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class QAComment {
+public class QAComment extends TimeAndByCheck {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "QA_comment_id")
@@ -23,6 +24,4 @@ public class QAComment {
     @JoinColumn(name = "item_QA_id")
     private ItemQA itemQA;
     private String content;
-    private LocalDateTime writtenDate;
-    private LocalDateTime editedDate;
 }

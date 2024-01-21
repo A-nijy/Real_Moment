@@ -19,8 +19,6 @@ public class ReviewDto {
         private String title;
         private String content;
         private int star;
-        private LocalDateTime writtenDate = null;
-        private LocalDateTime editedDate = null;
     }
 
 
@@ -33,8 +31,6 @@ public class ReviewDto {
         private String title;
         private String content;
         private int star;
-        private LocalDateTime writtenDate = null;
-        private LocalDateTime editedDate = null;
     }
 
 
@@ -48,8 +44,8 @@ public class ReviewDto {
         private String title;
         private String content;
         private int star;
-        private LocalDateTime writtenDate;
-        private LocalDateTime editedDate;
+        private LocalDateTime createdDate;
+        private LocalDateTime lastModifiedDate;
 
 
 
@@ -59,8 +55,8 @@ public class ReviewDto {
             title = review.getTitle();
             content = review.getContent();
             star = review.getStar();
-            writtenDate = review.getWrittenDate();
-            editedDate = review.getEditedDate();
+            createdDate = review.getCreatedDate();
+            lastModifiedDate = review.getLastModifiedDate();
         }
     }
 
@@ -76,8 +72,8 @@ public class ReviewDto {
         private String title;
         private String content;
         private int star;
-        private LocalDateTime writtenDate;
-        private LocalDateTime editedDate;
+        private LocalDateTime createdDate;
+        private LocalDateTime lastModifiedDate;
 
 
         public MyReviewResponse(Review review){
@@ -87,8 +83,8 @@ public class ReviewDto {
             title = review.getTitle();
             content = review.getContent();
             star = review.getStar();
-            writtenDate = review.getWrittenDate();
-            editedDate = review.getEditedDate();
+            createdDate = review.getCreatedDate();
+            lastModifiedDate = review.getLastModifiedDate();
         }
     }
 }

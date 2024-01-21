@@ -19,8 +19,8 @@ public class ItemQADto {
         private String nickname;
         private String title;
         private String content;
-        private LocalDateTime writtenDate;
-        private LocalDateTime editedDate;
+        private LocalDateTime createdDate;
+        private LocalDateTime lastModifiedDate;
 
 
         public ItemQAResponse(ItemQA itemQA){
@@ -28,8 +28,8 @@ public class ItemQADto {
             nickname = itemQA.getMember().getNickname();
             title = itemQA.getTitle();
             content = itemQA.getContent();
-            writtenDate = itemQA.getWrittenDate();
-            editedDate = itemQA.getEditedDate();
+            createdDate = itemQA.getCreatedDate();
+            lastModifiedDate = itemQA.getLastModifiedDate();
         }
     }
 }

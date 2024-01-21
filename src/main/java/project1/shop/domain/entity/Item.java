@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.domain.AutoCheck.TimeAndByCheck;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Item {
+public class Item extends TimeAndByCheck {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
@@ -24,8 +25,6 @@ public class Item {
     private int price;
     private int discountRate;
     private int sellPrice;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
     private int stock;
     private boolean isSellCheck;
     private boolean isDeleteCheck;

@@ -48,7 +48,7 @@ public class ItemDto {
         private int discountRate;
         private int sellPrice;
         private LocalDateTime createdDate;
-        private LocalDateTime modifiedDate;
+        private LocalDateTime lastModifiedDate;
         private int stock;
         private boolean isSellCheck;
         private boolean isDeleteCheck;
@@ -64,7 +64,7 @@ public class ItemDto {
             discountRate = item.getDiscountRate();
             sellPrice = item.getSellPrice();
             createdDate = item.getCreatedDate();
-            modifiedDate = item.getModifiedDate();
+            lastModifiedDate = item.getLastModifiedDate();
             stock = item.getStock();
             isSellCheck = item.isSellCheck();
             isDeleteCheck = item.isDeleteCheck();

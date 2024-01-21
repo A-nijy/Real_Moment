@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.domain.AutoCheck.TimeCheck;
 import project1.shop.dto.innerDto.ReviewDto;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Review {
+public class Review extends TimeCheck {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
@@ -26,8 +27,6 @@ public class Review {
     private String title;
     private String content;
     private int star;
-    private LocalDateTime writtenDate;
-    private LocalDateTime editedDate;
 
 
     public Review(Member member, Item item, ReviewDto.ReviewRequest request){
@@ -36,15 +35,11 @@ public class Review {
         title = request.getTitle();
         content = request.getContent();
         star = request.getStar();
-        writtenDate = request.getWrittenDate();
-        editedDate = request.getEditedDate();
     }
 
     public void Update(ReviewDto.ReviewUpdateRequest request){
         title = request.getTitle();
         content = request.getContent();
         star = request.getStar();
-        writtenDate = request.getWrittenDate();
-        editedDate = request.getEditedDate();
     }
 }

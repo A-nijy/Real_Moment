@@ -11,7 +11,7 @@ INSERT INTO grade (grade, reward_rate) VALUES
 
 -- Member 회원 더미데이터
 
-INSERT INTO member (grade_id, id, password, email, name, nickname, tel, birth_date, gender, point, created_date, modified_date, recently_login, is_member_status, is_login_status)
+INSERT INTO member (grade_id, id, password, email, name, nickname, tel, birth_date, gender, point, created_date, last_modified_date, recently_login, is_member_status, is_login_status)
 VALUES
 (1, 'member1', 'password1', 'member1@gmail.com', 'A', 'aaa', '010-1111-1111', '1990-01-09', 'M', 100, '2020-10-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00', TRUE, FALSE),
 (2, 'member2', 'password2', 'member2@gmail.com', 'B', 'bbb', '010-2222-2222', '1993-05-06', 'M', 1000, '2023-01-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00', TRUE, FALSE),
@@ -56,24 +56,24 @@ VALUES
 
 -- Admin 관리자 더미데이터
 
-INSERT INTO admin (id, password, email, name, grade)
+INSERT INTO admin (id, password, email, name, grade, created_date, last_modified_date)
 VALUES
-('admin1', 'password1', 'admin1@gmail.com', '대표', 1),
-('admin2', 'password2', 'admin2@gmail.com', '이사', 2),
-('admin3', 'password3', 'admin3@gmail.com', '사원', 4),
-('admin4', 'password4', 'admin4@gmail.com', '사원', 4);
+('admin1', 'password1', 'admin1@gmail.com', '대표', 1, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin2', 'password2', 'admin2@gmail.com', '이사', 2, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin3', 'password3', 'admin3@gmail.com', '사원', 4, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin4', 'password4', 'admin4@gmail.com', '사원', 4, '2022-01-03 12:30:00', '2022-01-03 12:30:00');
 
 
 
 -- Announcements 공지사항 더미데이터
 
-INSERT INTO announcement (admin_id, title, content, is_fix, view_count, created_date, modified_date)
+INSERT INTO announcement (admin_id, title, content, is_fix, view_count, created_date, last_modified_date, created_by, last_modified_by)
 VALUES
-(2, 'Announcement title1', 'Announcement content1', FALSE, 100, '2022-01-05 10:00:00', '2022-01-05 10:00:00'),
-(1, 'Announcement title2', 'Announcement content2', TRUE, 500, '2023-01-06 10:00:00', '2023-01-08 10:00:00'),
-(3, 'Announcement title3', 'Announcement content3', FALSE, 20, '2023-02-07 10:00:00', '2023-02-07 10:00:00'),
-(3, 'Announcement title4', 'Announcement content4', FALSE, 100, '2023-04-08 10:00:00', '2023-04-08 10:00:00'),
-(4, 'Announcement title5', 'Announcement content5', TRUE, 800, '2023-08-09 10:00:00', '2023-08-09 10:00:00');
+(2, 'Announcement title1', 'Announcement content1', FALSE, 100, '2022-01-05 10:00:00', '2022-01-05 10:00:00', '이사', '이사'),
+(1, 'Announcement title2', 'Announcement content2', TRUE, 500, '2023-01-06 10:00:00', '2023-01-08 10:00:00', '대표', '대표'),
+(3, 'Announcement title3', 'Announcement content3', FALSE, 20, '2023-02-07 10:00:00', '2023-02-07 10:00:00', '직원A', '직원A'),
+(3, 'Announcement title4', 'Announcement content4', FALSE, 100, '2023-04-08 10:00:00', '2023-04-08 10:00:00', '직원A', '직원A'),
+(4, 'Announcement title5', 'Announcement content5', TRUE, 800, '2023-08-09 10:00:00', '2023-08-09 10:00:00', '직원B', '직원B');
 
 
 
@@ -94,23 +94,23 @@ INSERT INTO category (name, parent_id) VALUES
 -- Item 상품 더미데이터
 
 
-INSERT INTO item (category_id, name, content, price, discount_rate, sell_price, created_date, modified_date, stock, is_sell_check, is_delete_check, main_img, serve_img)
+INSERT INTO item (category_id, name, content, price, discount_rate, sell_price, created_date, last_modified_date, stock, is_sell_check, is_delete_check, main_img, serve_img, created_by, last_modified_by)
 VALUES
-(3, 'A립스틱', 'item content1', 8000, 10, 7200, '2022-01-29 10:00:00', '2022-01-29 10:00:00', 50, TRUE, FALSE, 'main1.jpg', 'serve1.jpg'),
-(3, 'B립스틱', 'item content2', 8000, 0, 8000, '2022-05-29 10:00:00', '2022-05-29 10:00:00', 10, TRUE, FALSE, 'main2.jpg', 'serve2.jpg'),
-(3, 'C립스틱', 'item content3', 8000, 10, 7200, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 150, TRUE, FALSE, 'main3.jpg', 'serve3.jpg'),
-(3, 'D립스틱', 'item content4', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 250, TRUE, FALSE, 'main4.jpg', 'serve4.jpg'),
-(4, 'A틴트', 'item content5', 10000, 20, 8000, '2021-05-19 10:00:00', '2023-09-02 11:30:00', 40, TRUE, FALSE, 'main5.jpg', 'serve5.jpg'),
-(4, 'B틴트', 'item content6', 8000, 10, 7200, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 240, FALSE, FALSE, 'main6.jpg', 'serve6.jpg'),
-(5, 'A파우더', 'item content7', 8000, 10, 7200, '2021-03-29 10:00:00', '2023-09-02 11:30:00', 150, TRUE, FALSE, 'main7.jpg', 'serve7.jpg'),
-(6, 'A마스크 팩', 'item content8', 8000, 10, 7200, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 360, TRUE, FALSE, 'main8.jpg', 'serve8.jpg'),
-(6, 'B마스크 팩', 'item content9', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 420, TRUE, FALSE, 'main9.jpg', 'serve9.jpg'),
-(7, 'A수분 크림', 'item content10', 8000, 0, 8000, '2021-08-29 10:00:00', '2021-08-29 10:00:00', 10, TRUE, FALSE, 'main10.jpg', 'serve10.jpg'),
-(7, 'B수분 크림', 'item content11', 8000, 0, 8000, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 570, TRUE, FALSE, 'main11.jpg', 'serve11.jpg'),
-(7, 'C수분 크림', 'item content12', 8000, 50, 4000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 0, FALSE, FALSE, 'main12.jpg', 'serve12.jpg'),
-(8, 'A클랜징 오일', 'item content13', 8000, 90, 800, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 5, TRUE, FALSE, 'main13.jpg', 'serve13.jpg'),
-(8, 'B클랜징 오일', 'item content14', 15000, 0, 15000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 10, TRUE, FALSE, 'main14.jpg', 'serve14.jpg'),
-(8, 'C클랜징 오일', 'item content15', 5000, 0, 5000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 20, TRUE, FALSE, 'main15.jpg', 'serve15.jpg');
+(3, 'A립스틱', 'item content1', 8000, 10, 7200, '2022-01-29 10:00:00', '2022-01-29 10:00:00', 50, TRUE, FALSE, 'main1.jpg', 'serve1.jpg', '직원A', '직원A'),
+(3, 'B립스틱', 'item content2', 8000, 0, 8000, '2022-05-29 10:00:00', '2022-05-29 10:00:00', 10, TRUE, FALSE, 'main2.jpg', 'serve2.jpg', '직원A', '직원A'),
+(3, 'C립스틱', 'item content3', 8000, 10, 7200, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 150, TRUE, FALSE, 'main3.jpg', 'serve3.jpg', '직원A', '직원A'),
+(3, 'D립스틱', 'item content4', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 250, TRUE, FALSE, 'main4.jpg', 'serve4.jpg', '직원A', '직원A'),
+(4, 'A틴트', 'item content5', 10000, 20, 8000, '2021-05-19 10:00:00', '2023-09-02 11:30:00', 40, TRUE, FALSE, 'main5.jpg', 'serve5.jpg', '직원A', '직원B'),
+(4, 'B틴트', 'item content6', 8000, 10, 7200, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 240, FALSE, FALSE, 'main6.jpg', 'serve6.jpg', '직원A', '직원A'),
+(5, 'A파우더', 'item content7', 8000, 10, 7200, '2021-03-29 10:00:00', '2023-09-02 11:30:00', 150, TRUE, FALSE, 'main7.jpg', 'serve7.jpg', '직원A', '직원A'),
+(6, 'A마스크 팩', 'item content8', 8000, 10, 7200, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 360, TRUE, FALSE, 'main8.jpg', 'serve8.jpg', '직원A', '직원A'),
+(6, 'B마스크 팩', 'item content9', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 420, TRUE, FALSE, 'main9.jpg', 'serve9.jpg', '직원A', '직원B'),
+(7, 'A수분 크림', 'item content10', 8000, 0, 8000, '2021-08-29 10:00:00', '2021-08-29 10:00:00', 10, TRUE, FALSE, 'main10.jpg', 'serve10.jpg', '직원A', '직원A'),
+(7, 'B수분 크림', 'item content11', 8000, 0, 8000, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 570, TRUE, FALSE, 'main11.jpg', 'serve11.jpg', '직원A', '직원A'),
+(7, 'C수분 크림', 'item content12', 8000, 50, 4000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 0, FALSE, FALSE, 'main12.jpg', 'serve12.jpg', '직원A', '직원A'),
+(8, 'A클랜징 오일', 'item content13', 8000, 90, 800, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 5, TRUE, FALSE, 'main13.jpg', 'serve13.jpg', '직원A', '직원A'),
+(8, 'B클랜징 오일', 'item content14', 15000, 0, 15000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 10, TRUE, FALSE, 'main14.jpg', 'serve14.jpg', '직원A', '직원A'),
+(8, 'C클랜징 오일', 'item content15', 5000, 0, 5000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 20, TRUE, FALSE, 'main15.jpg', 'serve15.jpg', '직원A', '직원A');
 
 
 
@@ -166,7 +166,7 @@ VALUES
 
 -- Review 리뷰 더미데이터
 
-INSERT INTO review (member_id, item_id, title, content, star, written_date, edited_date)
+INSERT INTO review (member_id, item_id, title, content, star, created_date, last_modified_date)
 VALUES
 (1, 1, 'review title1', 'review content1', 5, '2023-01-05 12:00:00', '2023-01-05 12:00:00'),
 (1, 13, 'review title2', 'review content2', 4, '2023-02-05 12:00:00', '2023-02-05 12:00:00'),
@@ -178,7 +178,7 @@ VALUES
 
 -- ItemQA 상품 문의 더미데이터
 
-INSERT INTO itemqa (item_id, member_id, title, content, written_date, edited_date)
+INSERT INTO itemqa (item_id, member_id, title, content, created_date, last_modified_date)
 VALUES
 (1, 1, 'QA title1', 'QA content1', '2023-01-05 10:30:00', '2023-01-05 11:00:00'),
 (6, 1, 'QA title2', 'QA content2', '2023-02-05 10:30:00', '2023-02-05 11:00:00'),
@@ -191,9 +191,9 @@ VALUES
 
 -- QAComment 상품 문의 댓글 더미데이터
 
-INSERT INTO qacomment (admin_id, item_QA_id, content, written_date, edited_date)
+INSERT INTO qacomment (admin_id, item_QA_id, content, created_date, last_modified_date, created_by, last_modified_by)
 VALUES
-(1, 1, 'QA_comments content1', '2023-03-07 12:00:00', '2023-03-07 12:00:00'),
-(4, 2, 'QA_comments content2', '2023-03-07 12:00:00', '2023-03-07 12:00:00'),
-(3, 3, 'QA_comments content3', '2023-03-07 12:00:00', '2023-03-07 12:00:00'),
-(2, 4, 'QA_comments content4', '2023-04-07 12:00:00', '2023-04-07 12:00:00');
+(1, 1, 'QA_comments content1', '2023-03-07 12:00:00', '2023-03-07 12:00:00', '대표', '대표'),
+(4, 2, 'QA_comments content2', '2023-03-07 12:00:00', '2023-03-07 12:00:00', '직원B', '직원B'),
+(3, 3, 'QA_comments content3', '2023-03-07 12:00:00', '2023-03-07 12:00:00', '직원A', '직원A'),
+(2, 4, 'QA_comments content4', '2023-04-07 12:00:00', '2023-04-07 12:00:00', '이사', '이사');
