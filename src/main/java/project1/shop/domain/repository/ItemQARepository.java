@@ -8,4 +8,5 @@ import java.util.List;
 public interface ItemQARepository extends JpaRepository<ItemQA, Long> {
 
     List<ItemQA> findByItem_ItemId(Long id);
+    List<ItemQA> findByMember_MemberId(Long id);
 }

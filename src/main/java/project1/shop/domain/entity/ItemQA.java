@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project1.shop.domain.AutoCheck.TimeCheck;
+import project1.shop.dto.innerDto.ItemQADto;
 
 import java.time.LocalDateTime;
 
@@ -25,4 +26,19 @@ public class ItemQA extends TimeCheck {
     private Item item;
     private String title;
     private String content;
+
+
+    public ItemQA(Member member, Item item, ItemQADto.ItemQARequest request){
+        this.member = member;
+        this.item = item;
+        title = request.getTitle();
+        content = request.getContent();;
+    }
+
+
+    public void update(ItemQADto.UpdateItemQARequest request){
+
+        title = request.getTitle();
+        content = request.getContent();
+    }
 }
