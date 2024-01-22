@@ -24,4 +24,9 @@ public class Announcement extends TimeAndByCheck {
     private String content;
     private boolean isFix;
     private int viewCount;
+
+
+    public void viewCountUp() {
+        viewCount++;
+    }
 }
