@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import project1.shop.domain.AutoCheck.TimeCheck;
 import project1.shop.dto.innerDto.ReviewDto;
 
-import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor

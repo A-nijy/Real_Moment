@@ -16,6 +16,6 @@ public class Grade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "grade_id")
     private Long gradeId;
-    private String grade;
-    private int rewardRate;
+    private String gradeName = "White";
+    private int rewardRate = 1;
 }

@@ -38,7 +38,8 @@ public class ItemQADto {
     @Setter
     public static class ItemQAResponse {
         private Long id;
-        private String nickname;
+//        private String nickname;
+        private String loginId;
         private String title;
         private String content;
         private LocalDateTime createdDate;
@@ -47,7 +48,8 @@ public class ItemQADto {
 
         public ItemQAResponse(ItemQA itemQA){
             id = itemQA.getItemQAId();
-            nickname = itemQA.getMember().getNickname();
+//            nickname = itemQA.getMember().getNickname();
+            loginId = itemQA.getMember().getLoginId();
             title = itemQA.getTitle();
             content = itemQA.getContent();
             createdDate = itemQA.getCreatedDate();
@@ -63,7 +65,8 @@ public class ItemQADto {
     public static class MyItemQAResponse {
         private Long id;
         private ItemDto.SimpleItemResponse item;
-        private String nickname;
+//        private String nickname;
+        private String loginId;
         private String title;
         private String content;
         private LocalDateTime createdDate;
@@ -73,7 +76,8 @@ public class ItemQADto {
         public MyItemQAResponse(ItemQA itemQA){
             id = itemQA.getItemQAId();
             item = new ItemDto.SimpleItemResponse(itemQA.getItem());
-            nickname = itemQA.getMember().getNickname();
+//            nickname = itemQA.getMember().getNickname();
+            loginId = itemQA.getMember().getLoginId();
             title = itemQA.getTitle();
             content = itemQA.getContent();
             createdDate = itemQA.getCreatedDate();
