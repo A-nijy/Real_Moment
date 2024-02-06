@@ -1,11 +1,13 @@
 spring:
   datasource:
-    url: "jdbc:h2:mem://localhost/~/shop"
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/shop
+    username: postgres
+    password: "rainick98"
+    driver-class-name: org.postgresql.Driver
 
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
     hibernate:
       ddl-auto: create
     defer-datasource-initialization: true
@@ -13,7 +15,7 @@ spring:
       hibernate:
 #        show_sql: true
         format_sql: true
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   h2:
     console:
@@ -32,5 +34,8 @@ logging.level:
 
 server:
   servlet:
+    context-path: /
     encoding:
+      charset: UTF-8
+      enabled: true
       force: true

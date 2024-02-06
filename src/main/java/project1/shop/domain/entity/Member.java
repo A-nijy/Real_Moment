@@ -9,6 +9,9 @@ import project1.shop.dto.innerDto.MemberDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Entity
@@ -35,6 +38,7 @@ public class Member extends TimeCheck {
     private LocalDateTime recentlyLogin = LocalDateTime.now();
 //    private boolean isMemberStatus = true;
 //    private boolean isLoginStatus = false;
+    private String roles;
 
 
 
@@ -48,6 +52,7 @@ public class Member extends TimeCheck {
         tel = request.getTel();
         birthDate = request.getBirthDate();
         gender = request.getGender();
+        roles = request.getRoles();
     }
 
     public void loginStatus(){
@@ -68,5 +73,14 @@ public class Member extends TimeCheck {
         name = request.getName();
         tel = request.getTel();
         gender = request.getGender();
+    }
+
+
+    // enum으로 안하고 ,로 split하여 ROLE을 입력 -> 그걸 parsing
+    public List<String> getRoleList(){
+        if(this.roles.length()>0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
     }
 }

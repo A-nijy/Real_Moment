@@ -1,6 +1,8 @@
 package project1.shop.controller;
 
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,18 +66,18 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/member/login")
-    public void memberLogin(@RequestBody MemberDto.LoginRequest request){
+    public void memberLogin(@RequestBody MemberDto.LoginRequest request, HttpServletResponse response){
 
-        memberService.memberLogin(request);
+        memberService.memberLogin(request, response);
     }
 
 
-//    // 로그아웃
-//    @PostMapping("/member/logout/{id}")
-//    public void memberLogout(@PathVariable Long id){
-//
-//        memberService.memberLogout(id);
-//    }
+    // 로그아웃
+    @PostMapping("/member/logout/{id}")
+    public void memberLogout(@PathVariable Long id){
+
+        memberService.memberLogout(id);
+    }
 
 
     // 회원 정보 관리 페이지 이동
@@ -113,6 +115,39 @@ public class MemberController {
 
         memberService.memberUpdateProfile(id, request);
     }
+
+
+    //--------------------------------------------------------------------
+    // access 토큰 재발급 (+ RTR 방식으로 refresh 토큰도 재발급됨)
+    @GetMapping("/reissue/accessToken")
+    public String reissueAccessTokoen(HttpServletRequest request, HttpServletResponse response){
+
+        log.info("refresh 토큰 재요청중 / access 토큰 재발급");
+        memberService.reissueAccessToken(request, response);
+
+        return "access 토큰 재발급 완료";
+    }
+    // -------------------------------------------------------------------
+
+    //----------------------------------------------------------------------
+    // 접근 권한 테스크
+    @GetMapping("/api/v1/user")
+    public String user() {
+        return "user";
+    }
+
+    // manager, admin 권한 접근 가능
+    @GetMapping("/api/v1/manager")
+    public String manager() {
+        return "manager";
+    }
+
+    // admin 권한 접근 가능
+    @GetMapping("/api/v1/admin")
+    public String admin() {
+        return "admin";
+    }
+    //----------------------------------------------------------------------
 
 
 }

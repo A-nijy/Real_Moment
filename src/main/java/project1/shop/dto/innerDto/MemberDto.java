@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import project1.shop.domain.entity.Member;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MemberDto {
 
@@ -93,6 +95,8 @@ public class MemberDto {
         @Size(min = 1, max = 1, message = "한 글자가 아닙니다.")
         @Pattern(regexp = "^[남여]$", message = "남 또는 여를 입력해주세요")
         private String gender;
+
+        private String roles;
     }
 
 
@@ -164,5 +168,33 @@ public class MemberDto {
         @Size(min = 1, max = 1, message = "한 글자가 아닙니다.")
         @Pattern(regexp = "^[남여]$", message = "남 또는 여를 입력해주세요")
         private String gender;
+    }
+
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ServerCheckDto {
+
+        private long memberId;
+        private String loginId;
+        private String loginPassword;
+        private String roles;
+
+
+        public ServerCheckDto(Member member){
+            memberId = member.getMemberId();
+            loginId = member.getLoginId();
+            loginPassword = member.getLoginPassword();
+            roles = member.getRoles();
+        }
+
+        public List<String> getRoleList(){
+            if(this.roles.length()>0){
+                return Arrays.asList(this.roles.split(","));
+            }
+            return new ArrayList<>();
+        }
     }
 }

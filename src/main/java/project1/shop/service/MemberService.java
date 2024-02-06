@@ -1,16 +1,23 @@
 package project1.shop.service;
 
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Grade;
 import project1.shop.domain.entity.Member;
+import project1.shop.domain.entity.RefreshToken;
 import project1.shop.domain.repository.GradeRepository;
 import project1.shop.domain.repository.MemberRepository;
+import project1.shop.domain.repository.RefreshTokenRepository;
 import project1.shop.dto.innerDto.GradeDto;
 import project1.shop.dto.innerDto.MemberDto;
+import project1.shop.jwt.config.util.JWTProperties;
+import project1.shop.jwt.config.util.JwtFunction;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +26,9 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final GradeRepository gradeRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JwtFunction jwtFunction;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
     @Transactional
@@ -51,6 +61,8 @@ public class MemberService {
 //        if(!(memberNickname == null)){
 //            throw new IllegalArgumentException("닉네임이 중복입니다.");
 //        }
+        request.setLoginPassword(bCryptPasswordEncoder.encode(request.getLoginPassword()));
+        request.setRoles("ROLE_USER");
 
         Grade grade = gradeRepository.findByGradeName("WHITE").orElseThrow(IllegalArgumentException::new);
 
@@ -60,24 +72,42 @@ public class MemberService {
     }
 
     @Transactional
-    public void memberLogin(MemberDto.LoginRequest request) {
+    public void memberLogin(MemberDto.LoginRequest request, HttpServletResponse response) {
 
         Member member = memberRepository.findByLoginId(request.getLoginId()).orElseThrow(IllegalArgumentException::new);
 
-        if(!(member.getLoginPassword().equals(request.getLoginPassword()))){
+        if(!bCryptPasswordEncoder.matches(request.getLoginPassword(), member.getLoginPassword())){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+
+        String accessToken = jwtFunction.createAccessToken(member);
+        String refreshToken = jwtFunction.createRefreshToken(member);
+
+        RefreshToken checkRefreshTooken = refreshTokenRepository.findByMemberId(member.getMemberId()).orElse(null);
+
+        if(checkRefreshTooken != null){
+            checkRefreshTooken.updateToken(refreshToken);
+        } else {
+            RefreshToken refreshTokenEntity = new RefreshToken(member.getMemberId(), refreshToken);
+            refreshTokenRepository.save(refreshTokenEntity);
+        }
+
+        response.addHeader(JWTProperties.HEADER_STRING, accessToken);
+        response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
 
         member.loginStatus();
     }
 
-//    @Transactional
-//    public void memberLogout(Long id) {
-//
-//        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-//
+    @Transactional
+    public void memberLogout(Long id) {
+
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        RefreshToken refreshToken = refreshTokenRepository.findByMemberId(member.getMemberId()).orElseThrow(IllegalArgumentException::new);
+
+        refreshTokenRepository.delete(refreshToken);
 //        member.logoutStatus();
-//    }
+    }
 
     @Transactional
     public MemberDto.profileResponse memberProfile(Long id) {
@@ -105,5 +135,26 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
         member.UpdateProfile(request);
+    }
+
+
+    //-----------------------------------------------
+    // 토큰 재발급
+    @Transactional
+    public void reissueAccessToken(HttpServletRequest request, HttpServletResponse response) {
+
+        String header_refresh = request.getHeader(JWTProperties.REFRESH_STRING);
+
+        RefreshToken refresh = refreshTokenRepository.findByToken(header_refresh).orElseThrow(() -> new IllegalArgumentException("해당 refresh토큰이 DB에 존재하지 않습니다."));
+
+        Member member = memberRepository.findById(refresh.getMemberId()).orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
+
+        String accessToken = jwtFunction.createAccessToken(member);
+        String refreshToken = jwtFunction.createRefreshToken(member);
+
+        refresh.updateToken(refreshToken);
+
+        response.addHeader(JWTProperties.HEADER_STRING, accessToken);
+        response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
     }
 }
