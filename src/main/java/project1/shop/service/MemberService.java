@@ -31,6 +31,7 @@ public class MemberService {
     private final RefreshTokenRepository refreshTokenRepository;
 
 
+    // 아이디 중복 체크
     @Transactional
     public boolean idCheck(MemberDto.IdCheckRequest request) {
 
@@ -47,6 +48,7 @@ public class MemberService {
 //        return member == null;
 //    }
 
+    // 회원 가입
     @Transactional
     public void memberJoin(MemberDto.CreateRequest request) {
 
@@ -71,6 +73,7 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    // 회원 로그인
     @Transactional
     public void memberLogin(MemberDto.LoginRequest request, HttpServletResponse response) {
 
@@ -98,6 +101,7 @@ public class MemberService {
         member.loginStatus();
     }
 
+    // 회원 로그아웃
     @Transactional
     public void memberLogout(Long id) {
 
@@ -109,6 +113,7 @@ public class MemberService {
 //        member.logoutStatus();
     }
 
+    // 회원 정보 가져오기 (비밀번호 제외)
     @Transactional
     public MemberDto.profileResponse memberProfile(Long id) {
 
@@ -121,14 +126,22 @@ public class MemberService {
         return profileDto;
     }
 
+    // 회원 비밀번호 수정
     @Transactional
     public void memberUpdatePassword(Long id, MemberDto.UpdatePasswordRequest request) {
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
+        if(!bCryptPasswordEncoder.matches(request.getLoginPassword(), member.getLoginPassword())){
+            throw new IllegalArgumentException("기존 비밀번호가 일치하지 않습니다.");
+        }
+
+        request.setNewLoginPassword(bCryptPasswordEncoder.encode(request.getNewLoginPassword()));
+
         member.UpdatePassword(request);
     }
 
+    // 회원 프로필 수정
     @Transactional
     public void memberUpdateProfile(Long id, MemberDto.UpdateProfileRequest request) {
 
@@ -136,6 +149,25 @@ public class MemberService {
 
         member.UpdateProfile(request);
     }
+
+
+    // 회원 탈퇴
+    @Transactional
+    public void memberDelete(Long id, MemberDto.PasswordRequest request) {
+
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        if(!bCryptPasswordEncoder.matches(request.getLoginPassword(), member.getLoginPassword())){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        RefreshToken refreshToken = refreshTokenRepository.findByMemberId(member.getMemberId()).orElseThrow(IllegalArgumentException::new);
+
+        refreshTokenRepository.delete(refreshToken);
+
+        member.DeleteMember();
+    }
+
 
 
     //-----------------------------------------------
@@ -157,4 +189,6 @@ public class MemberService {
         response.addHeader(JWTProperties.HEADER_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
     }
+
+
 }

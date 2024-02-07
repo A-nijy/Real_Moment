@@ -4,6 +4,7 @@ package project1.shop.jwt.config.util;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import project1.shop.domain.entity.Admin;
 import project1.shop.domain.entity.Member;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
 @Slf4j
 public class JwtFunction {
 
-    // access 토큰 생성
+    // 회원 access 토큰 생성
     public String createAccessToken(Member member)
     {
         Claims claims = Jwts.claims();
@@ -33,8 +34,46 @@ public class JwtFunction {
         return accessToken;
     }
 
-    // access 토큰 생성
+    // 회원 refresh 토큰 생성
     public String createRefreshToken(Member member)
+    {
+
+        String refreshToken = Jwts.builder()
+                .setIssuer(JWTProperties.ISSUER)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWTProperties.REFRESH_TIME))
+                .signWith(JWTProperties.REFRESH_KEY, SignatureAlgorithm.HS256)
+                .compact();
+
+        refreshToken = JWTProperties.TOKEN_PREFIX + refreshToken;
+
+        return refreshToken;
+    }
+
+
+    // 관리자 access 토큰 생성
+    public String createAccessToken(Admin admin)
+    {
+        Claims claims = Jwts.claims();
+        claims.put("adminId", admin.getAdminId());
+        claims.put("loginId", admin.getLoginId());
+        claims.put("roles", admin.getRoles());
+
+        String accessToken = Jwts.builder()
+                .setClaims(claims)
+                .setIssuer(JWTProperties.ISSUER)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWTProperties.ACCESS_TIME))
+                .signWith(JWTProperties.ACCESS_KEY, SignatureAlgorithm.HS256)
+                .compact();
+
+        accessToken = JWTProperties.TOKEN_PREFIX + accessToken;
+
+        return accessToken;
+    }
+
+    // 관리자 refresh 토큰 생성
+    public String createRefreshToken(Admin admin)
     {
 
         String refreshToken = Jwts.builder()

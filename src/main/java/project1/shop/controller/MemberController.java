@@ -80,7 +80,7 @@ public class MemberController {
     }
 
 
-    // 회원 정보 관리 페이지 이동
+    // 회원 정보 관리 페이지 이동 (회원 정보 가져오기)
     @GetMapping("/member/{id}/profile")
     public MemberDto.profileResponse memberProfile(@PathVariable Long id){
 
@@ -114,6 +114,14 @@ public class MemberController {
         }
 
         memberService.memberUpdateProfile(id, request);
+    }
+
+
+    // 회원 탈퇴
+    @PatchMapping("/member/{id}/delete")
+    public void memberDelete(@PathVariable Long id, @RequestBody MemberDto.PasswordRequest request){
+
+        memberService.memberDelete(id, request);
     }
 
 

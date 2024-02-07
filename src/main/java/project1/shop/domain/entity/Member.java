@@ -38,6 +38,7 @@ public class Member extends TimeCheck {
     private LocalDateTime recentlyLogin = LocalDateTime.now();
 //    private boolean isMemberStatus = true;
 //    private boolean isLoginStatus = false;
+    private boolean isDelete = false;
     private String roles;
 
 
@@ -65,7 +66,7 @@ public class Member extends TimeCheck {
 //    }
 
     public void UpdatePassword(MemberDto.UpdatePasswordRequest request){
-        loginPassword = request.getLoginPassword();
+        loginPassword = request.getNewLoginPassword();
     }
 
     public void UpdateProfile(MemberDto.UpdateProfileRequest request){
@@ -73,6 +74,20 @@ public class Member extends TimeCheck {
         name = request.getName();
         tel = request.getTel();
         gender = request.getGender();
+    }
+
+
+    public void DeleteMember(){
+        grade = null;
+        loginId = null;
+        loginPassword = null;
+        email = null;
+        name = null;
+        tel = null;
+        birthDate = null;
+        gender = null;
+        recentlyLogin = LocalDateTime.now();
+        isDelete = true;
     }
 
 

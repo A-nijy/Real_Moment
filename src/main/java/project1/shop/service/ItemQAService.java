@@ -26,6 +26,7 @@ public class ItemQAService {
     private final MemberRepository memberRepository;
 
 
+    // 상품 Q&A 목록 보기
     @Transactional
     public List<ItemQADto.ItemQAResponse> showQAList(Long itemId) {
 
@@ -38,6 +39,7 @@ public class ItemQAService {
         return QAListDto;
     }
 
+    // 내가 작성한 상품 Q&A 목록 보기
     @Transactional
     public List<ItemQADto.MyItemQAResponse> showMyQAList(Long id) {
 
@@ -50,6 +52,7 @@ public class ItemQAService {
         return myQAListDto;
     }
 
+    // Q&A 작성하기
     @Transactional
     public void saveItemQA(Long id, ItemQADto.ItemQARequest request) {
 
@@ -61,17 +64,16 @@ public class ItemQAService {
         itemQARepository.save(itemQA);
     }
 
+    // Q&A 수정하기 (답변이 달리지 않았을 경우에만)
     @Transactional
     public void updateItemQA(Long id, ItemQADto.UpdateItemQARequest request) {
 
-        log.info("itemQA객체 생성");
         ItemQA itemQA = itemQARepository.findById(request.getItemQAId()).orElseThrow(IllegalArgumentException::new);
 
-        log.info("itemQA객체 내용 수정");
         itemQA.update(request);
-        log.info("itemQA객체 수정 완료");
     }
 
+    // Q&A 삭제하기 (답변이 달리지 않았을 경우에만)
     @Transactional
     public void deleteItemQA(Long id, Long itemQAId) {
 

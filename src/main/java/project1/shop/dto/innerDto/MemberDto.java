@@ -25,7 +25,6 @@ public class MemberDto {
         private Long memberId;
         private GradeDto.Response grade;
         private String loginId;
-        private String loginPassword;
         private String email;
         private String name;
         private String tel;
@@ -33,14 +32,12 @@ public class MemberDto {
         private String gender;
         private int point;
         private LocalDateTime createdDate;
-        private LocalDateTime recentlyLogin;
 
 
         public profileResponse(Member member, GradeDto.Response gradeDto){
             memberId = member.getMemberId();
             grade = gradeDto;
             loginId = member.getLoginId();
-            loginPassword = member.getLoginPassword();
             email = member.getEmail();
             name = member.getName();
             tel = member.getTel();
@@ -48,7 +45,6 @@ public class MemberDto {
             gender = member.getGender();
             point = member.getPoint();
             createdDate = member.getCreatedDate();
-            recentlyLogin = member.getRecentlyLogin();
 
         }
     }
@@ -144,6 +140,11 @@ public class MemberDto {
         @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하로 입력해주세요.")
         @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,20}$", message = "비밀번호는 영문 대소문자, 숫자, 특수기호(!, @, #, $, %, ^, &, *)가 포함되어야 합니다.")
         private String loginPassword;
+
+        @NotBlank(message = "비밀번호를 입력해주세요")
+        @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하로 입력해주세요.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,20}$", message = "비밀번호는 영문 대소문자, 숫자, 특수기호(!, @, #, $, %, ^, &, *)가 포함되어야 합니다.")
+        private String newLoginPassword;
     }
 
 
@@ -196,5 +197,14 @@ public class MemberDto {
             }
             return new ArrayList<>();
         }
+    }
+
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class PasswordRequest{
+        private String loginPassword;
     }
 }

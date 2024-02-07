@@ -38,4 +38,29 @@ public class AnnouncementDto {
 
         }
     }
+
+
+    // --------- ADMIN ---------------------------------------------------------------------------------------------------------------------
+
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class SaveRequest {
+        private String title;
+        private String content;
+        private boolean isFix;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateRequest {
+        private Long AnnouncementId;
+        private String title;
+        private String content;
+        private boolean isFix;
+    }
 }

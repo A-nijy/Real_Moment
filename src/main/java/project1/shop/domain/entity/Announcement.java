@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project1.shop.domain.AutoCheck.TimeAndByCheck;
-
-import java.time.LocalDateTime;
+import project1.shop.dto.innerDto.AnnouncementDto;
 
 @Entity
 @AllArgsConstructor
@@ -23,7 +22,24 @@ public class Announcement extends TimeAndByCheck {
     private String title;
     private String content;
     private boolean isFix;
-    private int viewCount;
+    private int viewCount = 0;
+
+
+    public Announcement(Admin admin, AnnouncementDto.SaveRequest request){
+
+        this.admin = admin;
+        title = request.getTitle();
+        content = request.getContent();
+        isFix = request.isFix();
+    }
+
+    public void UpdateAnnouncement(Admin admin, AnnouncementDto.UpdateRequest request){
+
+        this.admin = admin;
+        title = request.getTitle();
+        content = request.getContent();
+        isFix = request.isFix();
+    }
 
 
     public void viewCountUp() {
