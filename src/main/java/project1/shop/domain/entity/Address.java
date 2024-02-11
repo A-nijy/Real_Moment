@@ -24,18 +24,18 @@ public class Address {
     private String detAddress;
     private boolean isDefAddress;
 
-    public Address(AddressDto.AddressRequest requestDto, Member member){
+    public Address(AddressDto.SaveRequest request, Member member){
         this.member = member;
-        name = requestDto.getName();
-        address = requestDto.getAddress();
-        detAddress = requestDto.getDetAddress();
-        isDefAddress = requestDto.isDefAddress();
+        name = request.getName();
+        address = request.getAddress();
+        detAddress = request.getDetAddress();
+        isDefAddress = request.isDefAddress();
     }
 
-    public void update(AddressDto.AddressRequest requestDto){
-        name = requestDto.getName();
-        address = requestDto.getAddress();
-        detAddress = requestDto.getDetAddress();
-        isDefAddress = requestDto.isDefAddress();
+    public void update(AddressDto.UpdateRequest request){
+        name = request.getName();
+        address = request.getAddress();
+        detAddress = request.getDetAddress();
+        isDefAddress = request.isDefAddress();
     }
 }

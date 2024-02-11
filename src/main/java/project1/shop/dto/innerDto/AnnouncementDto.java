@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class AnnouncementDto {
 
 
+    // 공지사항 목록 조회 응답 (+ 공지사항 상세 조회 응답)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -43,6 +44,7 @@ public class AnnouncementDto {
     // --------- ADMIN ---------------------------------------------------------------------------------------------------------------------
 
 
+    // 공지사항 추가 요청
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -53,6 +55,8 @@ public class AnnouncementDto {
         private boolean isFix;
     }
 
+
+    // 공지사항 수정 요청
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter

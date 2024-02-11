@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import project1.shop.dto.innerDto.ItemQADto;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.ItemQAService;
 
 import java.util.List;
@@ -19,21 +20,21 @@ public class ItemQAController {
 
     // 특정 상품 문의 목록 조회
     @GetMapping("/QAList")
-    public List<ItemQADto.ItemQAResponse> showQAList(@RequestParam("itemId") Long itemId){
+    public List<ItemQADto.ItemQAResponse> showQAList(SearchDto.ItemQAs request){
 
-        List<ItemQADto.ItemQAResponse> QAListDto = itemQAService.showQAList(itemId);
+        List<ItemQADto.ItemQAResponse> itemQADto = itemQAService.showQAList(request);
 
-        return QAListDto;
+        return itemQADto;
     }
 
 
     // 내가 작성한 상품 문의 목록 조회
     @GetMapping("/QAList/{id}")
-    public List<ItemQADto.MyItemQAResponse> showMyQAList(@PathVariable Long id){
+    public List<ItemQADto.MyItemQAResponse> showMyQAList(@PathVariable Long id, SearchDto.Page nowPage){
 
-        List<ItemQADto.MyItemQAResponse> MyQAListDto = itemQAService.showMyQAList(id);
+        List<ItemQADto.MyItemQAResponse> myItemQADto = itemQAService.showMyQAList(id, nowPage);
 
-        return MyQAListDto;
+        return myItemQADto;
     }
 
 

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import project1.shop.dto.innerDto.ReviewDto;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.ReviewService;
 
 import java.util.List;
@@ -19,11 +20,10 @@ public class ReviewController {
 
     // 특정 상품의 리뷰 목록 조회
     @GetMapping("/reviews")
-    public List<ReviewDto.ReviewResponse> showReviews(@RequestParam("itemId") Long itemId){
+    public List<ReviewDto.ReviewResponse> showReviews(SearchDto.Reviews request){
 
-        log.info("{}", itemId);
         log.info("서비스 호출");
-        List<ReviewDto.ReviewResponse> reviewsDto = reviewService.showReviews(itemId);
+        List<ReviewDto.ReviewResponse> reviewsDto = reviewService.showReviews(request);
 
         return reviewsDto;
     }
@@ -31,9 +31,10 @@ public class ReviewController {
 
     // 내가 작성한 리뷰 목록 조회
     @GetMapping("/reviews/{id}")
-    public List<ReviewDto.MyReviewResponse> showMyReviews(@PathVariable Long id){
+    public List<ReviewDto.MyReviewResponse> showMyReviews(@PathVariable Long id, SearchDto.Page nowPage){
 
-        List<ReviewDto.MyReviewResponse> reviewsDto = reviewService.showMyReviews(id);
+        System.out.println("값 받아옴");
+        List<ReviewDto.MyReviewResponse> reviewsDto = reviewService.showMyReviews(id, nowPage);
 
         return reviewsDto;
     }

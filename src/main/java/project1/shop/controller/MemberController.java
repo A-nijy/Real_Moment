@@ -35,21 +35,6 @@ public class MemberController {
     }
 
 
-//    // 닉네임 중복 체크
-//    @PostMapping("/nicknameCheck")
-//    public boolean nicknameCheck(@Valid @RequestBody MemberDto.NicknameCheckRequest request, BindingResult bindingResult){
-//
-//        // 닉네임 유효성 검사
-//        if(bindingResult.hasErrors()){
-//            throw new IllegalArgumentException(String.format("잘못된 형식입니다. Nickname = (%s)", request.getNcikname()));
-//        }
-//
-//        boolean check = memberService.nicknameCheck(request);
-//
-//        return check;
-//    }
-
-
     // 회원가입
     @PostMapping("/member/join")
     public void memberJoin(@Valid @RequestBody MemberDto.CreateRequest request, BindingResult bindingResult){

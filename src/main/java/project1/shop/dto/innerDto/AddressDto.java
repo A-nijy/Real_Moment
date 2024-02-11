@@ -8,11 +8,26 @@ import project1.shop.domain.entity.Address;
 
 public class AddressDto {
 
+
+    // 배송지 추가 요청
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class AddressRequest {
+    public static class SaveRequest {
+        private String name;
+        private String address;
+        private String detAddress;
+        private boolean isDefAddress;
+    }
+
+
+    // 배송지 수정 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateRequest {
         private Long Id;
         private String name;
         private String address;
@@ -21,6 +36,7 @@ public class AddressDto {
     }
 
 
+    // 배송지 목록 조회 응답
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter

@@ -11,13 +11,13 @@ INSERT INTO grade (grade_name, reward_rate) VALUES
 
 -- Member 회원 더미데이터
 
-INSERT INTO member (grade_id, login_id, login_password, email, name, tel, birth_date, gender, point, roles, created_date, last_modified_date, recently_login)
+INSERT INTO member (grade_id, login_id, login_password, email, name, tel, birth_date, gender, point, is_delete, roles, created_date, last_modified_date, recently_login)
 VALUES
-(1, 'member11', 'password1@', 'member1@gmail.com', 'A', '010-1111-1111', '1990-01-09', '남', 100, 'ROLE_USER', '2020-10-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(2, 'member22', 'password2@', 'member2@gmail.com', 'B', '010-2222-2222', '1993-05-06', '여', 1000, 'ROLE_USER', '2023-01-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(2, 'member33', 'password3@', 'member3@gmail.com', 'C', '010-3333-3333', '1995-11-01', '여', 500, 'ROLE_USER', '2019-04-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(4, 'member44', 'password4@', 'member4@gmail.com', 'D', '010-4444-4444', '2000-01-01', '여', 12500, 'ROLE_USER', '2020-07-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(3, 'member55', 'password5@', 'member5@gmail.com', 'E', '010-5555-5555', '1998-04-28', '남', 10000, 'ROLE_USER', '2021-06-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00');
+(1, 'member11', 'password1@', 'member1@gmail.com', 'A', '010-1111-1111', '1990-01-09', '남', 100, false, 'ROLE_USER', '2020-10-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(2, 'member22', 'password2@', 'member2@gmail.com', 'B', '010-2222-2222', '1993-05-06', '여', 1000, false, 'ROLE_USER', '2023-01-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(2, 'member33', 'password3@', 'member3@gmail.com', 'C', '010-3333-3333', '1995-11-01', '여', 500, false, 'ROLE_USER', '2019-04-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(4, 'member44', 'password4@', 'member4@gmail.com', 'D', '010-4444-4444', '2000-01-01', '여', 12500, false, 'ROLE_USER', '2020-07-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(3, 'member55', 'password5@', 'member5@gmail.com', 'E', '010-5555-5555', '1998-04-28', '남', 10000, false, 'ROLE_USER', '2021-06-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00');
 
 
 
@@ -56,12 +56,12 @@ VALUES
 
 -- Admin 관리자 더미데이터
 
-INSERT INTO admin (id, password, email, name, grade, created_date, last_modified_date)
+INSERT INTO admin (login_id, login_password, email, name, roles, created_date, last_modified_date)
 VALUES
-('admin1', 'password1', 'admin1@gmail.com', '대표', 1, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
-('admin2', 'password2', 'admin2@gmail.com', '이사', 2, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
-('admin3', 'password3', 'admin3@gmail.com', '사원', 4, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
-('admin4', 'password4', 'admin4@gmail.com', '사원', 4, '2022-01-03 12:30:00', '2022-01-03 12:30:00');
+('admin1', 'password1', 'admin1@gmail.com', '대표', 'ROLE_ADMIN', '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin2', 'password2', 'admin2@gmail.com', '이사', 'ROLE_ADMIN', '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin3', 'password3', 'admin3@gmail.com', '사원', 'ROLE_ADMIN', '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin4', 'password4', 'admin4@gmail.com', '사원', 'ROLE_ADMIN', '2022-01-03 12:30:00', '2022-01-03 12:30:00');
 
 
 
@@ -178,14 +178,14 @@ VALUES
 
 -- ItemQA 상품 문의 더미데이터
 
-INSERT INTO itemqa (item_id, member_id, title, content, created_date, last_modified_date)
+INSERT INTO itemqa (item_id, member_id, title, content, answer, created_date, last_modified_date)
 VALUES
-(1, 1, 'QA title1', 'QA content1', '2023-01-05 10:30:00', '2023-01-05 11:00:00'),
-(6, 1, 'QA title2', 'QA content2', '2023-02-05 10:30:00', '2023-02-05 11:00:00'),
-(1, 3, 'QA title3', 'QA content3', '2023-03-05 10:30:00', '2023-03-05 11:00:00'),
-(1, 4, 'QA title4', 'QA content4', '2023-04-05 10:30:00', '2023-04-05 11:00:00'),
-(1, 5, 'QA title5', 'QA content5', '2023-05-05 10:30:00', '2023-05-05 11:00:00'),
-(15, 5, 'QA title6', 'QA content6', '2023-06-05 10:30:00', '2023-06-07 11:00:00');
+(1, 1, 'QA title1', 'QA content1', true, '2023-01-05 10:30:00', '2023-01-05 11:00:00'),
+(6, 1, 'QA title2', 'QA content2', true, '2023-02-05 10:30:00', '2023-02-05 11:00:00'),
+(1, 3, 'QA title3', 'QA content3', true, '2023-03-05 10:30:00', '2023-03-05 11:00:00'),
+(1, 4, 'QA title4', 'QA content4', true, '2023-04-05 10:30:00', '2023-04-05 11:00:00'),
+(1, 5, 'QA title5', 'QA content5', false, '2023-05-05 10:30:00', '2023-05-05 11:00:00'),
+(15, 5, 'QA title6', 'QA content6', false, '2023-06-05 10:30:00', '2023-06-07 11:00:00');
 
 
 

@@ -26,6 +26,7 @@ public class ItemQA extends TimeCheck {
     private Item item;
     private String title;
     private String content;
+    private boolean answer = false;
 
 
     public ItemQA(Member member, Item item, ItemQADto.ItemQARequest request){

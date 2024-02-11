@@ -1,5 +1,6 @@
 package project1.shop.dto.innerDto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,9 @@ import java.util.List;
 
 public class ItemDto {
 
+
+
+    // 상품 간단 정보 (목록용)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -25,6 +29,7 @@ public class ItemDto {
         private String mainImg;
 
 
+        @QueryProjection
         public SimpleItemResponse (Item item){
             id = item.getItemId();
             name = item.getName();
@@ -36,6 +41,8 @@ public class ItemDto {
         }
     }
 
+
+    // 상품 상세 정보
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -74,6 +81,7 @@ public class ItemDto {
     }
 
 
+    // 상품 상세 페이지에 출력 (상품, 리뷰, 문의)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter

@@ -43,7 +43,7 @@ public class AddressService {
     }
 
     @Transactional
-    public void saveAddress(Long id, AddressDto.AddressRequest requestDto) {
+    public void saveAddress(Long id, AddressDto.SaveRequest requestDto) {
 
         log.info("서비스 호출 -> member 엔티티 조회");
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -53,17 +53,17 @@ public class AddressService {
     }
 
     @Transactional
-    public void updateAddress(Long id, AddressDto.AddressRequest requestDto) {
+    public void updateAddress(Long id, AddressDto.UpdateRequest request) {
 
-        Address address = addressRepository.findById(requestDto.getId()).orElseThrow(IllegalArgumentException::new);
+        Address address = addressRepository.findById(request.getId()).orElseThrow(IllegalArgumentException::new);
 
-        address.update(requestDto);
+        address.update(request);
     }
 
     @Transactional
-    public void deleteAddress(Long id, AddressDto.AddressRequest requestDto) {
+    public void deleteAddress(Long id, Long addressId) {
 
-        Address address = addressRepository.findById(requestDto.getId()).orElseThrow(IllegalArgumentException::new);
+        Address address = addressRepository.findById(addressId).orElseThrow(IllegalArgumentException::new);
 
         addressRepository.delete(address);
     }

@@ -30,14 +30,11 @@ public class Member extends TimeCheck {
     private String loginPassword;
     private String email;
     private String name;
-//    private String nickname;
     private String tel;
     private LocalDate birthDate;
     private String gender;
     private int point = 0;
     private LocalDateTime recentlyLogin = LocalDateTime.now();
-//    private boolean isMemberStatus = true;
-//    private boolean isLoginStatus = false;
     private boolean isDelete = false;
     private String roles;
 
@@ -49,7 +46,6 @@ public class Member extends TimeCheck {
         loginPassword = request.getLoginPassword();
         email = request.getEmail();
         name = request.getName();
-//        nickname = request.getName();
         tel = request.getTel();
         birthDate = request.getBirthDate();
         gender = request.getGender();
@@ -57,13 +53,9 @@ public class Member extends TimeCheck {
     }
 
     public void loginStatus(){
-//        isLoginStatus = true;
         recentlyLogin = LocalDateTime.now();
     }
 
-//    public void logoutStatus(){
-//        isLoginStatus = false;
-//    }
 
     public void UpdatePassword(MemberDto.UpdatePasswordRequest request){
         loginPassword = request.getNewLoginPassword();

@@ -9,6 +9,29 @@ import project1.shop.domain.entity.Grade;
 public class GradeDto {
 
 
+    // 등급 추가 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class CreateRequest{
+        private String gradeName;
+        private int rewardRate;
+    }
+
+    // 등급 수정 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateRequest{
+        private Long gradeId;
+        private String gradeName;
+        private int rewardRate;
+    }
+
+
+    // 등급 모든 값 응답
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -25,23 +48,5 @@ public class GradeDto {
         }
     }
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class CreateRequest{
-        private String gradeName;
-        private int rewardRate;
-    }
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class UpdateRequest{
-        private Long gradeId;
-        private String gradeName;
-        private int rewardRate;
-    }
 
 }

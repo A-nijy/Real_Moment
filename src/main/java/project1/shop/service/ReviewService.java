@@ -3,6 +3,8 @@ package project1.shop.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
@@ -12,6 +14,7 @@ import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.MemberRepository;
 import project1.shop.domain.repository.ReviewRepository;
 import project1.shop.dto.innerDto.ReviewDto;
+import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,30 +29,31 @@ public class ReviewService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public List<ReviewDto.ReviewResponse> showReviews(Long itemId) {
+    public List<ReviewDto.ReviewResponse> showReviews(SearchDto.Reviews request) {
 
-        log.info("엔티티 리스트 생성");
-        List<Review> reviews = reviewRepository.findByItem_ItemId(itemId);
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
-        log.info("엔티티 -> dto 변환");
+        Page<Review> reviews = reviewRepository.searchReviews(request, pageRequest);
+
         List<ReviewDto.ReviewResponse> reviewsDto = reviews.stream()
-                .map(ReviewDto.ReviewResponse::new)
-                .collect(Collectors.toList());
+                                                        .map(ReviewDto.ReviewResponse::new)
+                                                        .collect(Collectors.toList());
 
-        log.info("컨트롤러로 반환");
         return reviewsDto;
     }
 
     @Transactional
-    public List<ReviewDto.MyReviewResponse> showMyReviews(Long memberId) {
+    public List<ReviewDto.MyReviewResponse> showMyReviews(Long memberId, SearchDto.Page nowPage) {
 
-        log.info("엔티티 리스트 생성");
-        List<Review> reviews = reviewRepository.findByMember_MemberId(memberId);
+
+        PageRequest pageRequest = PageRequest.of(nowPage.getNowPage() - 1, 10);
+
+        Page<Review> reviews = reviewRepository.searchMyReviews(memberId, pageRequest);
 
         log.info("엔티티 -> dto 변환");
         List<ReviewDto.MyReviewResponse> reviewsDto = reviews.stream()
-                .map(ReviewDto.MyReviewResponse::new)
-                .collect(Collectors.toList());
+                                                            .map(ReviewDto.MyReviewResponse::new)
+                                                            .collect(Collectors.toList());
 
         log.info("컨트롤러로 반환");
         return reviewsDto;

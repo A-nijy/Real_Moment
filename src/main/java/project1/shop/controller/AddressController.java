@@ -32,26 +32,26 @@ public class AddressController {
 
     // 배송지(주소) 추가
     @PostMapping("/member/{id}/address")
-    public void saveAddress(@PathVariable Long id, @RequestBody AddressDto.AddressRequest requestDto) {
+    public void saveAddress(@PathVariable Long id, @RequestBody AddressDto.SaveRequest request) {
 
         log.info("컨트롤러 수행 -> 서비스 호출");
-        addressService.saveAddress(id, requestDto);
+        addressService.saveAddress(id, request);
 
         log.info("배송지 저장 완료");
     }
 
     // 배송지(주소) 수정
     @PatchMapping("/member/{id}/address")
-    public void updateAddress(@PathVariable Long id, @RequestBody AddressDto.AddressRequest requestDto) {
+    public void updateAddress(@PathVariable Long id, @RequestBody AddressDto.UpdateRequest request) {
 
-        addressService.updateAddress(id, requestDto);
+        addressService.updateAddress(id, request);
     }
 
     // 배송지(주소) 삭제
     @DeleteMapping("/member/{id}/address")
-    public void deleteAddress(@PathVariable Long id, @RequestBody AddressDto.AddressRequest requestDto) {
+    public void deleteAddress(@PathVariable Long id, @RequestParam("addressId") Long addressId) {
 
-        addressService.deleteAddress(id, requestDto);
+        addressService.deleteAddress(id, addressId);
     }
 
 

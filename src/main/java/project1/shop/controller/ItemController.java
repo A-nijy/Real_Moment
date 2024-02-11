@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import project1.shop.dto.innerDto.ItemDto;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.ItemService;
 
 import java.util.List;
@@ -21,10 +22,10 @@ public class ItemController {
 
     // 카테고리 별 상품 목록 조회
     @GetMapping("/items")
-    public List<ItemDto.SimpleItemResponse> showItems(@RequestParam("categoryId") Long id){
+    public List<ItemDto.SimpleItemResponse> showItems(SearchDto.Items request){
 
         log.info("컨트롤러 시작 -> 서비스 이동");
-        List<ItemDto.SimpleItemResponse> items = itemService.showItems(id);
+        List<ItemDto.SimpleItemResponse> items = itemService.showItems(request);
 
         log.info("서비스 종료 -> 반환");
         return items;

@@ -3,6 +3,9 @@ package project1.shop.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
@@ -12,6 +15,7 @@ import project1.shop.domain.repository.ItemQARepository;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.MemberRepository;
 import project1.shop.dto.innerDto.ItemQADto;
+import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,28 +32,32 @@ public class ItemQAService {
 
     // 상품 Q&A 목록 보기
     @Transactional
-    public List<ItemQADto.ItemQAResponse> showQAList(Long itemId) {
+    public List<ItemQADto.ItemQAResponse> showQAList(SearchDto.ItemQAs request) {
 
-        List<ItemQA> QAList = itemQARepository.findByItem_ItemId(itemId);
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
-        List<ItemQADto.ItemQAResponse> QAListDto = QAList.stream()
+        Page<ItemQA> itemQAs = itemQARepository.searchItemQAs(request, pageRequest);
+
+        List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
                 .map(ItemQADto.ItemQAResponse::new)
                 .collect(Collectors.toList());
 
-        return QAListDto;
+        return itemQADto;
     }
 
     // 내가 작성한 상품 Q&A 목록 보기
     @Transactional
-    public List<ItemQADto.MyItemQAResponse> showMyQAList(Long id) {
+    public List<ItemQADto.MyItemQAResponse> showMyQAList(Long id, SearchDto.Page nowPage) {
 
-        List<ItemQA> myQAList = itemQARepository.findByMember_MemberId(id);
+        PageRequest pageRequest = PageRequest.of(nowPage.getNowPage() - 1, 10);
 
-        List<ItemQADto.MyItemQAResponse> myQAListDto = myQAList.stream()
+        Page<ItemQA> myItemQAs = itemQARepository.searchMyItemQAs(id, pageRequest);
+
+        List<ItemQADto.MyItemQAResponse> myItemQADto = myItemQAs.stream()
                 .map(ItemQADto.MyItemQAResponse::new)
                 .collect(Collectors.toList());
 
-        return myQAListDto;
+        return myItemQADto;
     }
 
     // Q&A 작성하기

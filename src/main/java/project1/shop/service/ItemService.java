@@ -2,6 +2,8 @@ package project1.shop.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
@@ -13,6 +15,7 @@ import project1.shop.domain.repository.ReviewRepository;
 import project1.shop.dto.innerDto.ItemDto;
 import project1.shop.dto.innerDto.ItemQADto;
 import project1.shop.dto.innerDto.ReviewDto;
+import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,23 +32,19 @@ public class ItemService {
 
 
     @Transactional
-    public List<ItemDto.SimpleItemResponse> showItems(Long id) {
+    public List<ItemDto.SimpleItemResponse> showItems(SearchDto.Items request) {
 
-        log.info("서비스 시작 -> repository에서 데이터 찾기");
-        List<Item> items = itemRepository.findByCategory_CategoryId(id);
 
-        if(items.isEmpty()){
-            log.info("데이터가 존재하지 않음 -> 예외 발생");
-            throw new IllegalArgumentException();
-        }
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 9);
 
-        log.info("repositroy에서 데이터 찾음 -> entity를 dto로 변환");
+        Page<Item> items = itemRepository.searchPageSimple(request, pageRequest);
+
         List<ItemDto.SimpleItemResponse> itemsDto = items.stream()
-                .map(ItemDto.SimpleItemResponse::new)
-                .collect(Collectors.toList());
+                                                        .map(ItemDto.SimpleItemResponse::new)
+                                                        .collect(Collectors.toList());
 
-        log.info("dto를 컨트롤러에 반환");
         return itemsDto;
+
     }
 
     @Transactional
