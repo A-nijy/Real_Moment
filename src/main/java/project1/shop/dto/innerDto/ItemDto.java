@@ -13,6 +13,46 @@ import java.util.List;
 public class ItemDto {
 
 
+    // 상품 추가 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class SaveRequest {
+        private Long categoryId;
+        private String name;
+        private String content;
+        private int price;
+        private int discountRate;
+        private int sellPrice;
+        private int stock;
+        private boolean isSellCheck;
+        private String mainImg;
+        private String serveImg;
+    }
+
+
+    // 상품 수정 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateRequest {
+        private Long itemId;
+        private Long categoryId;
+        private String name;
+        private String content;
+        private int price;
+        private int discountRate;
+        private int sellPrice;
+        private int stock;
+        private boolean isSellCheck;
+        private boolean isDeleteCheck;
+        private String mainImg;
+        private String serveImg;
+    }
+
+
 
     // 상품 간단 정보 (목록용)
     @AllArgsConstructor

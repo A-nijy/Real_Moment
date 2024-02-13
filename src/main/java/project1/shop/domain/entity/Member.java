@@ -33,6 +33,7 @@ public class Member extends TimeCheck {
     private String tel;
     private LocalDate birthDate;
     private String gender;
+    private int thisYearPay = 0;
     private int point = 0;
     private LocalDateTime recentlyLogin = LocalDateTime.now();
     private boolean isDelete = false;

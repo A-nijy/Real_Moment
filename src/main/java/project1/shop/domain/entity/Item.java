@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project1.shop.domain.AutoCheck.TimeAndByCheck;
-
-import java.time.LocalDateTime;
+import project1.shop.dto.innerDto.ItemDto;
 
 @Entity
 @AllArgsConstructor
@@ -27,10 +26,49 @@ public class Item extends TimeAndByCheck {
     private int sellPrice;
     private int stock;
     private boolean isSellCheck;
-    private boolean isDeleteCheck;
+    private boolean isDeleteCheck = false;
     private String mainImg;
     private String serveImg;
 
 
 
+    public Item (Category category, ItemDto.SaveRequest request){
+        this.category = category;
+        name = request.getName();
+        content = request.getContent();
+        price = request.getPrice();
+        discountRate = request.getDiscountRate();
+        sellPrice = request.getSellPrice();
+        stock = request.getStock();
+        isSellCheck = request.isSellCheck();
+        mainImg = request.getMainImg();
+        serveImg = request.getServeImg();
+    }
+
+
+
+    public void update(Category category, ItemDto.UpdateRequest request){
+        this.category = category;
+        name = request.getName();
+        content = request.getContent();
+        price = request.getPrice();
+        discountRate = request.getDiscountRate();
+        sellPrice = request.getSellPrice();
+        stock = request.getStock();
+        isSellCheck = request.isSellCheck();
+        isDeleteCheck = request.isDeleteCheck();
+        mainImg = request.getMainImg();
+        serveImg = request.getServeImg();
+    }
+
+
+    public void delete(){
+        category = null;
+        name = null;
+        content = null;
+        isSellCheck = false;
+        isDeleteCheck = true;
+        mainImg = null;
+        serveImg = null;
+    }
 }

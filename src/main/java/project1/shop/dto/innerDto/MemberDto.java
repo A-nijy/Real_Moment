@@ -141,11 +141,12 @@ public class MemberDto {
 
 
 
+    // 회원 개인정보 확인용 응답
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class profileResponse{
+    public static class ProfileResponse {
         private Long memberId;
         private GradeDto.Response grade;
         private String loginId;
@@ -158,7 +159,7 @@ public class MemberDto {
         private LocalDateTime createdDate;
 
 
-        public profileResponse(Member member, GradeDto.Response gradeDto){
+        public ProfileResponse(Member member, GradeDto.Response gradeDto){
             memberId = member.getMemberId();
             grade = gradeDto;
             loginId = member.getLoginId();
@@ -168,6 +169,71 @@ public class MemberDto {
             birthDate = member.getEmail();
             gender = member.getGender();
             point = member.getPoint();
+            createdDate = member.getCreatedDate();
+
+        }
+    }
+
+
+
+    // 회원 목록 검색용 간단 회원 정보 응답
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class SimpleProfileResponse{
+        private Long memberId;
+        private GradeDto.Response grade;
+        private String loginId;
+        private String name;
+        private boolean isDelete;
+        private LocalDateTime createdDate;
+
+
+        public SimpleProfileResponse(Member member){
+            memberId = member.getMemberId();
+            grade = new GradeDto.Response(member.getGrade());
+            loginId = member.getLoginId();
+            name = member.getName();
+            isDelete = member.isDelete();
+            createdDate = member.getCreatedDate();
+
+        }
+    }
+
+
+    // 회원의 개인정보 확인 응답 (관리자용)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class FullProfileResponse {
+        private Long memberId;
+        private GradeDto.Response grade;
+        private String loginId;
+        private String email;
+        private String name;
+        private String tel;
+        private String birthDate;
+        private String gender;
+        private int point;
+        private LocalDateTime recentlyLogin;
+        private boolean isDelete;
+        private LocalDateTime createdDate;
+
+
+        public FullProfileResponse(Member member){
+            memberId = member.getMemberId();
+            grade = new GradeDto.Response(member.getGrade());
+            loginId = member.getLoginId();
+            email = member.getEmail();
+            name = member.getName();
+            tel = member.getTel();
+            birthDate = member.getEmail();
+            gender = member.getGender();
+            point = member.getPoint();
+            recentlyLogin = member.getRecentlyLogin();
+            isDelete = member.isDelete();
             createdDate = member.getCreatedDate();
 
         }

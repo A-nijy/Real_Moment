@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.dto.innerDto.GradeDto;
 
 
 @Entity
@@ -17,5 +18,21 @@ public class Grade {
     @Column(name = "grade_id")
     private Long gradeId;
     private String gradeName = "White";
+    private int gradePrice = 0;
     private int rewardRate = 1;
+
+
+
+    public Grade(GradeDto.CreateRequest request){
+        gradeName = request.getGradeName();
+        gradePrice = request.getGradePrice();
+        rewardRate = request.getRewardRate();
+    }
+
+
+    public void update(GradeDto.UpdateRequest request){
+        gradeName = request.getGradeName();
+        gradePrice = request.getGradePrice();
+        rewardRate = request.getRewardRate();
+    }
 }

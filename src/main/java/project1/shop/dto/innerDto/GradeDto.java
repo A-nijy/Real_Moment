@@ -16,6 +16,7 @@ public class GradeDto {
     @Setter
     public static class CreateRequest{
         private String gradeName;
+        private int gradePrice;
         private int rewardRate;
     }
 
@@ -27,6 +28,7 @@ public class GradeDto {
     public static class UpdateRequest{
         private Long gradeId;
         private String gradeName;
+        private int gradePrice;
         private int rewardRate;
     }
 
@@ -39,11 +41,13 @@ public class GradeDto {
     public static class Response{
         private Long gradeId;
         private String gradeName;
+        private int gradePrice;
         private int rewardRate;
 
         public Response(Grade grade){
             gradeId = grade.getGradeId();
             gradeName = grade.getGradeName();
+            gradePrice = grade.getGradePrice();
             rewardRate = grade.getRewardRate();
         }
     }

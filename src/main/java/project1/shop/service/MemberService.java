@@ -115,13 +115,13 @@ public class MemberService {
 
     // 회원 정보 가져오기 (비밀번호 제외)
     @Transactional
-    public MemberDto.profileResponse memberProfile(Long id) {
+    public MemberDto.ProfileResponse memberProfile(Long id) {
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
         GradeDto.Response gradeDto = new GradeDto.Response(member.getGrade());
 
-        MemberDto.profileResponse profileDto = new MemberDto.profileResponse(member, gradeDto);
+        MemberDto.ProfileResponse profileDto = new MemberDto.ProfileResponse(member, gradeDto);
 
         return profileDto;
     }

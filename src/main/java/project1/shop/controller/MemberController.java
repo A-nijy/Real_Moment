@@ -67,10 +67,10 @@ public class MemberController {
 
     // 회원 정보 관리 페이지 이동 (회원 정보 가져오기)
     @GetMapping("/member/{id}/profile")
-    public MemberDto.profileResponse memberProfile(@PathVariable Long id){
+    public MemberDto.ProfileResponse memberProfile(@PathVariable Long id){
 
         log.info("시작");
-        MemberDto.profileResponse profileDto = memberService.memberProfile(id);
+        MemberDto.ProfileResponse profileDto = memberService.memberProfile(id);
 
         return profileDto;
     }

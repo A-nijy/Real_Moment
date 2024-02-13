@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project1.shop.domain.AutoCheck.TimeCheck;
+import project1.shop.dto.innerDto.AdminDto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +25,27 @@ public class Admin extends TimeCheck {
     private String email;
     private String name;
     private String roles;
+    private boolean isDeleteCheck = false;
+
+
+
+    public void update(AdminDto.UpdateRequest request){
+        email = request.getEmail();
+        name = request.getName();
+    }
+
+    public void rolesUpdate(AdminDto.RoleUpdateRequest request){
+        roles = request.getRoles();
+    }
+
+    public void delete(){
+        loginId = null;
+        loginPassword = null;
+        email = null;
+        name = null;
+        roles = null;
+        isDeleteCheck = true;
+    }
 
 
     // enum으로 안하고 ,로 split하여 ROLE을 입력 -> 그걸 parsing

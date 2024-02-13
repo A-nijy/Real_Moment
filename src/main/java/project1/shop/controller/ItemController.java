@@ -20,7 +20,7 @@ public class ItemController {
     private final ItemService itemService;
 
 
-    // 카테고리 별 상품 목록 조회
+    // (카테고리 or 검색 등) 상품 목록 조회
     @GetMapping("/items")
     public List<ItemDto.SimpleItemResponse> showItems(SearchDto.Items request){
 

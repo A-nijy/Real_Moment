@@ -64,10 +64,24 @@ public class SearchDto {
     @Getter
     @Setter
     public static class Members{
+        private String memberSort = null;                   // 회원 정렬 - day 가입일, point 적립금
         private String loginId = null;                    // 특정 회원 아이디
         private Long gradeId = null;                       // 등급
         private Boolean isDelete = null;               // 탈퇴 여부
         private int nowPage = 1;                // 페이지
+    }
+
+
+    // 관리자 목록 조회
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class Admins{
+        private String loginId = null;                  // 관리자 아이디
+        private String name = null;                     // 관리자 이름
+        private String roles = null;                    // 관리자 권한
+        private int nowPage = 1;                        // 페이지
     }
 
 
