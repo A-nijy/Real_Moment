@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.dto.innerDto.CategoryDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,4 +27,21 @@ public class Category {
 
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
+
+
+    public Category(CategoryDto.CreateRequest request){
+        name = request.getName();
+        parent = null;
+    }
+
+    public Category(CategoryDto.CreateRequest request, Category parentCategory){
+        name = request.getName();
+        parent = parentCategory;
+    }
+
+
+    public void update(CategoryDto.UpdateRequest request, Category parentCategory){
+        name = request.getName();
+        parent = parentCategory;
+    }
 }
