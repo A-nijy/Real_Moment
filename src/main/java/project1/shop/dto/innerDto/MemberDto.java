@@ -239,38 +239,4 @@ public class MemberDto {
         }
     }
 
-
-
-    // --------------------------------------------------------------------------------------------
-
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class ServerCheckDto {
-
-        private long memberId;
-        private String loginId;
-        private String loginPassword;
-        private String roles;
-
-
-        public ServerCheckDto(Member member){
-            memberId = member.getMemberId();
-            loginId = member.getLoginId();
-            loginPassword = member.getLoginPassword();
-            roles = member.getRoles();
-        }
-
-        public List<String> getRoleList(){
-            if(this.roles.length()>0){
-                return Arrays.asList(this.roles.split(","));
-            }
-            return new ArrayList<>();
-        }
-    }
-
-
-
 }

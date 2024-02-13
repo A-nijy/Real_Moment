@@ -8,9 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project1.shop.domain.entity.Admin;
 import project1.shop.domain.entity.Grade;
 import project1.shop.domain.entity.Member;
 import project1.shop.domain.entity.RefreshToken;
+import project1.shop.domain.repository.AdminRepository;
 import project1.shop.domain.repository.GradeRepository;
 import project1.shop.domain.repository.MemberRepository;
 import project1.shop.domain.repository.RefreshTokenRepository;
@@ -25,6 +27,7 @@ import project1.shop.jwt.config.util.JwtFunction;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final AdminRepository adminRepository;
     private final GradeRepository gradeRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtFunction jwtFunction;
@@ -36,33 +39,23 @@ public class MemberService {
     public boolean idCheck(MemberDto.IdCheckRequest request) {
 
         Member member = memberRepository.findByLoginId(request.getLoginId()).orElse(null);
+        Admin admin = adminRepository.findByLoginId(request.getLoginId()).orElse(null);
 
-        return member == null;
+        return member == null && admin == null;
     }
 
-//    @Transactional
-//    public boolean nicknameCheck(MemberDto.NicknameCheckRequest request) {
-//
-//        Member member = memberRepository.findByNickname(request.getNcikname()).orElse(null);
-//
-//        return member == null;
-//    }
 
     // 회원 가입
     @Transactional
     public void memberJoin(MemberDto.CreateRequest request) {
 
         Member memberId = memberRepository.findByLoginId(request.getLoginId()).orElse(null);
+        Admin adminId = adminRepository.findByLoginId(request.getLoginId()).orElse(null);
 
-        if(!(memberId == null)){
+        if(!(memberId == null && adminId == null)){
             throw new IllegalArgumentException("아이디가 중복입니다.");
         }
 
-//        Member memberNickname = memberRepository.findByNickname(request.getNcikname()).orElse(null);
-//
-//        if(!(memberNickname == null)){
-//            throw new IllegalArgumentException("닉네임이 중복입니다.");
-//        }
         request.setLoginPassword(bCryptPasswordEncoder.encode(request.getLoginPassword()));
         request.setRoles("ROLE_USER");
 
@@ -86,12 +79,12 @@ public class MemberService {
         String accessToken = jwtFunction.createAccessToken(member);
         String refreshToken = jwtFunction.createRefreshToken(member);
 
-        RefreshToken checkRefreshTooken = refreshTokenRepository.findByMemberId(member.getMemberId()).orElse(null);
+        RefreshToken checkRefreshTooken = refreshTokenRepository.findByLoginId(member.getLoginId()).orElse(null);
 
         if(checkRefreshTooken != null){
             checkRefreshTooken.updateToken(refreshToken);
         } else {
-            RefreshToken refreshTokenEntity = new RefreshToken(member.getMemberId(), refreshToken);
+            RefreshToken refreshTokenEntity = new RefreshToken(member.getLoginId(), refreshToken);
             refreshTokenRepository.save(refreshTokenEntity);
         }
 
@@ -107,10 +100,9 @@ public class MemberService {
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
-        RefreshToken refreshToken = refreshTokenRepository.findByMemberId(member.getMemberId()).orElseThrow(IllegalArgumentException::new);
+        RefreshToken refreshToken = refreshTokenRepository.findByLoginId(member.getLoginId()).orElseThrow(IllegalArgumentException::new);
 
         refreshTokenRepository.delete(refreshToken);
-//        member.logoutStatus();
     }
 
     // 회원 정보 가져오기 (비밀번호 제외)
@@ -161,7 +153,7 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        RefreshToken refreshToken = refreshTokenRepository.findByMemberId(member.getMemberId()).orElseThrow(IllegalArgumentException::new);
+        RefreshToken refreshToken = refreshTokenRepository.findByLoginId(member.getLoginId()).orElseThrow(IllegalArgumentException::new);
 
         refreshTokenRepository.delete(refreshToken);
 
@@ -179,7 +171,7 @@ public class MemberService {
 
         RefreshToken refresh = refreshTokenRepository.findByToken(header_refresh).orElseThrow(() -> new IllegalArgumentException("해당 refresh토큰이 DB에 존재하지 않습니다."));
 
-        Member member = memberRepository.findById(refresh.getMemberId()).orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
+        Member member = memberRepository.findByLoginId(refresh.getLoginId()).orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
 
         String accessToken = jwtFunction.createAccessToken(member);
         String refreshToken = jwtFunction.createRefreshToken(member);

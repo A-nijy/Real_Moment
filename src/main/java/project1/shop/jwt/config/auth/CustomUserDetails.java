@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import project1.shop.dto.commonDto.ServerCheckDto;
 import project1.shop.dto.innerDto.MemberDto;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final MemberDto.ServerCheckDto serverCheckDto;
+    private final ServerCheckDto serverCheckDto;
 
     //------------------------------------------------
 

@@ -22,12 +22,17 @@ public class Admin extends TimeCheck {
     private Long adminId;
     private String loginId;
     private String loginPassword;
-    private String email;
-    private String name;
+    private String email = null;
+    private String name = null;
     private String roles;
     private boolean isDeleteCheck = false;
 
 
+    public Admin(AdminDto.CreateRequest request){
+        loginId = request.getLoginId();
+        loginPassword = request.getLoginPassword();
+        roles = request.getRoles();
+    }
 
     public void update(AdminDto.UpdateRequest request){
         email = request.getEmail();

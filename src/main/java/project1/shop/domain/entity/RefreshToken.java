@@ -18,11 +18,11 @@ public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long memberId;
+    private String loginId;
     private String token;
 
-    public RefreshToken(long memberId, String token){
-        this.memberId = memberId;
+    public RefreshToken(String loginId, String token){
+        this.loginId = loginId;
         this.token = token;
     }
 
