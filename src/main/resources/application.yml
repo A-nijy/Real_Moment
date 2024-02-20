@@ -39,3 +39,12 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+
+
+# 아임포트 가맹점 번호 / 키 / 비밀키
+imp:
+  code: imp17081186
+  api:
+    key: 3840388228737536
+    secret_key: 9zlHvbdiTYbSAjgc1R1BFEZmROc0Bah2dFuhsT8Rfn5y8SyXxJGSqqnP6ad7Dcl7bE8mnFXWAfT2fnPs

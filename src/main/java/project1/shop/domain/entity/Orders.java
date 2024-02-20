@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.enumeration.PaymentStatus;
 
 import java.time.LocalDateTime;
 
@@ -27,6 +28,13 @@ public class Orders {
     private String detAddress;
     private String request;
     private String tel;
-    private String status;
+
+//    private String status;
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
+
+    private String merchantUid;
+    private String impUid;
+
     private String refoundText;
 }
