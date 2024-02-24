@@ -23,6 +23,7 @@ public class Item extends TimeAndByCheck {
     private String content;
     private int price;
     private int discountRate;
+    private int discountPrice;
     private int sellPrice;
     private int stock;
     private boolean isSellCheck;
@@ -38,6 +39,7 @@ public class Item extends TimeAndByCheck {
         content = request.getContent();
         price = request.getPrice();
         discountRate = request.getDiscountRate();
+        discountPrice = request.getDiscountPrice();
         sellPrice = request.getSellPrice();
         stock = request.getStock();
         isSellCheck = request.isSellCheck();
@@ -59,6 +61,13 @@ public class Item extends TimeAndByCheck {
         isDeleteCheck = request.isDeleteCheck();
         mainImg = request.getMainImg();
         serveImg = request.getServeImg();
+    }
+
+
+    // 재고 차감
+    public void subStock(int itemCount){
+
+        stock -= itemCount;
     }
 
 

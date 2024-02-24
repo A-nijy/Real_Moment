@@ -20,21 +20,24 @@ public class Address {
     @JoinColumn(name = "member_id")
     private Member member;
     private String name;
-    private String address;
+    private String tel;
+    private String mainAddress;
     private String detAddress;
     private boolean isDefAddress;
 
     public Address(AddressDto.SaveRequest request, Member member){
         this.member = member;
         name = request.getName();
-        address = request.getAddress();
+        tel = request.getTel();
+        mainAddress = request.getMainAddress();
         detAddress = request.getDetAddress();
         isDefAddress = request.isDefAddress();
     }
 
     public void update(AddressDto.UpdateRequest request){
         name = request.getName();
-        address = request.getAddress();
+        tel = request.getTel();
+        mainAddress = request.getMainAddress();
         detAddress = request.getDetAddress();
         isDefAddress = request.isDefAddress();
     }

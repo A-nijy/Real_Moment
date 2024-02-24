@@ -4,15 +4,17 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project1.shop.dto.innerDto.OrderDto;
 import project1.shop.enumeration.PaymentStatus;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Orders {
+public class Orders{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
@@ -21,12 +23,12 @@ public class Orders {
     @JoinColumn(name = "member_id")
     private Member member;
     private LocalDateTime orderedDate;
-    private LocalDateTime shippedDate;
+    private LocalDateTime deliveryDate;
     private int price;
     private String name;
-    private String address;
+    private String mainAddress;
     private String detAddress;
-    private String request;
+    private String requestText;
     private String tel;
 
 //    private String status;
@@ -34,7 +36,41 @@ public class Orders {
     private PaymentStatus status;
 
     private String merchantUid;
-    private String impUid;
+    private String impUid = null;
 
-    private String refoundText;
+    private String refoundText = null;
+
+
+
+    // 결제시 결제창 열기 전에 임시 주문 객체 생성용
+    public Orders(Member member, OrderDto.PaymentRequest request){
+
+        this.member = member;
+        price = request.getBuyPrice();
+        name = request.getName();
+        mainAddress = request.getMainAddress();
+        detAddress = request.getDetAddress();
+        requestText = request.getRequestText();
+        tel = request.getTel();
+        status = PaymentStatus.PAYMENT_READY;
+        merchantUid = UUID.randomUUID().toString();         // 임시로 일단 랜덤 값 부여 (나중에 규칙 정하면 수정 에정)
+    }
+
+
+    // 아임포트로 부터 가져온 결제 번호를 저장 or 결제 상태 PAYMENT_DONE
+    public void updateBySuccess(String impUid){
+        this.status = PaymentStatus.PAYMENT_DONE;
+        this.impUid = impUid;
+    }
+
+
+    // 주문일 정의
+    public void updateOrderedDate(){
+        orderedDate = LocalDateTime.now();
+    }
+
+    // 배송 완료일 정의
+    public void updateDeliveryDate(){
+        deliveryDate = LocalDateTime.now();
+    }
 }

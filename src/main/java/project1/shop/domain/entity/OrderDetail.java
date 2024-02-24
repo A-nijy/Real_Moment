@@ -20,8 +20,22 @@ public class OrderDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
-    private int fixedPrice;
-    private int discountRate;
-    private int sellPrice;
-    private int itemCount;
+    private int fixedPrice;                 // 결제 당시 정가
+    private int discountRate;               // 결제 당시 할인율
+    private int discountPrice;              // 결제 당시 할인가
+    private int sellPrice;                  // 결제 당시 판매가
+    private int itemCount;                  // 결제 당시 구매 개수
+    private int totalPrice;                 // 결제 당시 총 구매가
+
+
+    public OrderDetail(Orders orders, Item item, int itemCount){
+
+        this.orders = orders;
+        this.item = item;
+        fixedPrice = item.getPrice();
+        discountRate = item.getDiscountRate();
+        discountPrice = item.getDiscountPrice();
+        sellPrice = item.getSellPrice();
+        this.itemCount = itemCount;
+    }
 }

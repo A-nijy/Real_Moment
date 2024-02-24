@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.*;
+import project1.shop.domain.entity.Orders;
 
 public class PortOneDto {
 
 
+    // 결제를 위해 이니시스에게 전달할 데이터 (이니시스에 표시될 데이터)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -17,14 +19,25 @@ public class PortOneDto {
 
         private String merchantUid;             // 주문 번호
         private String itemName;                // 상품 이름
-        private Long paymentPrice;              // 결제 금액
+        private int paymentPrice;              // 결제 금액
         private String buyerName;               // 구매자 이름
         private String buyerEmail;              // 구매자 이메일
         private String buyerAddress;            // 구매자 주소
+
+
+        public InicisResponse(Orders orders){
+
+            merchantUid = orders.getMerchantUid();
+            itemName = "REAL MOMENT";                   // 여러 상품 구매시 어떻게 작성할지 미정으로 임시 정의
+            paymentPrice = orders.getPrice();
+            buyerName = orders.getName();
+            buyerEmail = orders.getMember().getEmail();
+            buyerAddress = orders.getMainAddress() + " " + orders.getDetAddress();
+        }
     }
 
 
-
+    // 결제 완료시 포트원으로 부터 요청 받을 데이터
     @NoArgsConstructor
     @AllArgsConstructor
     @Getter

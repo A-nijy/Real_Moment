@@ -23,14 +23,14 @@ VALUES
 
 -- Address 주소 더미데이터
 
-INSERT INTO address (member_id, name, address, det_address, is_def_address)
+INSERT INTO address (member_id, name, main_address, det_address, is_def_address)
 VALUES
-(1, 'A', '대전 유성구', '101동 503호', FALSE),
+(1, 'A', '대전 유성구', '101동 503호', true),
 (1, 'A-2', '대전 화구', '202동 703호', FALSE),
 (2, 'B', '서울 파구', '301동 507호', FALSE),
 (3, 'C', '광주 피구', '601동 604호', FALSE),
 (3, 'C-2', '서울 뭐구', '201동 203호', FALSE),
-(4, 'D', '대전 서구', '801동 503호', FALSE),
+(4, 'D', '대전 서구', '801동 503호', TRUE),
 (5, 'E', '대전 당구', '1101동 603호', FALSE),
 (5, 'E-2', '부산 바다구', '301동 201호', FALSE);
 
@@ -38,7 +38,7 @@ VALUES
 
 -- Orders 주문 더미데이터
 
-INSERT INTO orders (member_id, ordered_date, shipped_date, price, name, address, det_address, request, tel, status, merchant_uid, imp_uid, refound_text)
+INSERT INTO orders (member_id, ordered_date, delivery_date, price, name, main_address, det_address, request_text, tel, status, merchant_uid, imp_uid, refound_text)
 VALUES
 (1, '2022-01-01 12:30:00', '2022-01-03 12:30:00', 5000, 'A', '대전 유성구', '101동 503호', '깨질 수 있으니 조심해주세요', '010-1111-1111', 'DELIVERY_DONE', NULL, NULL, NULL),
 (1, '2022-02-01 12:30:00', '2022-02-04 12:30:00', 15000, 'A-2', '대전 화구', '202동 703호', '문앞에 두시면 됩니다.', '010-1111-1111', 'DELIVERY_DONE', NULL, NULL, NULL),
@@ -94,23 +94,23 @@ INSERT INTO category (name, parent_id) VALUES
 -- Item 상품 더미데이터
 
 
-INSERT INTO item (category_id, name, content, price, discount_rate, sell_price, created_date, last_modified_date, stock, is_sell_check, is_delete_check, main_img, serve_img, created_by, last_modified_by)
+INSERT INTO item (category_id, name, content, price, discount_rate, discount_price, sell_price, created_date, last_modified_date, stock, is_sell_check, is_delete_check, main_img, serve_img, created_by, last_modified_by)
 VALUES
-(3, 'A립스틱', 'item content1', 8000, 10, 7200, '2022-01-29 10:00:00', '2022-01-29 10:00:00', 50, TRUE, FALSE, 'main1.jpg', 'serve1.jpg', '직원A', '직원A'),
-(3, 'B립스틱', 'item content2', 8000, 0, 8000, '2022-05-29 10:00:00', '2022-05-29 10:00:00', 10, TRUE, FALSE, 'main2.jpg', 'serve2.jpg', '직원A', '직원A'),
-(3, 'C립스틱', 'item content3', 8000, 10, 7200, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 150, TRUE, FALSE, 'main3.jpg', 'serve3.jpg', '직원A', '직원A'),
-(3, 'D립스틱', 'item content4', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 250, TRUE, FALSE, 'main4.jpg', 'serve4.jpg', '직원A', '직원A'),
-(4, 'A틴트', 'item content5', 10000, 20, 8000, '2021-05-19 10:00:00', '2023-09-02 11:30:00', 40, TRUE, FALSE, 'main5.jpg', 'serve5.jpg', '직원A', '직원B'),
-(4, 'B틴트', 'item content6', 8000, 10, 7200, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 240, FALSE, FALSE, 'main6.jpg', 'serve6.jpg', '직원A', '직원A'),
-(5, 'A파우더', 'item content7', 8000, 10, 7200, '2021-03-29 10:00:00', '2023-09-02 11:30:00', 150, TRUE, FALSE, 'main7.jpg', 'serve7.jpg', '직원A', '직원A'),
-(6, 'A마스크 팩', 'item content8', 8000, 10, 7200, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 360, TRUE, FALSE, 'main8.jpg', 'serve8.jpg', '직원A', '직원A'),
-(6, 'B마스크 팩', 'item content9', 8000, 0, 8000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 420, TRUE, FALSE, 'main9.jpg', 'serve9.jpg', '직원A', '직원B'),
-(7, 'A수분 크림', 'item content10', 8000, 0, 8000, '2021-08-29 10:00:00', '2021-08-29 10:00:00', 10, TRUE, FALSE, 'main10.jpg', 'serve10.jpg', '직원A', '직원A'),
-(7, 'B수분 크림', 'item content11', 8000, 0, 8000, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 570, TRUE, FALSE, 'main11.jpg', 'serve11.jpg', '직원A', '직원A'),
-(7, 'C수분 크림', 'item content12', 8000, 50, 4000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 0, FALSE, FALSE, 'main12.jpg', 'serve12.jpg', '직원A', '직원A'),
-(8, 'A클랜징 오일', 'item content13', 8000, 90, 800, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 5, TRUE, FALSE, 'main13.jpg', 'serve13.jpg', '직원A', '직원A'),
-(8, 'B클랜징 오일', 'item content14', 15000, 0, 15000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 10, TRUE, FALSE, 'main14.jpg', 'serve14.jpg', '직원A', '직원A'),
-(8, 'C클랜징 오일', 'item content15', 5000, 0, 5000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 20, TRUE, FALSE, 'main15.jpg', 'serve15.jpg', '직원A', '직원A');
+(3, 'A립스틱', 'item content1', 8000, 10, 800, 7200, '2022-01-29 10:00:00', '2022-01-29 10:00:00', 50, TRUE, FALSE, 'main1.jpg', 'serve1.jpg', '직원A', '직원A'),
+(3, 'B립스틱', 'item content2', 8000, 0, 0, 8000, '2022-05-29 10:00:00', '2022-05-29 10:00:00', 10, TRUE, FALSE, 'main2.jpg', 'serve2.jpg', '직원A', '직원A'),
+(3, 'C립스틱', 'item content3', 8000, 10, 800, 7200, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 150, TRUE, FALSE, 'main3.jpg', 'serve3.jpg', '직원A', '직원A'),
+(3, 'D립스틱', 'item content4', 8000, 0, 0, 8000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 250, TRUE, FALSE, 'main4.jpg', 'serve4.jpg', '직원A', '직원A'),
+(4, 'A틴트', 'item content5', 10000, 20, 2000, 8000, '2021-05-19 10:00:00', '2023-09-02 11:30:00', 40, TRUE, FALSE, 'main5.jpg', 'serve5.jpg', '직원A', '직원B'),
+(4, 'B틴트', 'item content6', 8000, 10, 800, 7200, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 240, FALSE, FALSE, 'main6.jpg', 'serve6.jpg', '직원A', '직원A'),
+(5, 'A파우더', 'item content7', 8000, 10, 800, 7200, '2021-03-29 10:00:00', '2023-09-02 11:30:00', 150, TRUE, FALSE, 'main7.jpg', 'serve7.jpg', '직원A', '직원A'),
+(6, 'A마스크 팩', 'item content8', 8000, 10, 800, 7200, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 360, TRUE, FALSE, 'main8.jpg', 'serve8.jpg', '직원A', '직원A'),
+(6, 'B마스크 팩', 'item content9', 8000, 0, 0, 8000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 420, TRUE, FALSE, 'main9.jpg', 'serve9.jpg', '직원A', '직원B'),
+(7, 'A수분 크림', 'item content10', 8000, 0, 0, 8000, '2021-08-29 10:00:00', '2021-08-29 10:00:00', 10, TRUE, FALSE, 'main10.jpg', 'serve10.jpg', '직원A', '직원A'),
+(7, 'B수분 크림', 'item content11', 8000, 0, 0, 8000, '2022-08-29 10:00:00', '2023-09-02 11:30:00', 570, TRUE, FALSE, 'main11.jpg', 'serve11.jpg', '직원A', '직원A'),
+(7, 'C수분 크림', 'item content12', 8000, 50, 4000, 4000, '2023-08-29 10:00:00', '2023-09-02 11:30:00', 0, FALSE, FALSE, 'main12.jpg', 'serve12.jpg', '직원A', '직원A'),
+(8, 'A클랜징 오일', 'item content13', 8000, 90, 7200, 800, '2022-08-29 10:00:00', '2022-08-29 10:00:00', 5, TRUE, FALSE, 'main13.jpg', 'serve13.jpg', '직원A', '직원A'),
+(8, 'B클랜징 오일', 'item content14', 15000, 0, 0, 15000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 10, TRUE, FALSE, 'main14.jpg', 'serve14.jpg', '직원A', '직원A'),
+(8, 'C클랜징 오일', 'item content15', 5000, 0, 0, 5000, '2023-08-29 10:00:00', '2023-08-29 10:00:00', 20, TRUE, FALSE, 'main15.jpg', 'serve15.jpg', '직원A', '직원A');
 
 
 
@@ -140,27 +140,27 @@ INSERT INTO cart (member_id, item_id, stock, price, is_check) VALUES
 
 -- OrderDetail 주문 상세 더미데이터
 
-INSERT INTO order_detail (item_id, order_id, fixed_price, discount_rate, sell_price, item_count)
+INSERT INTO order_detail (item_id, order_id, fixed_price, discount_rate, discount_price, sell_price, item_count, total_price)
 VALUES
-(1, 1, 8000, 10, 7200, 2),
-(6, 1, 8000, 10, 7200, 2),
-(13, 2, 8000, 90, 800, 10),
-(1, 3, 8000, 10, 7200, 1),
-(4, 3, 8000, 0, 8000, 2),
-(8, 4, 8000, 10, 7200, 2),
-(12, 4, 8000, 50, 4000, 3),
-(14, 5, 15000, 0, 15000, 1),
-(15, 6, 5000, 0, 5000, 2),
-(13, 6, 8000, 90, 800, 5),
-(11, 7, 8000, 0, 8000, 2),
-(15, 7, 5000, 0, 5000, 2),
-(1, 8, 8000, 10, 7200, 1),
-(2, 8, 8000, 0, 8000, 1),
-(3, 8, 8000, 10, 7200, 1),
-(1, 9, 8000, 10, 7200, 1),
-(7, 9, 8000, 10, 7200, 1),
-(10, 10, 8000, 0, 8000, 1),
-(15, 11, 5000, 0, 5000, 2);
+(1, 1, 8000, 10, 800, 7200, 2, 14400),
+(6, 1, 8000, 10, 800, 7200, 2, 14400),
+(13, 2, 8000, 90, 7200, 800, 10, 8000),
+(1, 3, 8000, 10, 800, 7200, 1, 7200),
+(4, 3, 8000, 0, 0, 8000, 2, 16000),
+(8, 4, 8000, 10, 800, 7200, 2, 14400),
+(12, 4, 8000, 50, 4000, 4000, 3, 12000),
+(14, 5, 15000, 0, 0, 15000, 1, 15000),
+(15, 6, 5000, 0, 0, 5000, 2, 10000),
+(13, 6, 8000, 90, 7200, 800, 5, 4000),
+(11, 7, 8000, 0, 0, 8000, 2, 16000),
+(15, 7, 5000, 0, 0, 5000, 2, 10000),
+(1, 8, 8000, 10, 800, 7200, 1, 7200),
+(2, 8, 8000, 0, 0, 8000, 1, 8000),
+(3, 8, 8000, 10, 800, 7200, 1, 7200),
+(1, 9, 8000, 10, 800, 7200, 1, 7200),
+(7, 9, 8000, 10, 800, 7200, 1, 7200),
+(10, 10, 8000, 0, 0, 8000, 1, 8000),
+(15, 11, 5000, 0, 0, 5000, 2, 10000);
 
 
 

@@ -69,6 +69,10 @@ public class Member extends TimeCheck {
         gender = request.getGender();
     }
 
+    public void deletePoint(int point){
+        this.point -= point;
+    }
+
 
     public void DeleteMember(){
         grade = null;

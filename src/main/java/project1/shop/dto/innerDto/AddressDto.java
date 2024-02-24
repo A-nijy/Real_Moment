@@ -16,7 +16,8 @@ public class AddressDto {
     @Setter
     public static class SaveRequest {
         private String name;
-        private String address;
+        private String tel;
+        private String mainAddress;
         private String detAddress;
         private boolean isDefAddress;
     }
@@ -30,7 +31,8 @@ public class AddressDto {
     public static class UpdateRequest {
         private Long Id;
         private String name;
-        private String address;
+        private String tel;
+        private String mainAddress;
         private String detAddress;
         private boolean isDefAddress;
     }
@@ -44,7 +46,8 @@ public class AddressDto {
     public static class AddressResponse {
         private Long id;
         private String name;
-        private String address;
+        private String tel;
+        private String mainAddress;
         private String detAddress;
         private boolean isDefAddress;
 
@@ -53,7 +56,33 @@ public class AddressDto {
         public AddressResponse(Address address){
             id = address.getAddressId();
             name = address.getName();
-            this.address = address.getAddress();
+            tel = address.getTel();
+            this.mainAddress = address.getMainAddress();
+            detAddress = address.getDetAddress();
+            isDefAddress = address.isDefAddress();
+        }
+    }
+
+
+
+    // 주문 페이지 이동시 기본 배송지 응답용
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class OrderAddressResponse {
+        private Long id;
+        private String name;
+        private String tel;
+        private String mainAddress;
+        private String detAddress;
+        private boolean isDefAddress;
+
+        public OrderAddressResponse(Address address){
+            id = address.getAddressId();
+            name = address.getName();
+            tel = address.getTel();
+            this.mainAddress = address.getMainAddress();
             detAddress = address.getDetAddress();
             isDefAddress = address.isDefAddress();
         }

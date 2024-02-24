@@ -1,9 +1,13 @@
 package project1.shop.dto.innerDto;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project1.shop.enumeration.PaymentStatus;
+
+import java.time.LocalDateTime;
 
 public class SearchDto {
 
@@ -47,13 +51,32 @@ public class SearchDto {
     }
 
 
-    // 주문 내역 목록 조회
+    // 나의 주문 내역 목록 조회
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class Orders{
-        private String status = null;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
+    public static class MyOrdersSearch {
+        private String itemName = null;
+        private LocalDateTime startDate = null;
+        private LocalDateTime lastDate = null;
+        @Nullable
+        private PaymentStatus status;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
+        private int nowPage = 1;                // 페이지
+    }
+
+
+    // 나의 주문 내역 목록 조회
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class OrdersSearch{
+        private String itemName = null;
+        private String loginId = null;
+        private LocalDateTime startDate = null;
+        private LocalDateTime lastDate = null;
+        private PaymentStatus status = null;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
         private int nowPage = 1;                // 페이지
     }
 
@@ -93,4 +116,6 @@ public class SearchDto {
     public static class Page {
         private int nowPage = 1;                // 페이지
     }
+
+
 }

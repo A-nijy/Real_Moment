@@ -24,6 +24,7 @@ public class ItemDto {
         private String content;
         private int price;
         private int discountRate;
+        private int discountPrice;
         private int sellPrice;
         private int stock;
         private boolean isSellCheck;
@@ -44,6 +45,7 @@ public class ItemDto {
         private String content;
         private int price;
         private int discountRate;
+        private int discountPrice;
         private int sellPrice;
         private int stock;
         private boolean isSellCheck;
@@ -64,6 +66,7 @@ public class ItemDto {
         private String name;
         private int price;
         private int discountRate;
+        private int discountPrice;
         private int sellPrice;
         private boolean isSellCheck;
         private String mainImg;
@@ -75,6 +78,7 @@ public class ItemDto {
             name = item.getName();
             price = item.getPrice();
             discountRate = item.getDiscountRate();
+            discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
             isSellCheck = item.isSellCheck();
             mainImg = item.getMainImg();
@@ -93,6 +97,7 @@ public class ItemDto {
         private String content;
         private int price;
         private int discountRate;
+        private int discountPrice;
         private int sellPrice;
         private LocalDateTime createdDate;
         private LocalDateTime lastModifiedDate;
@@ -109,6 +114,7 @@ public class ItemDto {
             content = item.getContent();
             price = item.getPrice();
             discountRate = item.getDiscountRate();
+            discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
             createdDate = item.getCreatedDate();
             lastModifiedDate = item.getLastModifiedDate();
@@ -130,5 +136,38 @@ public class ItemDto {
         private ItemDto.FullItemResponse itemResponseDto;
         private List<ReviewDto.ReviewResponse> reviewResponseDto;
         private List<ItemQADto.ItemQAResponse> itemQAResponseDto;
+    }
+
+
+    // 주문 페이지에 응답할 상품 정보
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class OrderPageItemResponse {
+        private Long id;
+        private String name;
+        private int price;
+        private int discountRate;
+        private int discountPrice;
+        private int sellPrice;
+        private boolean isSellCheck;
+        private String mainImg;
+        private int count;
+        private int totalSellPrice;
+
+
+        public OrderPageItemResponse(Item item, int count){
+            id = item.getItemId();
+            name = item.getName();
+            price = item.getPrice();
+            discountRate = item.getDiscountRate();
+            discountPrice = item.getDiscountPrice();
+            sellPrice = item.getSellPrice();
+            isSellCheck = item.isSellCheck();
+            mainImg = item.getMainImg();
+            this.count = count;
+            totalSellPrice = item.getSellPrice() * count;
+        }
     }
 }
