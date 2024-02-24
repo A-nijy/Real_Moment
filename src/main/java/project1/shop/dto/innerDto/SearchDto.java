@@ -66,7 +66,7 @@ public class SearchDto {
     }
 
 
-    // 나의 주문 내역 목록 조회
+    // 주문 내역 목록 조회 (관리자용)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -74,6 +74,7 @@ public class SearchDto {
     public static class OrdersSearch{
         private String itemName = null;
         private String loginId = null;
+        private String merchantUid = null;
         private LocalDateTime startDate = null;
         private LocalDateTime lastDate = null;
         private PaymentStatus status = null;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등

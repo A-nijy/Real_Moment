@@ -92,6 +92,7 @@ public class OrderDto {
     }
 
 
+    // 주문 목록 조회 응답
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -110,8 +111,8 @@ public class OrderDto {
 
         private List<OrderDetailDto.response> orderDetails;
 
-        public OrderListResponse(Orders orders, List<OrderDetailDto.response> orderDetails){
 
+        public OrderListResponse(Orders orders){
             orderId = orders.getOrderId();
             orderedDate = orders.getOrderedDate();
             price = orders.getPrice();
@@ -121,11 +122,40 @@ public class OrderDto {
             tel = orders.getTel();
             status = orders.getStatus();
             merchantUid = orders.getMerchantUid();
+        }
+
+
+        public void plusOrderDetails(List<OrderDetailDto.response> orderDetails){
 
             this.orderDetails = orderDetails;
         }
+    }
 
-        public OrderListResponse(Orders orders){
+
+
+    // ------------------------------------------------------------
+
+    // 주문 목록 조회 응답 (관리자용)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class AdminOrderListResponse{
+
+        private Long orderId;
+        private LocalDateTime orderedDate;
+        private int price;
+        private String mainAddress;
+        private String detAddress;
+        private String requestText;
+        private String tel;
+        private PaymentStatus status;
+        private String merchantUid;
+
+        private List<OrderDetailDto.response> orderDetails;
+
+
+        public AdminOrderListResponse(Orders orders){
             orderId = orders.getOrderId();
             orderedDate = orders.getOrderedDate();
             price = orders.getPrice();

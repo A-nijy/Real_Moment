@@ -78,6 +78,7 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
 
         List<Orders> orders = queryFactory.selectFrom(QOrders.orders)
                 .where(orderIdIn(orderIds),
+                        merchantUidContains(searchDto.getMerchantUid()),
                         statusEq(searchDto.getStatus()),
                         betweenDate(searchDto.getStartDate(), searchDto.getLastDate()),
                         loginIdContains(searchDto.getLoginId()))
@@ -91,6 +92,7 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
                 .select(QOrders.orders.count())
                 .from(QOrders.orders)
                 .where(orderIdIn(orderIds),
+                        merchantUidContains(searchDto.getMerchantUid()),
                         statusEq(searchDto.getStatus()),
                         betweenDate(searchDto.getStartDate(), searchDto.getLastDate()),
                         loginIdContains(searchDto.getLoginId()))
@@ -125,7 +127,7 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
         if(loginId == null){
             return null;
         }
-        return loginId.isEmpty() ? null : QOrders.orders.member.loginId.eq(loginId);
+        return loginId.isEmpty() ? null : QOrders.orders.member.loginId.contains(loginId);
     }
 
     private BooleanExpression statusEq(PaymentStatus status){
@@ -177,5 +179,16 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
         }
 
         return QOrders.orders.orderedDate.between(startDate, lastDate);
+    }
+
+
+    // 주문 번호 검색
+    private BooleanExpression merchantUidContains(String merchantUid){
+
+        if(merchantUid == null){
+            return null;
+        }
+
+        return merchantUid.isEmpty() ? null : QOrders.orders.merchantUid.contains(merchantUid);
     }
 }

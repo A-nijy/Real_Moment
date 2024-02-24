@@ -20,12 +20,12 @@ public class AdminOrderController {
 
     private final AdminOrderService adminOrderService;
 
-//    // 주문 내역 목록 조회
-//    @PostMapping("/orders/{id}")
-//    public List<OrderDto.OrderListResponse> showOrders(@PathVariable Long id, @RequestBody SearchDto.OrdersSearch request){
-//
-//        List<OrderDto.OrderListResponse> myOrders = adminOrderService.showOrders(id, request);
-//
-//        return myOrders;
-//    }
+    // 주문 내역 목록 조회
+    @PostMapping("/admin/orders/{id}")
+    public List<OrderDto.OrderListResponse> showOrders(@PathVariable Long id, @RequestBody SearchDto.OrdersSearch request){
+
+        List<OrderDto.OrderListResponse> orders = adminOrderService.showOrders(id, request);
+
+        return orders;
+    }
 }
