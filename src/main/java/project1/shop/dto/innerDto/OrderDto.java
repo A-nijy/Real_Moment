@@ -160,6 +160,28 @@ public class OrderDto {
     }
 
 
+    // 결제 취소 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class CancelRequest{
+        private Long orderId;
+        private String reasonText;
+    }
+
+
+    // 환불 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class RefoundRequest{
+        private Long orderId;
+        private String reasonText;
+    }
+
+
 
     // ------------------------------------------------------------
 
@@ -239,4 +261,5 @@ public class OrderDto {
         private Long orderId;
         private String status;
     }
+
 }

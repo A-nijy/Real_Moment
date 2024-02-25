@@ -38,7 +38,7 @@ VALUES
 
 -- Orders 주문 더미데이터
 
-INSERT INTO orders (member_id, ordered_date, delivery_date, total_price, total_discount_price, use_point, get_point, buy_price, name, main_address, det_address, request_text, tel, status, merchant_uid, imp_uid, refound_text)
+INSERT INTO orders (member_id, ordered_date, delivery_date, total_price, total_discount_price, use_point, get_point, buy_price, name, main_address, det_address, request_text, tel, status, merchant_uid, imp_uid, reason_text)
 VALUES
 (1, '2022-01-01 12:30:00', '2022-01-03 12:30:00',32000, 3200, 0, 288, 28800, 'A', '대전 유성구', '101동 503호', '깨질 수 있으니 조심해주세요', '010-1111-1111', 'DELIVERY_DONE', NULL, NULL, NULL),
 (1, '2022-02-01 12:30:00', '2022-02-04 12:30:00', 80000, 72000, 0, 80, 8000, 'A-2', '대전 화구', '202동 703호', '문앞에 두시면 됩니다.', '010-1111-1111', 'DELIVERY_DONE', NULL, NULL, NULL),

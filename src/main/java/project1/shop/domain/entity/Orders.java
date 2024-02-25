@@ -42,7 +42,7 @@ public class Orders{
     private String merchantUid;
     private String impUid = null;
 
-    private String refoundText = null;
+    private String reasonText = null;
 
 
 
@@ -86,5 +86,11 @@ public class Orders{
     // 주문 상태 변경
     public void updateStatus(PaymentStatus status){
         this.status = status;
+    }
+
+
+    // 결제 취소 or 환불 사유 추가
+    public void updateReasonText(String reasonText){
+        this.reasonText = reasonText;
     }
 }

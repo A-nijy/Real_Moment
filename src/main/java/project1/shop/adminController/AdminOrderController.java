@@ -8,6 +8,7 @@ import project1.shop.adminService.AdminOrderService;
 import project1.shop.dto.innerDto.OrderDto;
 import project1.shop.dto.innerDto.SearchDto;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -46,5 +47,15 @@ public class AdminOrderController {
         adminOrderService.updateOrderStatus(request);
 
         return "주문 상태가 변경되었습니다.";
+    }
+
+
+    // 결제 취소 토큰 발급 후 바로 결제 취소하기
+    @PostMapping("/admin/order/cancel/{id}")
+    public String orderCancel(@PathVariable Long id, @RequestBody OrderDto.CancelRequest request) throws IOException {
+
+        adminOrderService.orderCancel(request);
+
+        return "결제 취소하기 위한 토큰 발금이 완료되었습니다.";
     }
 }

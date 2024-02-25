@@ -70,6 +70,12 @@ public class Item extends TimeAndByCheck {
         stock -= itemCount;
     }
 
+    // 재고 증가
+    public void plusStock(int itemCount){
+
+        stock += itemCount;
+    }
+
 
     public void delete(){
         category = null;

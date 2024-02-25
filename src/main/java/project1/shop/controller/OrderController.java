@@ -13,6 +13,7 @@ import project1.shop.dto.innerDto.PortOneDto;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.OrderService;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -75,4 +76,22 @@ public class OrderController {
     }
 
 
+    // 결제 취소 토큰 발급 후 바로 결제 취소하기
+    @PostMapping("/order/cancel/{id}")
+    public String orderCancel(@PathVariable Long id, @RequestBody OrderDto.CancelRequest request) throws IOException {
+
+        orderService.orderCancel(request);
+
+        return "결제 취소하기 위한 토큰 발금이 완료되었습니다.";
+    }
+
+
+    // 환불 신청하기
+    @PatchMapping("/order/refound/{id}")
+    public String orderRefound(@PathVariable Long id, @RequestBody OrderDto.RefoundRequest request) {
+
+        orderService.orderRefound(request);
+
+        return "주문 상태가 환불 요청으로 변경되었습니다.";
+    }
 }

@@ -1,6 +1,8 @@
 package project1.shop.service;
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
@@ -8,6 +10,7 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,12 +20,12 @@ import project1.shop.domain.repository.*;
 import project1.shop.dto.innerDto.*;
 import project1.shop.enumeration.PaymentStatus;
 
-import java.io.IOException;
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -37,6 +40,12 @@ public class OrderService {
     private final OrdersRepository ordersRepository;
     private final IamportClient iamportClient;
     private final OrderDetailRepository orderDetailRepository;
+
+    @Value("${imp.api.key}")
+    private String apiKey;
+    @Value("${imp.api.secret_key}")
+    private String secretKey;
+
 
 
     // 주문 페이지 접속시 기본 세팅 데이터 응답
@@ -217,6 +226,113 @@ public class OrderService {
     }
 
 
+    // 결제 취소를 위해 토큰 발급 후 주문 취소하기
+    @Transactional
+    public void orderCancel(OrderDto.CancelRequest request) throws IOException {
+
+        Orders orders = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+
+        if(!orders.getStatus().equals(PaymentStatus.PAYMENT_DONE)){
+
+            throw new IllegalArgumentException("결제를 취소할 수 있는 상태가 아닙니다.");
+        }
+
+
+        // 1. 토큰 발급받기
+
+        URL getTokenUrl = new URL("https://api.iamport.kr/users/getToken");
+        HttpsURLConnection getTokenConn = (HttpsURLConnection) getTokenUrl.openConnection();
+
+        // 요청 방식을 POST 메서드로 설정
+        getTokenConn.setRequestMethod("POST");
+
+        // 요청의 Content-Type과 Accept 헤더 설정
+        getTokenConn.setRequestProperty("Content-Type", "application/json");
+        getTokenConn.setRequestProperty("Accept", "application/json");
+
+        // 해당 연결을 출력 스트림(요청)으로 사용
+        getTokenConn.setDoOutput(true);
+
+        // JSON 객체에 해당 API가 필요로하는 데이터 추가
+        JsonObject getTokenJson = new JsonObject();
+        getTokenJson.addProperty("imp_key", apiKey);
+        getTokenJson.addProperty("imp_secret", secretKey);
+
+        // 출력 스트림으로 해당 conn에 요청
+        BufferedWriter getTokenBw = new BufferedWriter(new OutputStreamWriter(getTokenConn.getOutputStream()));
+        getTokenBw.write(getTokenJson.toString()); // getTokenJson 객체를 문자열 형태로 HTTP 요청 본문에 추가
+        getTokenBw.flush();                 // BufferedWriter 비우기
+        getTokenBw.close();                 // BufferedWriter 종료
+
+        // 입력 스트립으로 getTokenConn 요청에 대한 응답 반환
+        BufferedReader getTokenBr = new BufferedReader(new InputStreamReader(getTokenConn.getInputStream()));
+        Gson getTokenGson = new Gson();     // 응답 데이터를 자바 객체로 변환
+        String response = getTokenGson.fromJson(getTokenBr.readLine(), Map.class).get("response").toString();
+        String cancelToken = getTokenGson.fromJson(response, Map.class).get("access_token").toString();
+        getTokenBr.close(); // BufferedReader 종료
+
+        getTokenConn.disconnect(); // 연결 종료
+
+        log.info("결제 취소용 토큰 발급 완료");
+
+
+        // 2. 발급 받은 토큰을 이용하여 결제 취소하기
+
+        URL url = new URL("https://api.iamport.kr/payments/cancel");
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+
+        // 요청 방식을 POST로 설정
+        conn.setRequestMethod("POST");
+
+        // 요청의 Content-Type, Accept, Authorization 헤더 설정
+        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setRequestProperty("Authorization", cancelToken);
+
+        // 해당 연결을 출력 스트림(요청)으로 사용
+        conn.setDoOutput(true);
+
+        // JSON 객체에 해당 API가 필요로하는 데이터 추가.
+        JsonObject json = new JsonObject();
+        json.addProperty("merchant_uid", orders.getMerchantUid());
+        json.addProperty("reason", request.getReasonText());
+
+        // 출력 스트림으로 해당 conn에 요청
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        bw.write(json.toString());
+        bw.flush();
+        bw.close();
+
+        // 입력 스트림으로 conn 요청에 대한 응답 반환
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        br.close();
+        conn.disconnect();
+
+        log.info("결제가 취소되었습니다.");
+
+
+        // 데이터 수정하기
+        // 주문 테이블 상태 변경하기
+        PaymentStatus status = PaymentStatus.CANCEL;
+
+        // 상품 재고 다시 되돌리기
+        plusStock(orders);
+
+        // 결제 취소 사유 저장하기
+        orders.updateReasonText(request.getReasonText());
+    }
+
+
+    // 주문 상태 환불요청으로 변경하기
+    @Transactional
+    public void orderRefound(OrderDto.RefoundRequest request) {
+
+        Orders orders = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+
+        orders.updateStatus(PaymentStatus.REFUND_REQUEST);
+    }
+
+
     //----------------------------------------------------------------------------------------------
 
 
@@ -360,6 +476,20 @@ public class OrderService {
             Item item = itemRepository.findById(orderDetail.getItem().getItemId()).orElseThrow(IllegalArgumentException::new);
 
             item.subStock(orderDetail.getItemCount());
+        }
+    }
+
+
+    // 주문 취소로 인해 상품 재고 다시 채우기
+    public void plusStock(Orders orders){
+
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrders(orders);
+
+        for (OrderDetail orderDetail : orderDetails){
+
+            Item item = itemRepository.findById(orderDetail.getItem().getItemId()).orElseThrow(IllegalArgumentException::new);
+
+            item.plusStock(orderDetail.getItemCount());
         }
     }
 
