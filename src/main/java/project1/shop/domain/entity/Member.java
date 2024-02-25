@@ -62,11 +62,21 @@ public class Member extends TimeCheck {
         loginPassword = request.getNewLoginPassword();
     }
 
-    public void UpdateProfile(MemberDto.UpdateProfileRequest request){
-        email = request.getEmail();
-        name = request.getName();
-        tel = request.getTel();
-        gender = request.getGender();
+
+    public void UpdateEmail(String email){
+        this.email = email;
+    }
+
+    public void UpdateName(String name){
+        this.name = name;
+    }
+
+    public void UpdateBirth(LocalDate birth){
+        this.birthDate = birth;
+    }
+
+    public void UpdateTel(String tel){
+        this.tel = tel;
     }
 
     public void deletePoint(int point){

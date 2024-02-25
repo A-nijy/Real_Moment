@@ -133,13 +133,44 @@ public class MemberService {
         member.UpdatePassword(request);
     }
 
-    // 회원 프로필 수정
+
+    // 개인정보 이메일 수정
     @Transactional
-    public void memberUpdateProfile(Long id, MemberDto.UpdateProfileRequest request) {
+    public void memberUpdateEmail(Long id, MemberDto.UpdateEmailRequest request) {
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
-        member.UpdateProfile(request);
+        member.UpdateEmail(request.getEmail());
+    }
+
+
+    // 개인정보 이름 수정
+    @Transactional
+    public void memberUpdateName(Long id, MemberDto.UpdateNameRequest request) {
+
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        member.UpdateName(request.getName());
+    }
+
+
+    // 개인정보 생년월일 수정
+    @Transactional
+    public void memberUpdateBirth(Long id, MemberDto.UpdateBirthRequest request) {
+
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        member.UpdateBirth(request.getBirthDate());
+    }
+
+
+    // 개인정보 전화번호 수정
+    @Transactional
+    public void memberUpdateTel(Long id, MemberDto.UpdateTelRequest request) {
+
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        member.UpdateTel(request.getTel());
     }
 
 
@@ -181,6 +212,7 @@ public class MemberService {
         response.addHeader(JWTProperties.HEADER_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
     }
+
 
 
 }

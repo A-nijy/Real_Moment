@@ -104,28 +104,53 @@ public class MemberDto {
     }
 
 
-    // 개인 정보 수정 요청
+    // 개인 정보 수정 (이메일)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class UpdateProfileRequest{
+    public static class UpdateEmailRequest{
 
         @NotBlank(message = "이메일을 입력해주세요")
         @Email(message = "올바른 이메일 주소를 입력해주세요.")
         private String email;
+    }
+
+    // 개인 정보 수정 (이름)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateNameRequest{
 
         @NotBlank(message = "성함을 입력해주세요")
         private String name;
+    }
+
+    // 개인 정보 수정 (생년월일)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateBirthRequest{
+
+        @NotNull(message = "생년월일을 입력해주세요")
+//        @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)")
+        @Past(message = "과거 날짜만 입력할 수 있습니다.")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate birthDate;
+    }
+
+    // 개인 정보 수정 (전화번호)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateTelRequest{
 
         @NotBlank(message = "전화번호를 입력해주세요")
         @Pattern(regexp = "^(01[016789])(\\d{3,4})(\\d{4})$", message = "올바른 휴대폰 번호를 입력해주세요.")
         private String tel;
-
-        @NotBlank(message = "성별을 입력해주세요")
-        @Size(min = 1, max = 1, message = "한 글자가 아닙니다.")
-        @Pattern(regexp = "^[남여]$", message = "남 또는 여를 입력해주세요")
-        private String gender;
     }
 
 

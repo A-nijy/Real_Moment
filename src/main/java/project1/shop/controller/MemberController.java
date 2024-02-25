@@ -89,17 +89,58 @@ public class MemberController {
     }
 
 
-    // 개인정보 수정
-    @PostMapping("/member/{id}/updateProfile")
-    public void memberUpdateProfile(@PathVariable Long id, @Valid @RequestBody MemberDto.UpdateProfileRequest request, BindingResult bindingResult){
+
+    // 개인정보 이메일 수정
+    @PatchMapping("/member/{id}/email")
+    public void memberUpdateEmail(@PathVariable Long id, @Valid @RequestBody MemberDto.UpdateEmailRequest request, BindingResult bindingResult){
 
         // 개인정보 수정 유효성 검사
         if(bindingResult.hasErrors()){
             throw new IllegalArgumentException("잘못된 형식입니다. ID = (%s)");
         }
 
-        memberService.memberUpdateProfile(id, request);
+        memberService.memberUpdateEmail(id, request);
     }
+
+
+    // 개인정보 이름 수정
+    @PatchMapping("/member/{id}/name")
+    public void memberUpdateName(@PathVariable Long id, @Valid @RequestBody MemberDto.UpdateNameRequest request, BindingResult bindingResult){
+
+        // 개인정보 수정 유효성 검사
+        if(bindingResult.hasErrors()){
+            throw new IllegalArgumentException("잘못된 형식입니다. ID = (%s)");
+        }
+
+        memberService.memberUpdateName(id, request);
+    }
+
+
+    // 개인정보 생년월일 수정
+    @PatchMapping("/member/{id}/birth")
+    public void memberUpdateBirth(@PathVariable Long id, @Valid @RequestBody MemberDto.UpdateBirthRequest request, BindingResult bindingResult){
+
+        // 개인정보 수정 유효성 검사
+        if(bindingResult.hasErrors()){
+            throw new IllegalArgumentException("잘못된 형식입니다. ID = (%s)");
+        }
+
+        memberService.memberUpdateBirth(id, request);
+    }
+
+
+    // 개인정보 전화번호 수정
+    @PatchMapping("/member/{id}/tel")
+    public void memberUpdateTel(@PathVariable Long id, @Valid @RequestBody MemberDto.UpdateTelRequest request, BindingResult bindingResult){
+
+        // 개인정보 수정 유효성 검사
+        if(bindingResult.hasErrors()){
+            throw new IllegalArgumentException("잘못된 형식입니다. ID = (%s)");
+        }
+
+        memberService.memberUpdateTel(id, request);
+    }
+
 
 
     // 회원 탈퇴
