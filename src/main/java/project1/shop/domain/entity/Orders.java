@@ -81,4 +81,10 @@ public class Orders{
     public void updateDeliveryDate(){
         deliveryDate = LocalDateTime.now();
     }
+
+
+    // 주문 상태 변경
+    public void updateStatus(PaymentStatus status){
+        this.status = status;
+    }
 }

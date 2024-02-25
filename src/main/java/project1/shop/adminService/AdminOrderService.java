@@ -14,6 +14,7 @@ import project1.shop.domain.repository.OrdersRepository;
 import project1.shop.dto.innerDto.OrderDetailDto;
 import project1.shop.dto.innerDto.OrderDto;
 import project1.shop.dto.innerDto.SearchDto;
+import project1.shop.enumeration.PaymentStatus;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,5 +79,17 @@ public class AdminOrderService {
         OrderDto.AdminOrderDetailResponse orderDetailResponse = new OrderDto.AdminOrderDetailResponse(orderResponse, orders);
 
         return orderDetailResponse;
+    }
+
+
+    // 주문 상태 변경하기 [ 결제준비, 결제완료, 배송준비, 배송중, 배송완료, 결제취소, 환불요청, 환불완료 ]
+    @Transactional
+    public void updateOrderStatus(OrderDto.AdminOrderStatus request) {
+
+        Orders orders = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+
+        PaymentStatus status = PaymentStatus.fromString(request.getStatus());
+
+        orders.updateStatus(status);
     }
 }

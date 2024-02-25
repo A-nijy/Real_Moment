@@ -36,4 +36,15 @@ public class AdminOrderController {
 
         return orderDetailResponse;
     }
+
+
+
+    // 주문 상태 변경하기   [ 결제준비, 결제완료, 배송준비, 배송중, 배송완료, 결제취소, 환불요청, 환불완료 ]
+    @PatchMapping("/admin/order/status/{id}")
+    public String updateOrderStatus(@PathVariable Long id, @RequestBody OrderDto.AdminOrderStatus request){
+
+        adminOrderService.updateOrderStatus(request);
+
+        return "주문 상태가 변경되었습니다.";
+    }
 }

@@ -228,4 +228,15 @@ public class OrderDto {
             buyPrice = orders.getBuyPrice();
         }
     }
+
+
+    // 주문 상태 변경 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class AdminOrderStatus{
+        private Long orderId;
+        private String status;
+    }
 }
