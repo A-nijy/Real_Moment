@@ -24,7 +24,11 @@ public class Orders{
     private Member member;
     private LocalDateTime orderedDate;
     private LocalDateTime deliveryDate;
-    private int price;
+    private int totalPrice;
+    private int totalDiscountPrice;
+    private int usePoint;
+    private int getPoint;
+    private int buyPrice;
     private String name;
     private String mainAddress;
     private String detAddress;
@@ -46,7 +50,11 @@ public class Orders{
     public Orders(Member member, OrderDto.PaymentRequest request){
 
         this.member = member;
-        price = request.getBuyPrice();
+        totalPrice = request.getTotalPrice();
+        totalDiscountPrice = request.getTotalDiscountPrice();
+        usePoint = request.getUsePoint();
+        getPoint = request.getGetPoint();
+        buyPrice = request.getBuyPrice();
         name = request.getName();
         mainAddress = request.getMainAddress();
         detAddress = request.getDetAddress();

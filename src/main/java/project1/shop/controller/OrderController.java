@@ -5,7 +5,6 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,11 +57,21 @@ public class OrderController {
 
     // 주문 내역 목록 조회
     @PostMapping("/orders/{id}")
-    public List<OrderDto.OrderListResponse> showOrders(@PathVariable Long id, @RequestBody SearchDto.MyOrdersSearch request){
+    public List<OrderDto.OrderResponse> showOrders(@PathVariable Long id, @RequestBody SearchDto.MyOrdersSearch request){
 
-        List<OrderDto.OrderListResponse> myOrders = orderService.showOrders(id, request);
+        List<OrderDto.OrderResponse> myOrders = orderService.showOrders(id, request);
 
         return myOrders;
+    }
+
+
+    // 주문 내역 상세 조회
+    @GetMapping("/order/detail/{id}")
+    public OrderDto.OrderDetailResponse showOrder(@PathVariable Long id, @RequestParam("orderId") Long orderId){
+
+        OrderDto.OrderDetailResponse orderDetailResponse = orderService.showOrder(orderId);
+
+        return orderDetailResponse;
     }
 
 

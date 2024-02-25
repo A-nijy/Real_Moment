@@ -24,15 +24,18 @@ public enum PaymentStatus {
         this.paymentStatus = paymentStatus;
     }
 
-    // Getter
+    // Getter (해당 상수의 설명 문자열을 반환)
     public String getPaymentStatus() {
         return paymentStatus;
     }
 
-    /*
-    PaymentStatus paymentStatus = PaymentStatus.REFUND_DONE;
-
-    paymentStatus.name()                - 열거 객체명 출력 : REFUND_DONE
-    paymentStatus.getPaymentStatus()    - 매핑된 열거 데이터 출력 : 환불완료
-     */
+    // 상수 설명 문자열을 받아와서 상수 저장
+    public static PaymentStatus fromString(String text) {
+        for (PaymentStatus status : PaymentStatus.values()) {
+            if (status.getPaymentStatus().equalsIgnoreCase(text)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("No constant with text " + text + " found");
+    }
 }

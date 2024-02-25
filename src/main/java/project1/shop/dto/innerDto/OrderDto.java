@@ -42,7 +42,10 @@ public class OrderDto {
 
         private List<OrderPageItemRequest> items;       // 구매 상품 목록
 
+        private int totalPrice;                         // 총 정가
+        private int totalDiscountPrice;                 // 총 할인 금액
         private int usePoint;                           // 사용할 포인트
+        private int getPoint;                           // 적립금
         private int buyPrice;                           // 최종 구매 금액
     }
 
@@ -97,11 +100,11 @@ public class OrderDto {
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class OrderListResponse{
+    public static class OrderResponse {
 
         private Long orderId;
         private LocalDateTime orderedDate;
-        private int price;
+        private int buyPrice;
         private String mainAddress;
         private String detAddress;
         private String requestText;
@@ -112,10 +115,10 @@ public class OrderDto {
         private List<OrderDetailDto.response> orderDetails;
 
 
-        public OrderListResponse(Orders orders){
+        public OrderResponse(Orders orders){
             orderId = orders.getOrderId();
             orderedDate = orders.getOrderedDate();
-            price = orders.getPrice();
+            buyPrice = orders.getBuyPrice();
             mainAddress = orders.getMainAddress();
             detAddress = orders.getDetAddress();
             requestText = orders.getRequestText();
@@ -132,6 +135,31 @@ public class OrderDto {
     }
 
 
+    // 주문 상세 데이터 응답
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class OrderDetailResponse{
+        private OrderResponse orderResponse;
+        private int totalPrice;
+        private int totalDiscountPrice;
+        private int usePoint;
+        private int getPoint;
+        private int buyPrice;
+
+
+        public OrderDetailResponse(OrderResponse orderResponse, Orders orders){
+            this.orderResponse = orderResponse;
+            totalPrice = orders.getTotalPrice();
+            totalDiscountPrice = orders.getTotalDiscountPrice();
+            usePoint = orders.getUsePoint();
+            getPoint = orders.getGetPoint();
+            buyPrice = orders.getBuyPrice();
+        }
+    }
+
+
 
     // ------------------------------------------------------------
 
@@ -140,11 +168,12 @@ public class OrderDto {
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class AdminOrderListResponse{
+    public static class AdminOrderResponse {
 
         private Long orderId;
+        private String loginId;
         private LocalDateTime orderedDate;
-        private int price;
+        private int buyPrice;
         private String mainAddress;
         private String detAddress;
         private String requestText;
@@ -155,10 +184,11 @@ public class OrderDto {
         private List<OrderDetailDto.response> orderDetails;
 
 
-        public AdminOrderListResponse(Orders orders){
+        public AdminOrderResponse(Orders orders){
             orderId = orders.getOrderId();
+            loginId = orders.getMember().getLoginId();
             orderedDate = orders.getOrderedDate();
-            price = orders.getPrice();
+            buyPrice = orders.getBuyPrice();
             mainAddress = orders.getMainAddress();
             detAddress = orders.getDetAddress();
             requestText = orders.getRequestText();
@@ -171,6 +201,31 @@ public class OrderDto {
         public void plusOrderDetails(List<OrderDetailDto.response> orderDetails){
 
             this.orderDetails = orderDetails;
+        }
+    }
+
+
+    // 주문 상세 데이터 응답 (관리자용)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class AdminOrderDetailResponse{
+        private AdminOrderResponse adminOrderResponse;
+        private int totalPrice;
+        private int totalDiscountPrice;
+        private int usePoint;
+        private int getPoint;
+        private int buyPrice;
+
+
+        public AdminOrderDetailResponse(AdminOrderResponse adminOrderResponse, Orders orders){
+            this.adminOrderResponse = adminOrderResponse;
+            totalPrice = orders.getTotalPrice();
+            totalDiscountPrice = orders.getTotalDiscountPrice();
+            usePoint = orders.getUsePoint();
+            getPoint = orders.getGetPoint();
+            buyPrice = orders.getBuyPrice();
         }
     }
 }

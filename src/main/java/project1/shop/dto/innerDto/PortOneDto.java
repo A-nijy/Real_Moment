@@ -29,7 +29,7 @@ public class PortOneDto {
 
             merchantUid = orders.getMerchantUid();
             itemName = "REAL MOMENT";                   // 여러 상품 구매시 어떻게 작성할지 미정으로 임시 정의
-            paymentPrice = orders.getPrice();
+            paymentPrice = orders.getBuyPrice();
             buyerName = orders.getName();
             buyerEmail = orders.getMember().getEmail();
             buyerAddress = orders.getMainAddress() + " " + orders.getDetAddress();
