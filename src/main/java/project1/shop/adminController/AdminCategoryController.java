@@ -28,21 +28,31 @@ public class AdminCategoryController {
 
 
     // 카테고리 추가
-    @PostMapping("/admin/category/{id}")
-    public String saveCategory(@PathVariable Long id, @RequestBody CategoryDto.CreateRequest request){
+    @PostMapping("/admin/category")
+    public String saveCategory(@RequestBody CategoryDto.CreateRequest request){
 
-        adminCategoryService.saveCategory(id, request);
+        adminCategoryService.saveCategory(request);
 
         return "카테고리 추가 완료!";
     }
 
 
     // 카테고리 수정
-    @PatchMapping("/admin/category/{id}")
-    public String updateCategory(@PathVariable Long id, @RequestBody CategoryDto.UpdateRequest request){
+    @PatchMapping("/admin/category")
+    public String updateCategory(@RequestBody CategoryDto.UpdateRequest request){
 
-        adminCategoryService.updateCategory(id, request);
+        adminCategoryService.updateCategory(request);
 
         return "카테고리 수정 완료!";
+    }
+
+
+    // 카테고리 삭제
+    @DeleteMapping("/admin/category")
+    public String deleteCategory(@RequestParam("categoryId") Long categoryId){
+
+        adminCategoryService.deleteCategory(categoryId);
+
+        return "카테고리 삭제 완료";
     }
 }

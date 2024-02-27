@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class WishList {
+public class Wish {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "wish_list_id")
-    private Long wishListId;
+    @Column(name = "wish_id")
+    private Long wishId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -22,7 +22,7 @@ public class WishList {
     private Item item;
 
 
-    public WishList(Member member, Item item){
+    public Wish(Member member, Item item){
         this.member = member;
         this.item = item;
     }

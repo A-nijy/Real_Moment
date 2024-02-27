@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project1.shop.domain.entity.Member;
-import project1.shop.domain.entity.Orders;
+import project1.shop.domain.entity.Order;
 import project1.shop.enumeration.PaymentStatus;
 
 import java.time.LocalDateTime;
@@ -115,16 +115,16 @@ public class OrderDto {
         private List<OrderDetailDto.response> orderDetails;
 
 
-        public OrderResponse(Orders orders){
-            orderId = orders.getOrderId();
-            orderedDate = orders.getOrderedDate();
-            buyPrice = orders.getBuyPrice();
-            mainAddress = orders.getMainAddress();
-            detAddress = orders.getDetAddress();
-            requestText = orders.getRequestText();
-            tel = orders.getTel();
-            status = orders.getStatus();
-            merchantUid = orders.getMerchantUid();
+        public OrderResponse(Order order){
+            orderId = order.getOrderId();
+            orderedDate = order.getOrderedDate();
+            buyPrice = order.getBuyPrice();
+            mainAddress = order.getMainAddress();
+            detAddress = order.getDetAddress();
+            requestText = order.getRequestText();
+            tel = order.getTel();
+            status = order.getStatus();
+            merchantUid = order.getMerchantUid();
         }
 
 
@@ -149,13 +149,13 @@ public class OrderDto {
         private int buyPrice;
 
 
-        public OrderDetailResponse(OrderResponse orderResponse, Orders orders){
+        public OrderDetailResponse(OrderResponse orderResponse, Order order){
             this.orderResponse = orderResponse;
-            totalPrice = orders.getTotalPrice();
-            totalDiscountPrice = orders.getTotalDiscountPrice();
-            usePoint = orders.getUsePoint();
-            getPoint = orders.getGetPoint();
-            buyPrice = orders.getBuyPrice();
+            totalPrice = order.getTotalPrice();
+            totalDiscountPrice = order.getTotalDiscountPrice();
+            usePoint = order.getUsePoint();
+            getPoint = order.getGetPoint();
+            buyPrice = order.getBuyPrice();
         }
     }
 
@@ -206,17 +206,17 @@ public class OrderDto {
         private List<OrderDetailDto.response> orderDetails;
 
 
-        public AdminOrderResponse(Orders orders){
-            orderId = orders.getOrderId();
-            loginId = orders.getMember().getLoginId();
-            orderedDate = orders.getOrderedDate();
-            buyPrice = orders.getBuyPrice();
-            mainAddress = orders.getMainAddress();
-            detAddress = orders.getDetAddress();
-            requestText = orders.getRequestText();
-            tel = orders.getTel();
-            status = orders.getStatus();
-            merchantUid = orders.getMerchantUid();
+        public AdminOrderResponse(Order order){
+            orderId = order.getOrderId();
+            loginId = order.getMember().getLoginId();
+            orderedDate = order.getOrderedDate();
+            buyPrice = order.getBuyPrice();
+            mainAddress = order.getMainAddress();
+            detAddress = order.getDetAddress();
+            requestText = order.getRequestText();
+            tel = order.getTel();
+            status = order.getStatus();
+            merchantUid = order.getMerchantUid();
         }
 
 
@@ -241,13 +241,13 @@ public class OrderDto {
         private int buyPrice;
 
 
-        public AdminOrderDetailResponse(AdminOrderResponse adminOrderResponse, Orders orders){
+        public AdminOrderDetailResponse(AdminOrderResponse adminOrderResponse, Order order){
             this.adminOrderResponse = adminOrderResponse;
-            totalPrice = orders.getTotalPrice();
-            totalDiscountPrice = orders.getTotalDiscountPrice();
-            usePoint = orders.getUsePoint();
-            getPoint = orders.getGetPoint();
-            buyPrice = orders.getBuyPrice();
+            totalPrice = order.getTotalPrice();
+            totalDiscountPrice = order.getTotalDiscountPrice();
+            usePoint = order.getUsePoint();
+            getPoint = order.getGetPoint();
+            buyPrice = order.getBuyPrice();
         }
     }
 

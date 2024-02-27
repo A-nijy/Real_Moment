@@ -114,9 +114,9 @@ VALUES
 
 
 
--- Wishlist 찜 더미데이터
+-- Wish 찜 더미데이터
 
-INSERT INTO wish_list (member_id, item_id)
+INSERT INTO wish (member_id, item_id)
 VALUES
 (1, 2),
 (1, 6),

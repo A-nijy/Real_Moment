@@ -17,7 +17,7 @@ public class AdminQACommentController {
 
 
     // 상품 문의 댓글 작성
-    @PostMapping("/admin/QAComment/{id}")
+    @PostMapping("/admin/{id}/QAComment")
     public String saveQAComment(@PathVariable Long id, @RequestBody QACommentDto.SaveRequest request){
 
         adminQACommentService.saveQAComment(id, request);
@@ -27,7 +27,7 @@ public class AdminQACommentController {
 
 
     // 상품 문의 댓글 수정
-    @PatchMapping("admin/QAComment/{id}")
+    @PatchMapping("admin/{id}/QAComment")
     public String updateQAComment(@PathVariable Long id, @RequestBody QACommentDto.UpdateRequest request){
 
         adminQACommentService.updateQAComment(id, request);
@@ -37,10 +37,10 @@ public class AdminQACommentController {
 
 
     // 상품 문의 댓글 삭제
-    @DeleteMapping("admin/QAComment/{id}")
-    public String deleteQAComment(@PathVariable Long id, @RequestParam("qaCommentId") Long qaCommentId){
+    @DeleteMapping("admin/QAComment")
+    public String deleteQAComment(@RequestParam("qaCommentId") Long qaCommentId){
 
-        adminQACommentService.deleteQAComment(id, qaCommentId);
+        adminQACommentService.deleteQAComment(qaCommentId);
 
         return "상품 문의 댓글 삭제 완료!";
     }

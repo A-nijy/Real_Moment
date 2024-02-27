@@ -19,7 +19,7 @@ public class AdminItemController {
 
 
     // (카테고리 or 검색 등) 상품 목록 조회
-    @GetMapping("/admin/items")
+    @GetMapping("/admin/itemList")
     public List<ItemDto.SimpleItemResponse> showItems(SearchDto.Items request){
 
         List<ItemDto.SimpleItemResponse> itemsDto = adminItemService.showItems(request);
@@ -39,30 +39,30 @@ public class AdminItemController {
 
 
     // 상품 추가
-    @PostMapping("/admin/item/{id}")
-    public String saveItem(@PathVariable Long id, @RequestBody ItemDto.SaveRequest request){
+    @PostMapping("/admin/item")
+    public String saveItem(@RequestBody ItemDto.SaveRequest request){
 
-        adminItemService.saveItem(id, request);
+        adminItemService.saveItem(request);
 
         return "상품 등록 완료!";
     }
 
 
     // 상품 수정
-    @PatchMapping("/admin/item/{id}")
-    public String updateItem(@PathVariable Long id, @RequestBody ItemDto.UpdateRequest request){
+    @PatchMapping("/admin/item")
+    public String updateItem(@RequestBody ItemDto.UpdateRequest request){
 
-        adminItemService.updateItem(id, request);
+        adminItemService.updateItem(request);
 
         return "상품 수정 완료!";
     }
 
 
     // 상품 삭제
-    @DeleteMapping("/admin/item/{id}")
-    public String deleteItem(@PathVariable Long id, @RequestParam("itemId") Long itemId){
+    @DeleteMapping("/admin/item")
+    public String deleteItem(@RequestParam("itemId") Long itemId){
 
-        adminItemService.deleteItem(id, itemId);
+        adminItemService.deleteItem(itemId);
 
         return "상품 삭제 완료!";
     }

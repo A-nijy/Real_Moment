@@ -19,7 +19,7 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 목록 조회
-    @GetMapping("/admin/announcements")
+    @GetMapping("/admin/announcementList")
     public List<AnnouncementDto.response> showAnnouncements() {
 
         List<AnnouncementDto.response> announcementsDto = adminAnnouncementService.showAnnouncements();
@@ -39,7 +39,7 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 추가하기
-    @PostMapping("/admin/announcement/{id}")
+    @PostMapping("/admin/{id}/announcement")
     public String saveAnnouncement(@PathVariable Long id, AnnouncementDto.SaveRequest request){
 
         adminAnnouncementService.saveAnnouncement(id, request);
@@ -49,7 +49,7 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 수정하기
-    @PatchMapping("/admin/announcement/{id}")
+    @PatchMapping("/admin/{id}/announcement")
     public String updateAnnouncement(@PathVariable Long id, AnnouncementDto.UpdateRequest request){
 
         adminAnnouncementService.updateAnnouncement(id, request);
@@ -59,10 +59,10 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 삭제하기
-    @DeleteMapping("/admin/announcement/{id}")
-    public String deleteAnnouncement(@PathVariable Long id, @RequestParam("announcementId") Long announcementId){
+    @DeleteMapping("/admin/announcement")
+    public String deleteAnnouncement(@RequestParam("announcementId") Long announcementId){
 
-        adminAnnouncementService.deleteAnnouncement(id, announcementId);
+        adminAnnouncementService.deleteAnnouncement(announcementId);
 
         return "공지사항 삭제 완료!";
     }

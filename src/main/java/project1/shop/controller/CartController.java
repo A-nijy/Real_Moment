@@ -19,7 +19,7 @@ public class CartController {
 
 
     // 장바구니 목록 조회
-    @GetMapping("/carts/{id}")
+    @GetMapping("/member/{id}/cartList")
     public List<CartDto.CartResponse> showCart(@PathVariable Long id){
         List<CartDto.CartResponse> cartsDto = cartService.showCart(id);
 
@@ -28,7 +28,7 @@ public class CartController {
 
 
     // 장바구니 추가
-    @PostMapping("/carts/{id}")
+    @PostMapping("/member/{id}/cart")
     public void saveCart(@PathVariable Long id, @RequestBody CartDto.CartSaveRequest request){
 
         cartService.saveCart(id, request);
@@ -36,7 +36,7 @@ public class CartController {
 
 
     // 장바구니 삭제
-    @DeleteMapping("/carts/{id}")
+    @DeleteMapping("/member/{id}/cart")
     public void deleteCart(@PathVariable Long id, @RequestParam("cartId") Long cartId){
 
         cartService.deleteCart(id, cartId);
@@ -44,7 +44,7 @@ public class CartController {
 
 
     // 장바구니 수정 (수량 수정)
-    @PatchMapping("/carts/{id}/stock")
+    @PatchMapping("/member/{id}/cart/stock")
     public void updateStockCart(@PathVariable Long id, @RequestBody CartDto.CartUpdateStockRequest request){
 
         cartService.updateStockCart(id, request);
@@ -52,7 +52,7 @@ public class CartController {
 
 
     // 장바구니 수정 (체크 수정)
-    @PatchMapping("/carts/{id}/check")
+    @PatchMapping("/member/{id}/cart/check")
     public void updatedCheckCart(@PathVariable Long id, @RequestBody CartDto.CartUpdateCheckRequest request){
 
         cartService.updateCheckCart(id, request);

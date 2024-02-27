@@ -46,7 +46,7 @@ public class AdminQACommentService {
     }
 
     @Transactional
-    public void deleteQAComment(Long id, Long qaCommentId) {
+    public void deleteQAComment(Long qaCommentId) {
 
         QAComment qaComment = qaCommentRepository.findById(qaCommentId).orElseThrow(IllegalArgumentException::new);
 

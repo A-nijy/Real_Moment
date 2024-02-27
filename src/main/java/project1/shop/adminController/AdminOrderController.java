@@ -19,10 +19,10 @@ public class AdminOrderController {
     private final AdminOrderService adminOrderService;
 
     // 주문 내역 목록 조회
-    @PostMapping("/admin/orders")
-    public List<OrderDto.OrderResponse> showOrders(@PathVariable Long id, @RequestBody SearchDto.OrdersSearch request){
+    @PostMapping("/admin/orderList")
+    public List<OrderDto.OrderResponse> showOrders(@RequestBody SearchDto.OrdersSearch request){
 
-        List<OrderDto.OrderResponse> orders = adminOrderService.showOrders(id, request);
+        List<OrderDto.OrderResponse> orders = adminOrderService.showOrders(request);
 
         return orders;
     }
@@ -30,8 +30,8 @@ public class AdminOrderController {
 
 
     // 주문 내역 상세 조회
-    @GetMapping("/admin/order/detail/{id}")
-    public OrderDto.AdminOrderDetailResponse showOrder(@PathVariable Long id, @RequestParam("orderId") Long orderId){
+    @GetMapping("/admin/order")
+    public OrderDto.AdminOrderDetailResponse showOrder(@RequestParam("orderId") Long orderId){
 
         OrderDto.AdminOrderDetailResponse orderDetailResponse = adminOrderService.showOrder(orderId);
 
@@ -41,8 +41,8 @@ public class AdminOrderController {
 
 
     // 주문 상태 변경하기   [ 결제준비, 결제완료, 배송준비, 배송중, 배송완료, 결제취소, 환불요청, 환불완료 ]
-    @PatchMapping("/admin/order/status/{id}")
-    public String updateOrderStatus(@PathVariable Long id, @RequestBody OrderDto.AdminOrderStatus request){
+    @PatchMapping("/admin/order")
+    public String updateOrderStatus(@RequestBody OrderDto.AdminOrderStatus request){
 
         adminOrderService.updateOrderStatus(request);
 
@@ -51,8 +51,8 @@ public class AdminOrderController {
 
 
     // 결제 취소 토큰 발급 후 바로 결제 취소하기
-    @PostMapping("/admin/order/cancel/{id}")
-    public String orderCancel(@PathVariable Long id, @RequestBody OrderDto.CancelRequest request) throws IOException {
+    @PostMapping("/admin/order/cancel")
+    public String orderCancel(@RequestBody OrderDto.CancelRequest request) throws IOException {
 
         adminOrderService.orderCancel(request);
 

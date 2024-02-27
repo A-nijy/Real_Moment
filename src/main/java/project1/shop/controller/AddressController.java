@@ -18,7 +18,7 @@ public class AddressController {
 
 
     // 배송지(주소) 목록 조회
-    @GetMapping("/member/{id}/addresses")
+    @GetMapping("/member/{id}/addressList")
     public List<AddressDto.AddressResponse> showAddresses(@PathVariable Long id) {
 
         log.info("id = {}", id);

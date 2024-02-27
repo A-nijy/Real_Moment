@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
 import project1.shop.domain.entity.Member;
-import project1.shop.domain.entity.WishList;
+import project1.shop.domain.entity.Wish;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.MemberRepository;
-import project1.shop.domain.repository.WishListRepository;
+import project1.shop.domain.repository.WishRepository;
 import project1.shop.dto.innerDto.ItemDto;
-import project1.shop.dto.innerDto.WishListDto;
+import project1.shop.dto.innerDto.WishDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,18 +20,18 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class WishListService {
+public class WishService {
 
-    private final WishListRepository wishListRepository;
+    private final WishRepository wishRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
     @Transactional
-    public List<WishListDto.WishListResponse> showWishList(Long id) {
+    public List<WishDto.WishListResponse> showWishList(Long id) {
 
-        List<WishList> wishList = wishListRepository.findByMember_MemberId(id);
+        List<Wish> wish = wishRepository.findByMember_MemberId(id);
 
-        List<WishListDto.WishListResponse> wishListResponses = wishList.stream()
+        List<WishDto.WishListResponse> wishListResponses = wish.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
 
@@ -40,11 +40,11 @@ public class WishListService {
 
     // WishList엔티티 -> WishListDto 변환 과정 (WishListDto 내부에 ItemDto가 있는데 WishList엔티티의 Item을 ItemDto로 변환)
 
-    public WishListDto.WishListResponse mapToDto(WishList wishList) {
+    public WishDto.WishListResponse mapToDto(Wish wish) {
 
-        ItemDto.SimpleItemResponse simpleItemDto = new ItemDto.SimpleItemResponse(wishList.getItem());
+        ItemDto.SimpleItemResponse simpleItemDto = new ItemDto.SimpleItemResponse(wish.getItem());
 
-        WishListDto.WishListResponse wishListResponse = new WishListDto.WishListResponse(wishList.getWishListId(), simpleItemDto);
+        WishDto.WishListResponse wishListResponse = new WishDto.WishListResponse(wish.getWishId(), simpleItemDto);
 
         return wishListResponse;
     }
@@ -55,14 +55,14 @@ public class WishListService {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
 
-        wishListRepository.save(new WishList(member, item));
+        wishRepository.save(new Wish(member, item));
     }
 
     @Transactional
     public void deleteWishList(Long memberId, Long wishListId) {
 
-        WishList wishList = wishListRepository.findByWishListIdAndMember_MemberId(wishListId, memberId).orElseThrow(IllegalArgumentException::new);
+        Wish wish = wishRepository.findByWishIdAndMember_MemberId(wishListId, memberId).orElseThrow(IllegalArgumentException::new);
 
-        wishListRepository.delete(wishList);
+        wishRepository.delete(wish);
     }
 }

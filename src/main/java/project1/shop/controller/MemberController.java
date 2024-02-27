@@ -20,7 +20,7 @@ public class MemberController {
 
 
     // 아이디 중복 체크
-    @PostMapping("/idCheck")
+    @PostMapping("/memberIdCheck")
     public boolean idCheck(@Valid @RequestBody MemberDto.IdCheckRequest request, BindingResult bindingResult){
 
         log.info("시작");
@@ -36,7 +36,7 @@ public class MemberController {
 
 
     // 회원가입
-    @PostMapping("/member/join")
+    @PostMapping("/join")
     public void memberJoin(@Valid @RequestBody MemberDto.CreateRequest request, BindingResult bindingResult){
 
         // 회원가입 유효성 검사
@@ -50,7 +50,7 @@ public class MemberController {
 
 
     // 로그인
-    @PostMapping("/member/login")
+    @PostMapping("/login")
     public void memberLogin(@RequestBody MemberDto.LoginRequest request, HttpServletResponse response){
 
         memberService.memberLogin(request, response);
@@ -58,7 +58,7 @@ public class MemberController {
 
 
     // 로그아웃
-    @PostMapping("/member/logout/{id}")
+    @PostMapping("/member/{id}/logout")
     public void memberLogout(@PathVariable Long id){
 
         memberService.memberLogout(id);
@@ -77,7 +77,7 @@ public class MemberController {
 
 
     // 비밀번호 수정
-    @PostMapping("/member/{id}/updatePassword")
+    @PatchMapping("/member/{id}/password")
     public void memberUpdatePassword(@PathVariable Long id, @Valid @RequestBody MemberDto.UpdatePasswordRequest request, BindingResult bindingResult){
 
         // 비밀번호 유효성 검사
@@ -153,7 +153,7 @@ public class MemberController {
 
     //--------------------------------------------------------------------
     // access 토큰 재발급 (+ RTR 방식으로 refresh 토큰도 재발급됨)
-    @GetMapping("/reissue/accessToken")
+    @GetMapping("/member/reissue/accessToken")
     public String reissueAccessTokoen(HttpServletRequest request, HttpServletResponse response){
 
         log.info("refresh 토큰 재요청중 / access 토큰 재발급");

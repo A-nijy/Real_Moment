@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.*;
-import project1.shop.domain.entity.Orders;
+import project1.shop.domain.entity.Order;
 
 public class PortOneDto {
 
@@ -25,14 +25,14 @@ public class PortOneDto {
         private String buyerAddress;            // 구매자 주소
 
 
-        public InicisResponse(Orders orders){
+        public InicisResponse(Order order){
 
-            merchantUid = orders.getMerchantUid();
+            merchantUid = order.getMerchantUid();
             itemName = "REAL MOMENT";                   // 여러 상품 구매시 어떻게 작성할지 미정으로 임시 정의
-            paymentPrice = orders.getBuyPrice();
-            buyerName = orders.getName();
-            buyerEmail = orders.getMember().getEmail();
-            buyerAddress = orders.getMainAddress() + " " + orders.getDetAddress();
+            paymentPrice = order.getBuyPrice();
+            buyerName = order.getName();
+            buyerEmail = order.getMember().getEmail();
+            buyerAddress = order.getMainAddress() + " " + order.getDetAddress();
         }
     }
 

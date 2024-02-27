@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Category;
+import project1.shop.domain.entity.Item;
 import project1.shop.domain.repository.CategoryRepository;
+import project1.shop.domain.repository.ItemRepository;
 import project1.shop.dto.innerDto.CategoryDto;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class AdminCategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ItemRepository itemRepository;
 
 
     // 카테고리 목록 조회
@@ -36,7 +39,7 @@ public class AdminCategoryService {
 
     // 카테고리 추가
     @Transactional
-    public void saveCategory(Long id, CategoryDto.CreateRequest request) {
+    public void saveCategory(CategoryDto.CreateRequest request) {
 
         Category category;
 
@@ -54,7 +57,7 @@ public class AdminCategoryService {
 
     // 카테고리 수정
     @Transactional
-    public void updateCategory(Long id, CategoryDto.UpdateRequest request) {
+    public void updateCategory(CategoryDto.UpdateRequest request) {
 
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(IllegalArgumentException::new);
 
@@ -67,5 +70,42 @@ public class AdminCategoryService {
         }
 
         category.update(request, parentCategory);
+    }
+
+
+    // 카테고리 삭제
+    @Transactional
+    public void deleteCategory(Long categoryId) {
+
+        Category category = categoryRepository.findById(categoryId).orElseThrow(IllegalArgumentException::new);
+
+        // 만약 자식 카테고리라면?
+        if (category.getParent() != null){
+
+            List<Item> items = itemRepository.findByCategory_CategoryId(categoryId);
+
+            // 해당 카테고리의 상품이 존재하면?
+            if (!(items == null || items.isEmpty())){
+
+                throw new IllegalArgumentException("해당 카테고리의 상품을 모두 제거해주세요");
+            }
+
+            categoryRepository.delete(category);
+
+        } else {
+
+            List<Category> categories = categoryRepository.findByParent(category);
+
+            if (!(categories == null || categories.isEmpty())){
+
+                throw new IllegalArgumentException("해당 카테고리의 자식 카테고리를 모두 제거해주세요");
+            } else {
+
+                categoryRepository.delete(category);
+            }
+        }
+
+
+
     }
 }

@@ -19,7 +19,7 @@ public class ReviewController {
 
 
     // 특정 상품의 리뷰 목록 조회
-    @GetMapping("/reviews")
+    @GetMapping("/reviewList")
     public List<ReviewDto.ReviewResponse> showReviews(SearchDto.Reviews request){
 
         log.info("서비스 호출");
@@ -30,7 +30,7 @@ public class ReviewController {
 
 
     // 내가 작성한 리뷰 목록 조회
-    @GetMapping("/reviews/{id}")
+    @GetMapping("/member/{id}/reviewList")
     public List<ReviewDto.MyReviewResponse> showMyReviews(@PathVariable Long id, SearchDto.Page nowPage){
 
         System.out.println("값 받아옴");
@@ -41,7 +41,7 @@ public class ReviewController {
 
 
     // 리뷰 추가
-    @PostMapping("/review/{id}")
+    @PostMapping("/member/{id}/review")
     public void saveReview(@PathVariable Long id, @RequestBody ReviewDto.ReviewRequest request){
 
         reviewService.saveReview(id, request);
@@ -49,7 +49,7 @@ public class ReviewController {
 
 
     // 리뷰 수정
-    @PatchMapping("/review/{id}")
+    @PatchMapping("/member/{id}/review")
     public void updateReview(@PathVariable Long id, @RequestBody ReviewDto.ReviewUpdateRequest request){
 
         reviewService.updateReview(id, request);
@@ -57,7 +57,7 @@ public class ReviewController {
 
 
     // 리뷰 삭제
-    @DeleteMapping("/review/{id}")
+    @DeleteMapping("/member/{id}/review")
     public void deleteReview(@PathVariable Long id, @RequestParam("reviewId") Long reviewId){
 
         log.info("서비스 호출");

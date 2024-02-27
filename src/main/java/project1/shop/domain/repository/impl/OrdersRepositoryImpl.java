@@ -25,11 +25,11 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
 
 
     @Override
-    public Page<Orders> searchMyOrders(SearchDto.MyOrdersSearch searchDto, Long memberId, Pageable pageable) {
+    public Page<Order> searchMyOrders(SearchDto.MyOrdersSearch searchDto, Long memberId, Pageable pageable) {
 
         // Orders엔티티에 OrderDetail를 참조하고 있지 않기 때문에 바로 Item에 접근 불가..
         // 그래서 먼저 특정 상품 이름을 포함하는 OrderDetail 목록을 조회해서 해당 OrderId들을 뽑아옴
-        List<Long> orderIds = queryFactory.select(QOrderDetail.orderDetail.orders.orderId)
+        List<Long> orderIds = queryFactory.select(QOrderDetail.orderDetail.order.orderId)
                 .from(QOrderDetail.orderDetail)
                 .join(QOrderDetail.orderDetail.item, QItem.item)
                 .where(itemNameContains(searchDto.getItemName()))
@@ -37,24 +37,24 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
 
         log.info(orderIds.toString());
 
-        List<Orders> orders = queryFactory.selectFrom(QOrders.orders)
+        List<Order> orders = queryFactory.selectFrom(QOrder.order)
                 .where(orderIdIn(orderIds),
                         statusEq(searchDto.getStatus()),
                         betweenDate(searchDto.getStartDate(), searchDto.getLastDate()),
-                        QOrders.orders.member.memberId.eq(memberId))
-                .orderBy(QOrders.orders.orderedDate.desc())
+                        QOrder.order.member.memberId.eq(memberId))
+                .orderBy(QOrder.order.orderedDate.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         log.info(orderIds.toString());
         Long total = queryFactory
-                .select(QOrders.orders.count())
-                .from(QOrders.orders)
+                .select(QOrder.order.count())
+                .from(QOrder.order)
                 .where(orderIdIn(orderIds),
                         statusEq(searchDto.getStatus()),
                         betweenDate(searchDto.getStartDate(), searchDto.getLastDate()),
-                        QOrders.orders.member.memberId.eq(memberId))
+                        QOrder.order.member.memberId.eq(memberId))
                 .fetchOne();
 
 
@@ -64,11 +64,11 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
 
 
     @Override
-    public Page<Orders> searchOrders(SearchDto.OrdersSearch searchDto, Pageable pageable) {
+    public Page<Order> searchOrders(SearchDto.OrdersSearch searchDto, Pageable pageable) {
 
         // Orders엔티티에 OrderDetail를 참조하고 있지 않기 때문에 바로 Item에 접근 불가..
         // 그래서 먼저 특정 상품 이름을 포함하는 OrderDetail 목록을 조회해서 해당 OrderId들을 뽑아옴
-        List<Long> orderIds = queryFactory.select(QOrderDetail.orderDetail.orders.orderId)
+        List<Long> orderIds = queryFactory.select(QOrderDetail.orderDetail.order.orderId)
                 .from(QOrderDetail.orderDetail)
                 .join(QOrderDetail.orderDetail.item, QItem.item)
                 .where(itemNameContains(searchDto.getItemName()))
@@ -76,21 +76,21 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
 
         log.info(orderIds.toString());
 
-        List<Orders> orders = queryFactory.selectFrom(QOrders.orders)
+        List<Order> orders = queryFactory.selectFrom(QOrder.order)
                 .where(orderIdIn(orderIds),
                         merchantUidContains(searchDto.getMerchantUid()),
                         statusEq(searchDto.getStatus()),
                         betweenDate(searchDto.getStartDate(), searchDto.getLastDate()),
                         loginIdContains(searchDto.getLoginId()))
-                .orderBy(QOrders.orders.orderedDate.desc())
+                .orderBy(QOrder.order.orderedDate.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
 
         Long total = queryFactory
-                .select(QOrders.orders.count())
-                .from(QOrders.orders)
+                .select(QOrder.order.count())
+                .from(QOrder.order)
                 .where(orderIdIn(orderIds),
                         merchantUidContains(searchDto.getMerchantUid()),
                         statusEq(searchDto.getStatus()),
@@ -119,7 +119,7 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
         if(orderIds == null){
             return null;
         }
-        return QOrders.orders.orderId.in(orderIds);
+        return QOrder.order.orderId.in(orderIds);
     }
 
     private BooleanExpression loginIdContains(String loginId) {
@@ -127,7 +127,7 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
         if(loginId == null){
             return null;
         }
-        return loginId.isEmpty() ? null : QOrders.orders.member.loginId.contains(loginId);
+        return loginId.isEmpty() ? null : QOrder.order.member.loginId.contains(loginId);
     }
 
     private BooleanExpression statusEq(PaymentStatus status){
@@ -139,28 +139,28 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
         switch (status) {
 
             case PAYMENT_READY:
-                return QOrders.orders.status.eq(PaymentStatus.PAYMENT_READY);
+                return QOrder.order.status.eq(PaymentStatus.PAYMENT_READY);
 
             case PAYMENT_DONE:
-                return QOrders.orders.status.eq(PaymentStatus.PAYMENT_DONE);
+                return QOrder.order.status.eq(PaymentStatus.PAYMENT_DONE);
 
             case DELIVERY_READY:
-                return QOrders.orders.status.eq(PaymentStatus.DELIVERY_READY);
+                return QOrder.order.status.eq(PaymentStatus.DELIVERY_READY);
 
             case DELIVERY_DOING:
-                return QOrders.orders.status.eq(PaymentStatus.DELIVERY_DOING);
+                return QOrder.order.status.eq(PaymentStatus.DELIVERY_DOING);
 
             case DELIVERY_DONE:
-                return QOrders.orders.status.eq(PaymentStatus.DELIVERY_DONE);
+                return QOrder.order.status.eq(PaymentStatus.DELIVERY_DONE);
 
             case CANCEL:
-                return QOrders.orders.status.eq(PaymentStatus.CANCEL);
+                return QOrder.order.status.eq(PaymentStatus.CANCEL);
 
             case REFUND_REQUEST:
-                return QOrders.orders.status.eq(PaymentStatus.REFUND_REQUEST);
+                return QOrder.order.status.eq(PaymentStatus.REFUND_REQUEST);
 
             case REFUND_DONE:
-                return QOrders.orders.status.eq(PaymentStatus.REFUND_DONE);
+                return QOrder.order.status.eq(PaymentStatus.REFUND_DONE);
 
             default:
                 return null;
@@ -178,7 +178,7 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
             startDate = lastDate.minusMonths(3);
         }
 
-        return QOrders.orders.orderedDate.between(startDate, lastDate);
+        return QOrder.order.orderedDate.between(startDate, lastDate);
     }
 
 
@@ -189,6 +189,6 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
             return null;
         }
 
-        return merchantUid.isEmpty() ? null : QOrders.orders.merchantUid.contains(merchantUid);
+        return merchantUid.isEmpty() ? null : QOrder.order.merchantUid.contains(merchantUid);
     }
 }

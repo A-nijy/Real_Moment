@@ -20,7 +20,7 @@ public class AnnouncementController {
 
 
     // 공지사항 목록 조회
-    @GetMapping("/announcements")
+    @GetMapping("/announcementList")
     public List<AnnouncementDto.response> showAnnouncements() {
 
         List<AnnouncementDto.response> announcementsDto = announceService.showAnnouncements();

@@ -21,7 +21,7 @@ public class AdminMemberController {
 
 
     // 회원 목록 조회
-    @GetMapping("/admin/members")
+    @GetMapping("/admin/memberList")
     public List<MemberDto.SimpleProfileResponse> showMembers(SearchDto.Members request){
 
         List<MemberDto.SimpleProfileResponse> membersDto = adminMemberService.showMembers(request);

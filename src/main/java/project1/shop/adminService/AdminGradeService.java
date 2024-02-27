@@ -34,7 +34,7 @@ public class AdminGradeService {
 
 
     @Transactional
-    public void saveGrade(Long id, GradeDto.CreateRequest request) {
+    public void saveGrade(GradeDto.CreateRequest request) {
 
         Grade grade = new Grade(request);
 
@@ -43,7 +43,7 @@ public class AdminGradeService {
 
 
     @Transactional
-    public void updateGrade(Long id, GradeDto.UpdateRequest request) {
+    public void updateGrade(GradeDto.UpdateRequest request) {
 
         Grade grade = gradeRepository.findById(request.getGradeId()).orElseThrow(IllegalArgumentException::new);
 
@@ -52,7 +52,7 @@ public class AdminGradeService {
 
 
     @Transactional
-    public void deleteGrade(Long id, Long gradeId) {
+    public void deleteGrade(Long gradeId) {
 
         Grade grade = gradeRepository.findById(gradeId).orElseThrow(IllegalArgumentException::new);
 

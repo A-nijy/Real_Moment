@@ -21,7 +21,7 @@ public class ItemController {
 
 
     // (카테고리 or 검색 등) 상품 목록 조회
-    @GetMapping("/items")
+    @GetMapping("/itemList")
     public List<ItemDto.SimpleItemResponse> showItems(SearchDto.Items request){
 
         log.info("컨트롤러 시작 -> 서비스 이동");

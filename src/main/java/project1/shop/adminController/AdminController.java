@@ -65,7 +65,7 @@ public class AdminController {
     }
 
     // 관리자 로그아웃
-    @PostMapping("/admin/logout/{id}")
+    @PostMapping("/admin/{id}/logout")
     public String adminLogout(@PathVariable Long id){
 
         adminService.adminLogout(id);
@@ -76,7 +76,7 @@ public class AdminController {
 
 
     // 관리자 목록 조회
-    @GetMapping("/admin/admins")
+    @GetMapping("/admin/adminList")
     public List<AdminDto.Response> showAdmins(SearchDto.Admins request){
 
         List<AdminDto.Response> adminsDto = adminService.showAdmins(request);
@@ -86,17 +86,17 @@ public class AdminController {
 
 
     // 관리자 상세 정보 조회
-    @GetMapping("/admin/admin/{id}")
-    public AdminDto.Response showAdmin(@PathVariable Long id){
+    @GetMapping("/admin/admin")
+    public AdminDto.Response showAdmin(@RequestParam("adminId") Long adminId){
 
-        AdminDto.Response adminDto = adminService.showAdmin(id);
+        AdminDto.Response adminDto = adminService.showAdmin(adminId);
 
         return adminDto;
     }
 
 
     // 관리자 본인 정보 수정
-    @PatchMapping("/admin/admin/{id}")
+    @PatchMapping("/admin/{id}")
     public AdminDto.Response updateAdmin(@PathVariable Long id, @RequestBody AdminDto.UpdateRequest request){
 
         AdminDto.Response adminDto = adminService.updateAdmin(id, request);
@@ -106,20 +106,20 @@ public class AdminController {
 
 
     // 관리자 권한 수정
-    @PatchMapping("/admin/admin/roles/{id}")
-    public String roleUpdateAdmin(@PathVariable Long id, @RequestBody AdminDto.RoleUpdateRequest request){
+    @PatchMapping("/admin/admin/roles")
+    public String roleUpdateAdmin(@RequestBody AdminDto.RoleUpdateRequest request){
 
-        adminService.roleUpdateAdmin(id, request);
+        adminService.roleUpdateAdmin(request);
 
         return "관리자 권한 수정 완료!";
     }
 
 
     // 관리자 삭제 (고위 관리자)
-    @DeleteMapping("/admin/admin/{id}")
-    public String deleteAdmin(@PathVariable Long id, @RequestParam("adminId") Long adminId){
+    @DeleteMapping("/admin/admin")
+    public String deleteAdmin(@RequestParam("adminId") Long adminId){
 
-        adminService.deleteAdmin(id, adminId);
+        adminService.deleteAdmin(adminId);
 
         return "관리자 삭제 완료!";
     }

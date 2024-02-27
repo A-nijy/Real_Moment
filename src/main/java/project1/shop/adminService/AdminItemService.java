@@ -53,7 +53,7 @@ public class AdminItemService {
 
 
     @Transactional
-    public void saveItem(Long id, ItemDto.SaveRequest request) {
+    public void saveItem(ItemDto.SaveRequest request) {
 
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(IllegalArgumentException::new);
 
@@ -64,7 +64,7 @@ public class AdminItemService {
 
 
     @Transactional
-    public void updateItem(Long id, ItemDto.UpdateRequest request) {
+    public void updateItem(ItemDto.UpdateRequest request) {
 
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(IllegalArgumentException::new);
 
@@ -75,7 +75,7 @@ public class AdminItemService {
 
 
     @Transactional
-    public void deleteItem(Long id, Long itemId) {
+    public void deleteItem(Long itemId) {
 
         Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
 

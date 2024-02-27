@@ -26,7 +26,7 @@ public class OrderController {
 
 
     // 구매하기 버튼을 눌러 결제 정보 입력 창 호출 (이름 / 연락처 / 주소 / 요청사항 / 상품 / 총 상품 금액 / 총 할인 금액 / 보유 총 적립금 / 사용 적립금
-    @PostMapping("/order/{id}")
+    @PostMapping("/member/{id}/order/page")
     public OrderDto.OrderPageResponse giveOrderPage(@PathVariable Long id, @RequestBody List<OrderDto.OrderPageItemRequest> requestList){
 
         OrderDto.OrderPageResponse orderPageDto = orderService.giveOrderPage(id, requestList);
@@ -36,7 +36,7 @@ public class OrderController {
 
 
     // 1. 결제하기 버튼을 눌러서 임시 order객체 생성 후 저장 및 이니시스 결제창에 전달할 정보 DTO 응답 (+ 원래 결제해야하는 가격과 요청받은 결제 가격이 동일한지 검증)(+ orderDetail 객체도 생성)
-    @PostMapping("/payment/first/{id}")
+    @PostMapping("/member/{id}/payment/first")
     public PortOneDto.InicisResponse firstPayment(@PathVariable Long id, @RequestBody OrderDto.PaymentRequest request){
 
         PortOneDto.InicisResponse inicisDto = orderService.firstPayment(id, request);
@@ -46,7 +46,7 @@ public class OrderController {
 
 
     // 2. 결제 완료시 포트원으로 부터 imp_uid, merchant_uid를 요청 받아와서 검증 후 orders객체 완성 (+ 재고 차감)
-    @PostMapping("/payment/second/{id}")
+    @PostMapping("/member/{id}/payment/second")
     public ResponseEntity<IamportResponse<Payment>> secondPayment(@PathVariable Long id, @RequestBody PortOneDto.InicisRequest request){
 
         IamportResponse<Payment> iamportResponse = orderService.validatePayment(id, request);
@@ -57,7 +57,7 @@ public class OrderController {
 
 
     // 주문 내역 목록 조회
-    @PostMapping("/orders/{id}")
+    @PostMapping("/member/{id}/orderList")
     public List<OrderDto.OrderResponse> showOrders(@PathVariable Long id, @RequestBody SearchDto.MyOrdersSearch request){
 
         List<OrderDto.OrderResponse> myOrders = orderService.showOrders(id, request);
@@ -67,7 +67,7 @@ public class OrderController {
 
 
     // 주문 내역 상세 조회
-    @GetMapping("/order/detail/{id}")
+    @GetMapping("/member/{id}/order")
     public OrderDto.OrderDetailResponse showOrder(@PathVariable Long id, @RequestParam("orderId") Long orderId){
 
         OrderDto.OrderDetailResponse orderDetailResponse = orderService.showOrder(orderId);
@@ -77,7 +77,7 @@ public class OrderController {
 
 
     // 결제 취소 토큰 발급 후 바로 결제 취소하기
-    @PostMapping("/order/cancel/{id}")
+    @PostMapping("/member/{id}/order/cancel")
     public String orderCancel(@PathVariable Long id, @RequestBody OrderDto.CancelRequest request) throws IOException {
 
         orderService.orderCancel(request);
@@ -87,7 +87,7 @@ public class OrderController {
 
 
     // 환불 신청하기
-    @PatchMapping("/order/refound/{id}")
+    @PatchMapping("/member/{id}/order/refound")
     public String orderRefound(@PathVariable Long id, @RequestBody OrderDto.RefoundRequest request) {
 
         orderService.orderRefound(request);

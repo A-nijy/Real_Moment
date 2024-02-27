@@ -16,7 +16,7 @@ public class OrderDetail {
     private Long orderDetailId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private Orders orders;
+    private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
@@ -28,9 +28,9 @@ public class OrderDetail {
     private int totalPrice;                 // 결제 당시 총 구매가
 
 
-    public OrderDetail(Orders orders, Item item, int itemCount){
+    public OrderDetail(Order order, Item item, int itemCount){
 
-        this.orders = orders;
+        this.order = order;
         this.item = item;
         fixedPrice = item.getPrice();
         discountRate = item.getDiscountRate();

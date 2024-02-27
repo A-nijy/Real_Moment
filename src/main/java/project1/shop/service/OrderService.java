@@ -23,7 +23,6 @@ import project1.shop.enumeration.PaymentStatus;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -114,21 +113,21 @@ public class OrderService {
         member.deletePoint(request.getUsePoint());
 
         // orders 객체 생성
-        Orders orders = new Orders(member, request);
-        ordersRepository.save(orders);
+        Order order = new Order(member, request);
+        ordersRepository.save(order);
 
         // orderDetail 객체 생성
         for(OrderDto.OrderPageItemRequest itemRequest : request.getItems()){
 
             Item item = itemRepository.findById(itemRequest.getItemId()).orElseThrow(IllegalArgumentException::new);
 
-            OrderDetail orderDetail = new OrderDetail(orders, item, itemRequest.getCount());
+            OrderDetail orderDetail = new OrderDetail(order, item, itemRequest.getCount());
 
             orderDetailRepository.save(orderDetail);
         }
 
         // 이니시스에 전달할 DTO 생성
-        PortOneDto.InicisResponse inicisDto = new PortOneDto.InicisResponse(orders);
+        PortOneDto.InicisResponse inicisDto = new PortOneDto.InicisResponse(order);
 
         return inicisDto;
     }
@@ -143,27 +142,27 @@ public class OrderService {
             IamportResponse<Payment> iamportResponse = getIamportResponse(request);
 
             // 해당 주문 테이블 테이블를 가져온다.
-            Orders orders = ordersRepository.findByMerchantUid(request.getMerchantUid()).orElseThrow(NoSuchElementException::new);
+            Order order = ordersRepository.findByMerchantUid(request.getMerchantUid()).orElseThrow(NoSuchElementException::new);
 
             // 포트원으로부터 받은 결제 데이터 iamportResponse와 주문 데이터를 가져와서 결제에 대해 검증한다.
-            validatePaymentStatusAndPay(iamportResponse, orders);
+            validatePaymentStatusAndPay(iamportResponse, order);
 
             // 만약 결제 상태가 PYAMENT_DONE라면?(결제가 완료된 상태라면)
-            if(PaymentStatus.PAYMENT_DONE.equals(orders.getStatus())){
+            if(PaymentStatus.PAYMENT_DONE.equals(order.getStatus())){
 
-                log.info("이미 결제 완료된 주문입니다. imp_uid={}, merchant_uid={}", orders.getImpUid(), orders.getMerchantUid());
+                log.info("이미 결제 완료된 주문입니다. imp_uid={}, merchant_uid={}", order.getImpUid(), order.getMerchantUid());
 
             } else {
 
                 // 기존 orders 객체에 아임포트에서 가져온 imp_uid를 저장해준다. + 결제 상태 수정
-                orders.updateBySuccess(iamportResponse.getResponse().getImpUid());
+                order.updateBySuccess(iamportResponse.getResponse().getImpUid());
 
                 log.info("결제 완료 확인!, payment_uid={}, order_uid={}",
-                        orders.getImpUid(), orders.getMerchantUid());
+                        order.getImpUid(), order.getMerchantUid());
             }
 
             // 상품 재고 차감
-            subStock(orders);
+            subStock(order);
 
             return iamportResponse;
 
@@ -180,7 +179,7 @@ public class OrderService {
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
         log.info("1");
-        Page<Orders> orders = ordersRepository.searchMyOrders(request, id, pageRequest);
+        Page<Order> orders = ordersRepository.searchMyOrders(request, id, pageRequest);
         log.info("2");
         List<OrderDto.OrderResponse> ordersDto = orders.stream()
                 .map(OrderDto.OrderResponse::new)
@@ -189,7 +188,7 @@ public class OrderService {
         log.info("3");
         for (OrderDto.OrderResponse orderDto : ordersDto){
             log.info("4");
-            List<OrderDetail> orderDetails = orderDetailRepository.findByOrders_OrderId(orderDto.getOrderId());
+            List<OrderDetail> orderDetails = orderDetailRepository.findByOrder_OrderId(orderDto.getOrderId());
             log.info("5");
             List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
                     .map(OrderDetailDto.response::new)
@@ -206,11 +205,11 @@ public class OrderService {
     @Transactional
     public OrderDto.OrderDetailResponse showOrder(Long orderId) {
 
-        Orders orders = ordersRepository.findById(orderId).orElseThrow(IllegalArgumentException::new);
+        Order order = ordersRepository.findById(orderId).orElseThrow(IllegalArgumentException::new);
 
-        OrderDto.OrderResponse orderResponse = new OrderDto.OrderResponse(orders);
+        OrderDto.OrderResponse orderResponse = new OrderDto.OrderResponse(order);
 
-        List<OrderDetail> orderDetails = orderDetailRepository.findByOrders(orders);
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
                 .map(OrderDetailDto.response::new)
@@ -220,7 +219,7 @@ public class OrderService {
 
 
 
-        OrderDto.OrderDetailResponse orderDetailResponse = new OrderDto.OrderDetailResponse(orderResponse, orders);
+        OrderDto.OrderDetailResponse orderDetailResponse = new OrderDto.OrderDetailResponse(orderResponse, order);
 
         return orderDetailResponse;
     }
@@ -230,9 +229,9 @@ public class OrderService {
     @Transactional
     public void orderCancel(OrderDto.CancelRequest request) throws IOException {
 
-        Orders orders = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
-        if(!orders.getStatus().equals(PaymentStatus.PAYMENT_DONE)){
+        if(!order.getStatus().equals(PaymentStatus.PAYMENT_DONE)){
 
             throw new IllegalArgumentException("결제를 취소할 수 있는 상태가 아닙니다.");
         }
@@ -294,7 +293,7 @@ public class OrderService {
 
         // JSON 객체에 해당 API가 필요로하는 데이터 추가.
         JsonObject json = new JsonObject();
-        json.addProperty("merchant_uid", orders.getMerchantUid());
+        json.addProperty("merchant_uid", order.getMerchantUid());
         json.addProperty("reason", request.getReasonText());
 
         // 출력 스트림으로 해당 conn에 요청
@@ -316,10 +315,10 @@ public class OrderService {
         PaymentStatus status = PaymentStatus.CANCEL;
 
         // 상품 재고 다시 되돌리기
-        plusStock(orders);
+        plusStock(order);
 
         // 결제 취소 사유 저장하기
-        orders.updateReasonText(request.getReasonText());
+        order.updateReasonText(request.getReasonText());
     }
 
 
@@ -327,9 +326,9 @@ public class OrderService {
     @Transactional
     public void orderRefound(OrderDto.RefoundRequest request) {
 
-        Orders orders = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
-        orders.updateStatus(PaymentStatus.REFUND_REQUEST);
+        order.updateStatus(PaymentStatus.REFUND_REQUEST);
     }
 
 
@@ -350,19 +349,19 @@ public class OrderService {
     // 포트원으로부터 받은 결제 데이터를 가지고 검증하는 메서드
     // 결제 완료가 되지 않음 -> 주문 정보 및 결제 정보 삭제
     // 결제 완료는 되었으나 결제 금액이 다름 -> 주문 정보 및 결제 정보 삭제 후, 포트원에 결제 취소 요청
-    private void validatePaymentStatusAndPay(IamportResponse<Payment> iamportResponse, Orders orders) throws IamportResponseException, IOException{
+    private void validatePaymentStatusAndPay(IamportResponse<Payment> iamportResponse, Order order) throws IamportResponseException, IOException{
 
         // 결제 완료 상태가 아니라면
         if(!iamportResponse.getResponse().getStatus().equals("paid")){
 
             // 해당 주문 상세 정보 삭제
-            deleteOrderDetailsAndOrders(orders);
+            deleteOrderDetailsAndOrders(order);
 
             throw new RuntimeException("결제 미완료");
         }
 
         // 주문 정보에 있는 가격
-        int price = orders.getBuyPrice();
+        int price = order.getBuyPrice();
 
         // 포트원에 결제된 가격
         long portOnePrice = iamportResponse.getResponse().getAmount().longValue();
@@ -371,7 +370,7 @@ public class OrderService {
         if(!Objects.equals(portOnePrice, price)){
 
             // 해당 주문 상세 정보와 주문 정보 삭제
-            deleteOrderDetailsAndOrders(orders);
+            deleteOrderDetailsAndOrders(order);
 
             // 아임포트에게 결제를 취소를 요청하기 위해 결제 취소에 필요한 데이터를 포함하는 CancelData 객체를 생성한다.
             // 결제 고유 번호, 부분 취소 여부, 취소할 금액(결제된 가격)
@@ -408,16 +407,16 @@ public class OrderService {
 
 
     // 특정 orders와 해당 orderDetail를 DB에서 제거하기
-    public void deleteOrderDetailsAndOrders(Orders orders){
+    public void deleteOrderDetailsAndOrders(Order order){
 
-        List<OrderDetail> orderDetails = orderDetailRepository.findByOrders(orders);
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         for(OrderDetail orderDetail : orderDetails){
 
             orderDetailRepository.delete(orderDetail);
         }
 
-        ordersRepository.delete(orders);
+        ordersRepository.delete(order);
     }
 
 
@@ -452,9 +451,9 @@ public class OrderService {
 
 
     // 상품 재고 차감
-    public void subStock(Orders orders){
+    public void subStock(Order order){
 
-        List<OrderDetail> orderDetails = orderDetailRepository.findByOrders(orders);
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         // 재고 확인
         for(OrderDetail orderDetail : orderDetails){
@@ -464,7 +463,7 @@ public class OrderService {
             // 만약 해당 상품의 재고보다 구매하려는 개수가 많다면?
             if(item.getStock() < orderDetail.getItemCount()){
 
-                deleteOrderDetailsAndOrders(orders);
+                deleteOrderDetailsAndOrders(order);
 
                 throw new IllegalArgumentException("재고가 부족합니다.");
             }
@@ -481,9 +480,9 @@ public class OrderService {
 
 
     // 주문 취소로 인해 상품 재고 다시 채우기
-    public void plusStock(Orders orders){
+    public void plusStock(Order order){
 
-        List<OrderDetail> orderDetails = orderDetailRepository.findByOrders(orders);
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         for (OrderDetail orderDetail : orderDetails){
 

@@ -52,9 +52,9 @@ public class AdminService {
 
 
     @Transactional
-    public AdminDto.Response showAdmin(Long id) {
+    public AdminDto.Response showAdmin(Long adminId) {
 
-        Admin admin = adminRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Admin admin = adminRepository.findById(adminId).orElseThrow(IllegalArgumentException::new);
 
         AdminDto.Response adminDto = new AdminDto.Response(admin);
 
@@ -75,7 +75,7 @@ public class AdminService {
     }
 
     @Transactional
-    public void roleUpdateAdmin(Long id, AdminDto.RoleUpdateRequest request) {
+    public void roleUpdateAdmin(AdminDto.RoleUpdateRequest request) {
 
         Admin admin = adminRepository.findById(request.getAdminId()).orElseThrow(IllegalArgumentException::new);
 
@@ -84,7 +84,7 @@ public class AdminService {
 
 
     @Transactional
-    public void deleteAdmin(Long id, Long adminId) {
+    public void deleteAdmin(Long adminId) {
 
         Admin admin = adminRepository.findById(adminId).orElseThrow(IllegalArgumentException::new);
 

@@ -74,7 +74,7 @@ public class AdminAnnouncementService {
 
     // 공지사항 삭제
     @Transactional
-    public void deleteAnnouncement(Long id, Long announcementId) {
+    public void deleteAnnouncement(Long announcementId) {
 
         Announcement announcement = announcementRepository.findById(announcementId).orElseThrow(IllegalArgumentException::new);
 

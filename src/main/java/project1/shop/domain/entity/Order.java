@@ -14,7 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Orders{
+@Table(name = "orders")
+public class Order {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
@@ -47,7 +48,7 @@ public class Orders{
 
 
     // 결제시 결제창 열기 전에 임시 주문 객체 생성용
-    public Orders(Member member, OrderDto.PaymentRequest request){
+    public Order(Member member, OrderDto.PaymentRequest request){
 
         this.member = member;
         totalPrice = request.getTotalPrice();

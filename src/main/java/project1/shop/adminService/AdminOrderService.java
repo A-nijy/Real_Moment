@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
 import project1.shop.domain.entity.OrderDetail;
-import project1.shop.domain.entity.Orders;
+import project1.shop.domain.entity.Order;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.OrderDetailRepository;
 import project1.shop.domain.repository.OrdersRepository;
@@ -46,12 +46,12 @@ public class AdminOrderService {
 
     // 주문 목록 조회
     @Transactional
-    public List<OrderDto.OrderResponse> showOrders(Long id, SearchDto.OrdersSearch request) {
+    public List<OrderDto.OrderResponse> showOrders(SearchDto.OrdersSearch request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
         log.info("1");
-        Page<Orders> orders = ordersRepository.searchOrders(request, pageRequest);
+        Page<Order> orders = ordersRepository.searchOrders(request, pageRequest);
         log.info("2");
         List<OrderDto.OrderResponse> ordersDto = orders.stream()
                 .map(OrderDto.OrderResponse::new)
@@ -60,7 +60,7 @@ public class AdminOrderService {
         log.info("3");
         for (OrderDto.OrderResponse orderDto : ordersDto){
             log.info("4");
-            List<OrderDetail> orderDetails = orderDetailRepository.findByOrders_OrderId(orderDto.getOrderId());
+            List<OrderDetail> orderDetails = orderDetailRepository.findByOrder_OrderId(orderDto.getOrderId());
             log.info("5");
             List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
                     .map(OrderDetailDto.response::new)
@@ -77,11 +77,11 @@ public class AdminOrderService {
     @Transactional
     public OrderDto.AdminOrderDetailResponse showOrder(Long orderId) {
 
-        Orders orders = ordersRepository.findById(orderId).orElseThrow(IllegalArgumentException::new);
+        Order order = ordersRepository.findById(orderId).orElseThrow(IllegalArgumentException::new);
 
-        OrderDto.AdminOrderResponse orderResponse = new OrderDto.AdminOrderResponse(orders);
+        OrderDto.AdminOrderResponse orderResponse = new OrderDto.AdminOrderResponse(order);
 
-        List<OrderDetail> orderDetails = orderDetailRepository.findByOrders(orders);
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
                 .map(OrderDetailDto.response::new)
@@ -91,7 +91,7 @@ public class AdminOrderService {
 
 
 
-        OrderDto.AdminOrderDetailResponse orderDetailResponse = new OrderDto.AdminOrderDetailResponse(orderResponse, orders);
+        OrderDto.AdminOrderDetailResponse orderDetailResponse = new OrderDto.AdminOrderDetailResponse(orderResponse, order);
 
         return orderDetailResponse;
     }
@@ -101,11 +101,11 @@ public class AdminOrderService {
     @Transactional
     public void updateOrderStatus(OrderDto.AdminOrderStatus request) {
 
-        Orders orders = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
         PaymentStatus status = PaymentStatus.fromString(request.getStatus());
 
-        orders.updateStatus(status);
+        order.updateStatus(status);
     }
 
 
@@ -114,7 +114,7 @@ public class AdminOrderService {
     @Transactional
     public void orderCancel(OrderDto.CancelRequest request) throws IOException {
 
-        Orders orders = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
 
         // 1. 토큰 발급받기
@@ -173,7 +173,7 @@ public class AdminOrderService {
 
         // JSON 객체에 해당 API가 필요로하는 데이터 추가.
         JsonObject json = new JsonObject();
-        json.addProperty("merchant_uid", orders.getMerchantUid());
+        json.addProperty("merchant_uid", order.getMerchantUid());
         json.addProperty("reason", request.getReasonText());
 
         // 출력 스트림으로 해당 conn에 요청
@@ -190,15 +190,15 @@ public class AdminOrderService {
         log.info("결제가 취소되었습니다.");
 
         // 상품 재고 다시 되돌리기
-        plusStock(orders);
+        plusStock(order);
     }
 
 
 
     // 주문 취소로 인해 상품 재고 다시 채우기
-    public void plusStock(Orders orders){
+    public void plusStock(Order order){
 
-        List<OrderDetail> orderDetails = orderDetailRepository.findByOrders(orders);
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         for (OrderDetail orderDetail : orderDetails){
 
