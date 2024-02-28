@@ -23,6 +23,7 @@ public class AddressService {
     private final MemberRepository memberRepository;
 
 
+    // 배송지 목록 조회
     @Transactional
     public List<AddressDto.AddressResponse> showAddresses(Long id) {
 
@@ -42,6 +43,8 @@ public class AddressService {
         return addressesDto;
     }
 
+
+    // 배송지 저장
     @Transactional
     public void saveAddress(Long id, AddressDto.SaveRequest requestDto) {
 
@@ -52,14 +55,18 @@ public class AddressService {
         addressRepository.save(new Address(requestDto, member));
     }
 
+
+    // 배송지 수정
     @Transactional
     public void updateAddress(Long id, AddressDto.UpdateRequest request) {
 
-        Address address = addressRepository.findById(request.getId()).orElseThrow(IllegalArgumentException::new);
+        Address address = addressRepository.findById(request.getAddressId()).orElseThrow(IllegalArgumentException::new);
 
         address.update(request);
     }
 
+
+    // 배송지 삭제
     @Transactional
     public void deleteAddress(Long id, Long addressId) {
 

@@ -19,7 +19,7 @@ public class AddressDto {
         private String tel;
         private String mainAddress;
         private String detAddress;
-        private boolean isDefAddress;
+        private boolean isDefault;
     }
 
 
@@ -29,12 +29,12 @@ public class AddressDto {
     @Getter
     @Setter
     public static class UpdateRequest {
-        private Long Id;
+        private Long addressId;
         private String name;
         private String tel;
         private String mainAddress;
         private String detAddress;
-        private boolean isDefAddress;
+        private boolean isDefault;
     }
 
 
@@ -44,22 +44,22 @@ public class AddressDto {
     @Getter
     @Setter
     public static class AddressResponse {
-        private Long id;
+        private Long addressId;
         private String name;
         private String tel;
         private String mainAddress;
         private String detAddress;
-        private boolean isDefAddress;
+        private boolean isDefault;
 
 
 
         public AddressResponse(Address address){
-            id = address.getAddressId();
+            addressId = address.getAddressId();
             name = address.getName();
             tel = address.getTel();
             this.mainAddress = address.getMainAddress();
             detAddress = address.getDetAddress();
-            isDefAddress = address.isDefAddress();
+            isDefault = address.isDefault();
         }
     }
 
@@ -71,20 +71,20 @@ public class AddressDto {
     @Getter
     @Setter
     public static class OrderAddressResponse {
-        private Long id;
+        private Long addressId;
         private String name;
         private String tel;
         private String mainAddress;
         private String detAddress;
-        private boolean isDefAddress;
+        private boolean isDefault;
 
         public OrderAddressResponse(Address address){
-            id = address.getAddressId();
+            addressId = address.getAddressId();
             name = address.getName();
             tel = address.getTel();
             this.mainAddress = address.getMainAddress();
             detAddress = address.getDetAddress();
-            isDefAddress = address.isDefAddress();
+            isDefault = address.isDefault();
         }
     }
 }

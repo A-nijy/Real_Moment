@@ -23,7 +23,7 @@ VALUES
 
 -- Address 주소 더미데이터
 
-INSERT INTO address (member_id, name, main_address, det_address, is_def_address)
+INSERT INTO address (member_id, name, main_address, det_address, is_default)
 VALUES
 (1, 'A', '대전 유성구', '101동 503호', true),
 (1, 'A-2', '대전 화구', '202동 703호', FALSE),
@@ -94,7 +94,7 @@ INSERT INTO category (name, parent_id) VALUES
 -- Item 상품 더미데이터
 
 
-INSERT INTO item (category_id, name, content, price, discount_rate, discount_price, sell_price, created_date, last_modified_date, stock, is_sell_check, is_delete_check, main_img, serve_img, created_by, last_modified_by)
+INSERT INTO item (category_id, name, content, price, discount_rate, discount_price, sell_price, created_date, last_modified_date, stock, is_sell, is_delete, main_img, serve_img, created_by, last_modified_by)
 VALUES
 (3, 'A립스틱', 'item content1', 8000, 10, 800, 7200, '2022-01-29 10:00:00', '2022-01-29 10:00:00', 50, TRUE, FALSE, 'main1.jpg', 'serve1.jpg', '직원A', '직원A'),
 (3, 'B립스틱', 'item content2', 8000, 0, 0, 8000, '2022-05-29 10:00:00', '2022-05-29 10:00:00', 10, TRUE, FALSE, 'main2.jpg', 'serve2.jpg', '직원A', '직원A'),
@@ -140,7 +140,7 @@ INSERT INTO cart (member_id, item_id, stock, price, is_check) VALUES
 
 -- OrderDetail 주문 상세 더미데이터
 
-INSERT INTO order_detail (item_id, order_id, fixed_price, discount_rate, discount_price, sell_price, item_count, total_price)
+INSERT INTO order_detail (item_id, order_id, price, discount_rate, discount_price, sell_price, item_count, total_price)
 VALUES
 (1, 1, 8000, 10, 800, 7200, 2, 14400),
 (6, 1, 8000, 10, 800, 7200, 2, 14400),

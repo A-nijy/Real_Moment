@@ -26,6 +26,8 @@ public class CartService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
 
+
+    // 장바구니 목록 조회
     @Transactional
     public List<CartDto.CartResponse> showCart(Long id) {
 
@@ -50,6 +52,7 @@ public class CartService {
     }
 
 
+    // 장바구니 추가
     @Transactional
     public void saveCart(Long memberId, CartDto.CartSaveRequest request) {
 
@@ -62,6 +65,7 @@ public class CartService {
     }
 
 
+    // 장바구니 삭제
     @Transactional
     public void deleteCart(Long id, Long cartId) {
 
@@ -71,6 +75,7 @@ public class CartService {
     }
 
 
+    // 장바구니 수량 수정
     @Transactional
     public void updateStockCart(Long id, CartDto.CartUpdateStockRequest request) {
 
@@ -80,6 +85,7 @@ public class CartService {
     }
 
 
+    // 장바구니 구매 체크
     @Transactional
     public void updateCheckCart(Long id, CartDto.CartUpdateCheckRequest request) {
 

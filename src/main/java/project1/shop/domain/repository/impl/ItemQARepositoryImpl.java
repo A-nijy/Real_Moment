@@ -27,7 +27,7 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
                 .join(QItemQA.itemQA.item, QItem.item)
                 .where(itemIdEq(searchDto.getItemId()),
                         answerEq(searchDto.getAnswer()),
-                        QItem.item.isDeleteCheck.eq(false))
+                        QItem.item.isDelete.eq(false))
                 .orderBy(QItemQA.itemQA.createdDate.desc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -40,7 +40,7 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
                 .join(QItemQA.itemQA.item, QItem.item)
                 .where(itemIdEq(searchDto.getItemId()),
                         answerEq(searchDto.getAnswer()),
-                        QItem.item.isDeleteCheck.eq(false))
+                        QItem.item.isDelete.eq(false))
                 .fetchOne();
 
 
@@ -55,7 +55,7 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
                 .join(QItemQA.itemQA.member, QMember.member)
                 .join(QItemQA.itemQA.item, QItem.item)
                 .where(QMember.member.memberId.eq(memberId),
-                        QItem.item.isDeleteCheck.eq(false))
+                        QItem.item.isDelete.eq(false))
                 .orderBy(QItemQA.itemQA.createdDate.desc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -68,7 +68,7 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
                 .join(QItemQA.itemQA.member, QMember.member)
                 .join(QItemQA.itemQA.item, QItem.item)
                 .where(QMember.member.memberId.eq(memberId),
-                        QItem.item.isDeleteCheck.eq(false))
+                        QItem.item.isDelete.eq(false))
                 .fetchOne();
 
 

@@ -23,7 +23,7 @@ public class Address {
     private String tel;
     private String mainAddress;
     private String detAddress;
-    private boolean isDefAddress;
+    private boolean isDefault;
 
     public Address(AddressDto.SaveRequest request, Member member){
         this.member = member;
@@ -31,7 +31,7 @@ public class Address {
         tel = request.getTel();
         mainAddress = request.getMainAddress();
         detAddress = request.getDetAddress();
-        isDefAddress = request.isDefAddress();
+        isDefault = request.isDefault();
     }
 
     public void update(AddressDto.UpdateRequest request){
@@ -39,6 +39,6 @@ public class Address {
         tel = request.getTel();
         mainAddress = request.getMainAddress();
         detAddress = request.getDetAddress();
-        isDefAddress = request.isDefAddress();
+        isDefault = request.isDefault();
     }
 }

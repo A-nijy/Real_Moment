@@ -17,7 +17,7 @@ public class OrderDetailDto {
 
         private Long orderDetailId;
         private ItemDto.SimpleItemResponse simpleItem;
-        private int fixedPrice;                 // 결제 당시 정가
+        private int Price;                      // 결제 당시 정가
         private int discountRate;               // 결제 당시 할인율
         private int discountPrice;              // 결제 당시 할인가
         private int sellPrice;                  // 결제 당시 판매가
@@ -29,7 +29,7 @@ public class OrderDetailDto {
 
             orderDetailId = orderDetail.getOrderDetailId();
             simpleItem = new ItemDto.SimpleItemResponse(orderDetail.getItem());
-            fixedPrice = orderDetail.getFixedPrice();
+            Price = orderDetail.getPrice();
             discountRate = orderDetail.getDiscountRate();
             discountPrice = orderDetail.getDiscountPrice();
             sellPrice = orderDetail.getSellPrice();

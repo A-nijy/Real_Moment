@@ -29,15 +29,15 @@ public class WishController {
 
     // 찜 추가
     @PostMapping("/member/{id}/wish")
-    public void saveWishList(@PathVariable Long id, @RequestParam("itemId") Long itemId){
+    public void saveWishList(@PathVariable Long id, @RequestBody WishDto.WishRequest request){
 
-        wishService.saveWishList(id, itemId);
+        wishService.saveWishList(id, request);
     }
 
     // 찜 삭제
     @DeleteMapping("/member/{id}/wish")
-    public void deleteWishList(@PathVariable Long id, @RequestParam("wishListId") Long wishListId){
+    public void deleteWishList(@PathVariable Long id, @RequestParam("wishId") Long wishId){
 
-        wishService.deleteWishList(id, wishListId);
+        wishService.deleteWishList(id, wishId);
     }
 }

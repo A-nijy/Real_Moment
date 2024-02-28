@@ -87,8 +87,8 @@ public class OrderController {
 
 
     // 환불 신청하기
-    @PatchMapping("/member/{id}/order/refound")
-    public String orderRefound(@PathVariable Long id, @RequestBody OrderDto.RefoundRequest request) {
+    @PatchMapping("/member/{id}/order/refund")
+    public String orderRefund(@PathVariable Long id, @RequestBody OrderDto.RefoundRequest request) {
 
         orderService.orderRefound(request);
 

@@ -37,7 +37,7 @@ public class ItemQADto {
     @Getter
     @Setter
     public static class ItemQAResponse {
-        private Long id;
+        private Long itemQAId;
 //        private String nickname;
         private String loginId;
         private String title;
@@ -47,7 +47,7 @@ public class ItemQADto {
 
 
         public ItemQAResponse(ItemQA itemQA){
-            id = itemQA.getItemQAId();
+            itemQAId = itemQA.getItemQAId();
 //            nickname = itemQA.getMember().getNickname();
             loginId = itemQA.getMember().getLoginId();
             title = itemQA.getTitle();
@@ -63,7 +63,7 @@ public class ItemQADto {
     @Getter
     @Setter
     public static class MyItemQAResponse {
-        private Long id;
+        private Long itemQAId;
         private ItemDto.SimpleItemResponse item;
 //        private String nickname;
         private String loginId;
@@ -74,7 +74,7 @@ public class ItemQADto {
 
 
         public MyItemQAResponse(ItemQA itemQA){
-            id = itemQA.getItemQAId();
+            itemQAId = itemQA.getItemQAId();
             item = new ItemDto.SimpleItemResponse(itemQA.getItem());
 //            nickname = itemQA.getMember().getNickname();
             loginId = itemQA.getMember().getLoginId();

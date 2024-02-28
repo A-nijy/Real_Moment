@@ -62,7 +62,7 @@ public class AnnouncementDto {
     @Getter
     @Setter
     public static class UpdateRequest {
-        private Long AnnouncementId;
+        private Long announcementId;
         private String title;
         private String content;
         private boolean isFix;

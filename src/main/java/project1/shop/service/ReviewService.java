@@ -72,7 +72,7 @@ public class ReviewService {
 
     public void updateReview(Long id, ReviewDto.ReviewUpdateRequest request) {
 
-        Review review = reviewRepository.findById(request.getId()).orElseThrow(IllegalArgumentException::new);
+        Review review = reviewRepository.findById(request.getReviewId()).orElseThrow(IllegalArgumentException::new);
 
         review.Update(request);
 

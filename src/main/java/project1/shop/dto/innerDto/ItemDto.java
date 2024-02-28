@@ -27,7 +27,7 @@ public class ItemDto {
         private int discountPrice;
         private int sellPrice;
         private int stock;
-        private boolean isSellCheck;
+        private boolean isSell;
         private String mainImg;
         private String serveImg;
     }
@@ -48,8 +48,7 @@ public class ItemDto {
         private int discountPrice;
         private int sellPrice;
         private int stock;
-        private boolean isSellCheck;
-        private boolean isDeleteCheck;
+        private boolean isSell;
         private String mainImg;
         private String serveImg;
     }
@@ -62,25 +61,25 @@ public class ItemDto {
     @Getter
     @Setter
     public static class SimpleItemResponse {
-        private Long id;
+        private Long itemId;
         private String name;
         private int price;
         private int discountRate;
         private int discountPrice;
         private int sellPrice;
-        private boolean isSellCheck;
+        private boolean isSell;
         private String mainImg;
 
 
         @QueryProjection
         public SimpleItemResponse (Item item){
-            id = item.getItemId();
+            itemId = item.getItemId();
             name = item.getName();
             price = item.getPrice();
             discountRate = item.getDiscountRate();
             discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
-            isSellCheck = item.isSellCheck();
+            isSell = item.isSell();
             mainImg = item.getMainImg();
         }
     }
@@ -92,7 +91,7 @@ public class ItemDto {
     @Getter
     @Setter
     public static class FullItemResponse{
-        private Long id;
+        private Long itemId;
         private String name;
         private String content;
         private int price;
@@ -102,14 +101,14 @@ public class ItemDto {
         private LocalDateTime createdDate;
         private LocalDateTime lastModifiedDate;
         private int stock;
-        private boolean isSellCheck;
-        private boolean isDeleteCheck;
+        private boolean isSell;
+        private boolean isDelete;
         private String mainImg;
         private String serveImg;
 
 
         public FullItemResponse(Item item){
-            id = item.getItemId();
+            itemId = item.getItemId();
             name = item.getName();
             content = item.getContent();
             price = item.getPrice();
@@ -119,8 +118,8 @@ public class ItemDto {
             createdDate = item.getCreatedDate();
             lastModifiedDate = item.getLastModifiedDate();
             stock = item.getStock();
-            isSellCheck = item.isSellCheck();
-            isDeleteCheck = item.isDeleteCheck();
+            isSell = item.isSell();
+            isDelete = item.isDelete();
             mainImg = item.getMainImg();
             serveImg = item.getServeImg();
         }
@@ -145,26 +144,26 @@ public class ItemDto {
     @Getter
     @Setter
     public static class OrderPageItemResponse {
-        private Long id;
+        private Long itemId;
         private String name;
         private int price;
         private int discountRate;
         private int discountPrice;
         private int sellPrice;
-        private boolean isSellCheck;
+        private boolean isSell;
         private String mainImg;
         private int count;
         private int totalSellPrice;
 
 
         public OrderPageItemResponse(Item item, int count){
-            id = item.getItemId();
+            itemId = item.getItemId();
             name = item.getName();
             price = item.getPrice();
             discountRate = item.getDiscountRate();
             discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
-            isSellCheck = item.isSellCheck();
+            isSell = item.isSell();
             mainImg = item.getMainImg();
             this.count = count;
             totalSellPrice = item.getSellPrice() * count;

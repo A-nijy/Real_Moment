@@ -26,8 +26,8 @@ public class Item extends TimeAndByCheck {
     private int discountPrice;
     private int sellPrice;
     private int stock;
-    private boolean isSellCheck;
-    private boolean isDeleteCheck = false;
+    private boolean isSell;
+    private boolean isDelete = false;
     private String mainImg;
     private String serveImg;
 
@@ -42,7 +42,7 @@ public class Item extends TimeAndByCheck {
         discountPrice = request.getDiscountPrice();
         sellPrice = request.getSellPrice();
         stock = request.getStock();
-        isSellCheck = request.isSellCheck();
+        isSell = request.isSell();
         mainImg = request.getMainImg();
         serveImg = request.getServeImg();
     }
@@ -57,8 +57,7 @@ public class Item extends TimeAndByCheck {
         discountRate = request.getDiscountRate();
         sellPrice = request.getSellPrice();
         stock = request.getStock();
-        isSellCheck = request.isSellCheck();
-        isDeleteCheck = request.isDeleteCheck();
+        isSell = request.isSell();
         mainImg = request.getMainImg();
         serveImg = request.getServeImg();
     }
@@ -81,8 +80,8 @@ public class Item extends TimeAndByCheck {
         category = null;
         name = null;
         content = null;
-        isSellCheck = false;
-        isDeleteCheck = true;
+        isSell = false;
+        isDelete = true;
         mainImg = null;
         serveImg = null;
     }

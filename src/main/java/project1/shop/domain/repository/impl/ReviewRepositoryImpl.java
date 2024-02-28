@@ -28,7 +28,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                                             .join(QReview.review.item, QItem.item)
                                             .where(itemIdEq(searchDto.getItemId()),
                                                     starEq(searchDto.getStar()),
-                                                    QItem.item.isDeleteCheck.eq(false))
+                                                    QItem.item.isDelete.eq(false))
                                             .orderBy(QReview.review.createdDate.desc().nullsLast())
                                             .offset(pageable.getOffset())
                                             .limit(pageable.getPageSize())
@@ -41,7 +41,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .join(QReview.review.item, QItem.item)
                 .where(itemIdEq(searchDto.getItemId()),
                         starEq(searchDto.getStar()),
-                        QItem.item.isDeleteCheck.eq(false))
+                        QItem.item.isDelete.eq(false))
                 .fetchOne();
 
 

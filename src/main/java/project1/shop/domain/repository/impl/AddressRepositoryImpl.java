@@ -24,7 +24,7 @@ public class AddressRepositoryImpl implements AddressRepositoryCustom {
         Address address = queryFactory.selectFrom(QAddress.address)
                 .join(QAddress.address.member, QMember.member)
                 .where(QMember.member.memberId.eq(memberId),
-                        QAddress.address.isDefAddress.eq(true))
+                        QAddress.address.isDefault.eq(true))
                 .fetchOne();
 
 

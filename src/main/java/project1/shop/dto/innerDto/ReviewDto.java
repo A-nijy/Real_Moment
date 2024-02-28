@@ -27,7 +27,7 @@ public class ReviewDto {
     @Getter
     @Setter
     public static class ReviewUpdateRequest{
-        private Long id;
+        private Long reviewId;
         private String title;
         private String content;
         private int star;
@@ -39,7 +39,7 @@ public class ReviewDto {
     @Getter
     @Setter
     public static class ReviewResponse {
-        private Long id;
+        private Long reviewId;
 //        private String nickname;
         private String loginId;
         private String title;
@@ -51,7 +51,7 @@ public class ReviewDto {
 
 
         public ReviewResponse(Review review){
-            id = review.getReviewId();
+            reviewId = review.getReviewId();
 //            nickname = review.getMember().getNickname();
             loginId = review.getMember().getLoginId();
             title = review.getTitle();
@@ -68,7 +68,7 @@ public class ReviewDto {
     @Getter
     @Setter
     public static class MyReviewResponse {
-        private Long id;
+        private Long reviewId;
         private ItemDto.SimpleItemResponse item;
 //        private String nickname;
         private String loginId;
@@ -80,7 +80,7 @@ public class ReviewDto {
 
 
         public MyReviewResponse(Review review){
-            id = review.getReviewId();
+            reviewId = review.getReviewId();
             item = new ItemDto.SimpleItemResponse(review.getItem());
 //            nickname = review.getMember().getNickname();
             loginId = review.getMember().getLoginId();

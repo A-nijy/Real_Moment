@@ -427,7 +427,7 @@ public class OrderService {
 
             Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
-            if (!item.isSellCheck()){
+            if (!item.isSell()){
 
                 throw new IllegalArgumentException("판매중인 상품이 아닙니다.");
             }

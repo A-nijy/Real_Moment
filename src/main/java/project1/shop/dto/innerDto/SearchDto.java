@@ -22,7 +22,7 @@ public class SearchDto {
         private String itemSort = null;                // 정렬 = new, hot, sale
         private Long categoryId = null;                // 카테고리
         private String itemName = null;                // 상품 이름
-        private Boolean isDeleteCheck = null;           // 상품 삭제 여부
+        private Boolean isDelete = null;                // 상품 삭제 여부
         private int nowPage = 1;                       // 페이지
     }
 

@@ -30,6 +30,7 @@ public class CategoryDto {
     }
 
 
+    // 카테고리 조회 응답
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter

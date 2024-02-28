@@ -34,7 +34,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                                             .join(QItem.item.category, QCategory.category)
                                             .where(itemNameContains(searchDto.getItemName()),
                                                     categoryIdEq(searchDto.getCategoryId()),
-                                                    itemDeleteCheck(searchDto.getIsDeleteCheck()))
+                                                    itemDeleteCheck(searchDto.getIsDelete()))
                                             .orderBy(QItem.item.discountRate.desc(), QItem.item.createdDate.desc().nullsLast())
                                             .offset(pageable.getOffset())
                                             .limit(pageable.getPageSize())
@@ -46,7 +46,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                                             .join(QItem.item.category, QCategory.category)
                                             .where(itemNameContains(searchDto.getItemName()),
                                                     categoryIdEq(searchDto.getCategoryId()),
-                                                    itemDeleteCheck(searchDto.getIsDeleteCheck()))
+                                                    itemDeleteCheck(searchDto.getIsDelete()))
                                             .orderBy(QItem.item.discountRate.desc(), QItem.item.createdDate.desc().nullsLast())
                                             .offset(pageable.getOffset())
                                             .limit(pageable.getPageSize())
@@ -58,7 +58,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                                             .join(QItem.item.category, QCategory.category)
                                             .where(itemNameContains(searchDto.getItemName()),
                                                     categoryIdEq(searchDto.getCategoryId()),
-                                                    itemDeleteCheck(searchDto.getIsDeleteCheck()))
+                                                    itemDeleteCheck(searchDto.getIsDelete()))
                                             .orderBy(QItem.item.createdDate.desc().nullsLast())
                                             .offset(pageable.getOffset())
                                             .limit(pageable.getPageSize())
@@ -97,6 +97,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
         if(deleteCheck == null){
             return null;
         }
-        return QItem.item.isDeleteCheck.eq(deleteCheck);
+        return QItem.item.isDelete.eq(deleteCheck);
     }
 }

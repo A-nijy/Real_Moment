@@ -26,6 +26,8 @@ public class WishService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
+
+    // 찜 목록 조회
     @Transactional
     public List<WishDto.WishListResponse> showWishList(Long id) {
 
@@ -39,7 +41,6 @@ public class WishService {
     }
 
     // WishList엔티티 -> WishListDto 변환 과정 (WishListDto 내부에 ItemDto가 있는데 WishList엔티티의 Item을 ItemDto로 변환)
-
     public WishDto.WishListResponse mapToDto(Wish wish) {
 
         ItemDto.SimpleItemResponse simpleItemDto = new ItemDto.SimpleItemResponse(wish.getItem());
@@ -49,19 +50,22 @@ public class WishService {
         return wishListResponse;
     }
 
+
+    // 찜 추가
     @Transactional
-    public void saveWishList(Long id, Long itemId) {
+    public void saveWishList(Long id, WishDto.WishRequest request) {
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
+        Item item = itemRepository.findById(request.getWishId()).orElseThrow(IllegalArgumentException::new);
 
         wishRepository.save(new Wish(member, item));
     }
 
+    // 찜 삭제
     @Transactional
-    public void deleteWishList(Long memberId, Long wishListId) {
+    public void deleteWishList(Long memberId, Long wishId) {
 
-        Wish wish = wishRepository.findByWishIdAndMember_MemberId(wishListId, memberId).orElseThrow(IllegalArgumentException::new);
+        Wish wish = wishRepository.findByWishIdAndMember_MemberId(wishId, memberId).orElseThrow(IllegalArgumentException::new);
 
         wishRepository.delete(wish);
     }
