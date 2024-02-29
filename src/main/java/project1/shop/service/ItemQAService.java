@@ -30,21 +30,6 @@ public class ItemQAService {
     private final MemberRepository memberRepository;
 
 
-    // 상품 Q&A 목록 보기
-    @Transactional
-    public List<ItemQADto.ItemQAResponse> showQAList(SearchDto.ItemQAs request) {
-
-        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
-
-        Page<ItemQA> itemQAs = itemQARepository.searchItemQAs(request, pageRequest);
-
-        List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
-                .map(ItemQADto.ItemQAResponse::new)
-                .collect(Collectors.toList());
-
-        return itemQADto;
-    }
-
     // 내가 작성한 상품 Q&A 목록 보기
     @Transactional
     public List<ItemQADto.MyItemQAResponse> showMyQAList(Long id, SearchDto.Page nowPage) {

@@ -18,15 +18,6 @@ public class ItemQAController {
     private final ItemQAService itemQAService;
 
 
-    // 특정 상품 문의 목록 조회
-    @GetMapping("/QAList")
-    public List<ItemQADto.ItemQAResponse> showQAList(SearchDto.ItemQAs request){
-
-        List<ItemQADto.ItemQAResponse> itemQADto = itemQAService.showQAList(request);
-
-        return itemQADto;
-    }
-
 
     // 내가 작성한 상품 문의 목록 조회
     @GetMapping("/member/{id}/QAList")

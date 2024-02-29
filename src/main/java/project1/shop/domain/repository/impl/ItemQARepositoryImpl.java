@@ -26,7 +26,7 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
         List<ItemQA> itemQAs = queryFactory.selectFrom(QItemQA.itemQA)
                 .join(QItemQA.itemQA.item, QItem.item)
                 .where(itemIdEq(searchDto.getItemId()),
-                        answerEq(searchDto.getAnswer()),
+                        answerEq(searchDto.getIsAnswer()),
                         QItem.item.isDelete.eq(false))
                 .orderBy(QItemQA.itemQA.createdDate.desc().nullsLast())
                 .offset(pageable.getOffset())
@@ -39,7 +39,7 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
                 .from(QItemQA.itemQA)
                 .join(QItemQA.itemQA.item, QItem.item)
                 .where(itemIdEq(searchDto.getItemId()),
-                        answerEq(searchDto.getAnswer()),
+                        answerEq(searchDto.getIsAnswer()),
                         QItem.item.isDelete.eq(false))
                 .fetchOne();
 
@@ -85,11 +85,11 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
         return QItem.item.itemId.eq(itemId);
     }
 
-    private BooleanExpression answerEq(Boolean answer){
+    private BooleanExpression answerEq(Boolean isAnswer){
 
-        if(answer == null){
+        if(isAnswer == null){
             return null;
         }
-        return QItemQA.itemQA.answer.eq(answer);
+        return QItemQA.itemQA.isAnswer.eq(isAnswer);
     }
 }

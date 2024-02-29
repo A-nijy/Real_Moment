@@ -3,11 +3,14 @@ package project1.shop.adminService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.ItemQA;
 import project1.shop.domain.repository.ItemQARepository;
 import project1.shop.dto.innerDto.ItemQADto;
+import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,15 +25,17 @@ public class AdminItemQAService {
 
     // 모든 상품 Q&A 목록 조회
     @Transactional
-    public List<ItemQADto.ItemQAResponse> showQAList() {
+    public List<ItemQADto.ItemQAResponse> showQAList(SearchDto.ItemQAs request) {
 
-        List<ItemQA> QAList = itemQARepository.findAll();
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
-        List<ItemQADto.ItemQAResponse> QAListDto = QAList.stream()
+        Page<ItemQA> itemQAs = itemQARepository.searchItemQAs(request, pageRequest);
+
+        List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
                 .map(ItemQADto.ItemQAResponse::new)
                 .collect(Collectors.toList());
 
-        return QAListDto;
+        return itemQADto;
     }
 
 

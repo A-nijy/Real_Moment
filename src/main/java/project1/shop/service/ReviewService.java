@@ -28,19 +28,6 @@ public class ReviewService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
-    @Transactional
-    public List<ReviewDto.ReviewResponse> showReviews(SearchDto.Reviews request) {
-
-        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
-
-        Page<Review> reviews = reviewRepository.searchReviews(request, pageRequest);
-
-        List<ReviewDto.ReviewResponse> reviewsDto = reviews.stream()
-                                                        .map(ReviewDto.ReviewResponse::new)
-                                                        .collect(Collectors.toList());
-
-        return reviewsDto;
-    }
 
     @Transactional
     public List<ReviewDto.MyReviewResponse> showMyReviews(Long memberId, SearchDto.Page nowPage) {

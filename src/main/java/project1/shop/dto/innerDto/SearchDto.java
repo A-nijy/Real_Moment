@@ -47,7 +47,7 @@ public class SearchDto {
     @Setter
     public static class ItemQAs{
         private Long itemId = null;                      // 해당 상품
-        private Boolean answer = null;                 // 답변 여부
+        private Boolean isAnswer = null;                 // 답변 여부
         private int nowPage = 1;                // 페이지
     }
 

@@ -178,7 +178,7 @@ VALUES
 
 -- ItemQA 상품 문의 더미데이터
 
-INSERT INTO itemqa (item_id, member_id, title, content, answer, created_date, last_modified_date)
+INSERT INTO itemqa (item_id, member_id, title, content, is_answer, created_date, last_modified_date)
 VALUES
 (1, 1, 'QA title1', 'QA content1', true, '2023-01-05 10:30:00', '2023-01-05 11:00:00'),
 (6, 1, 'QA title2', 'QA content2', true, '2023-02-05 10:30:00', '2023-02-05 11:00:00'),

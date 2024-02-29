@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import project1.shop.adminService.AdminItemQAService;
 import project1.shop.dto.innerDto.ItemQADto;
+import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class AdminItemQAController {
 
     // 모든 상품 Q&A 목록 보기
     @GetMapping("/admin/QAList")
-    public List<ItemQADto.ItemQAResponse> showQAList(){
+    public List<ItemQADto.ItemQAResponse> showQAList(SearchDto.ItemQAs request){
 
-        List<ItemQADto.ItemQAResponse> QAListDto = adminItemQAService.showQAList();
+        List<ItemQADto.ItemQAResponse> QAListDto = adminItemQAService.showQAList(request);
 
         return QAListDto;
     }

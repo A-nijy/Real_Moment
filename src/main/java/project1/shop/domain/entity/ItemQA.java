@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import project1.shop.domain.AutoCheck.TimeCheck;
 import project1.shop.dto.innerDto.ItemQADto;
 
-import java.time.LocalDateTime;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +24,7 @@ public class ItemQA extends TimeCheck {
     private Item item;
     private String title;
     private String content;
-    private boolean answer = false;
+    private boolean isAnswer = false;
 
 
     public ItemQA(Member member, Item item, ItemQADto.ItemQARequest request){
