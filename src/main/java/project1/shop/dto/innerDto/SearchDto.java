@@ -39,6 +39,7 @@ public class SearchDto {
     }
 
 
+
     // 상품 문의 목록 조회
     @AllArgsConstructor
     @NoArgsConstructor

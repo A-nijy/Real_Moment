@@ -56,7 +56,7 @@ public class WishService {
     public void saveWishList(Long id, WishDto.WishRequest request) {
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        Item item = itemRepository.findById(request.getWishId()).orElseThrow(IllegalArgumentException::new);
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
         wishRepository.save(new Wish(member, item));
     }

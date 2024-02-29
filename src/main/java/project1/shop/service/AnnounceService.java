@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Announcement;
-import project1.shop.domain.repository.AnnouncementRepository;
+import project1.shop.domain.repository.AnnouncementRepositoryRepository;
 import project1.shop.dto.innerDto.AnnouncementDto;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AnnounceService {
 
-    private final AnnouncementRepository announcementRepository;
+    private final AnnouncementRepositoryRepository announcementRepository;
 
     @Transactional
     public List<AnnouncementDto.response> showAnnouncements(int nowPage) {

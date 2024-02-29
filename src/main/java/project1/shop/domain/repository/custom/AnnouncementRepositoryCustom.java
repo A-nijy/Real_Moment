@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import project1.shop.domain.entity.Announcement;
 
-public interface AnnouncementCustom {
+public interface AnnouncementRepositoryCustom {
 
     Page<Announcement> searchPage(Pageable pageable);
 }

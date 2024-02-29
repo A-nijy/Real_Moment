@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Admin;
 import project1.shop.domain.entity.Announcement;
 import project1.shop.domain.repository.AdminRepository;
-import project1.shop.domain.repository.AnnouncementRepository;
+import project1.shop.domain.repository.AnnouncementRepositoryRepository;
 import project1.shop.dto.innerDto.AnnouncementDto;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AdminAnnouncementService {
 
-    private final AnnouncementRepository announcementRepository;
+    private final AnnouncementRepositoryRepository announcementRepository;
     private final AdminRepository adminRepository;
 
 

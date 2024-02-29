@@ -29,6 +29,6 @@ public class WishDto {
     @Setter
     public static class WishRequest {
 
-        private Long wishId;
+        private Long itemId;
     }
 }

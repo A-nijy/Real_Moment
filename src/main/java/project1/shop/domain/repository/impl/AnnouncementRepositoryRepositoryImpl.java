@@ -6,17 +6,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import project1.shop.domain.entity.Announcement;
 import project1.shop.domain.entity.QAnnouncement;
-import project1.shop.domain.entity.QCategory;
-import project1.shop.domain.entity.QItem;
-import project1.shop.domain.repository.custom.AnnouncementCustom;
+import project1.shop.domain.repository.custom.AnnouncementRepositoryCustom;
 
 import java.util.List;
 
-public class AnnouncementImpl implements AnnouncementCustom {
+public class AnnouncementRepositoryRepositoryImpl implements AnnouncementRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    public AnnouncementImpl(JPAQueryFactory queryFactory){
+    public AnnouncementRepositoryRepositoryImpl(JPAQueryFactory queryFactory){
         this.queryFactory = queryFactory;
     }
 
