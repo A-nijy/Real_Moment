@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import project1.shop.domain.entity.*;
-import project1.shop.domain.repository.custom.OrdersRepositoryCustom;
+import project1.shop.domain.repository.custom.OrderRepositoryCustom;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.enumeration.PaymentStatus;
 
@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
-public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
+public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    public OrdersRepositoryImpl(JPAQueryFactory queryFactory){
+    public OrderRepositoryImpl(JPAQueryFactory queryFactory){
         this.queryFactory = queryFactory;
     }
 
@@ -101,6 +101,21 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
 
         return new PageImpl<>(orders, pageable, total);
 
+    }
+
+    @Override
+    public List<Order> findSevenDays() {
+
+        // 현재 시각으로 부터 7일전 시각
+        LocalDateTime sevenDaysAgo = LocalDateTime.now().minusDays(7);
+
+        List<Order> orderList = queryFactory.selectFrom(QOrder.order)
+                .where(QOrder.order.status.eq(PaymentStatus.DELIVERY_DONE),
+                        QOrder.order.deliveryDate.before(sevenDaysAgo))
+                .fetch();
+
+
+        return orderList;
     }
 
 

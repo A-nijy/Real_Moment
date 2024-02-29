@@ -15,7 +15,7 @@ import project1.shop.domain.entity.OrderDetail;
 import project1.shop.domain.entity.Order;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.OrderDetailRepository;
-import project1.shop.domain.repository.OrdersRepository;
+import project1.shop.domain.repository.OrderRepository;
 import project1.shop.dto.innerDto.OrderDetailDto;
 import project1.shop.dto.innerDto.OrderDto;
 import project1.shop.dto.innerDto.SearchDto;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AdminOrderService {
 
-    private final OrdersRepository ordersRepository;
+    private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ItemRepository itemRepository;
 
@@ -51,7 +51,7 @@ public class AdminOrderService {
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
         log.info("1");
-        Page<Order> orders = ordersRepository.searchOrders(request, pageRequest);
+        Page<Order> orders = orderRepository.searchOrders(request, pageRequest);
         log.info("2");
         List<OrderDto.OrderResponse> ordersDto = orders.stream()
                 .map(OrderDto.OrderResponse::new)
@@ -77,7 +77,7 @@ public class AdminOrderService {
     @Transactional
     public OrderDto.AdminOrderDetailResponse showOrder(Long orderId) {
 
-        Order order = ordersRepository.findById(orderId).orElseThrow(IllegalArgumentException::new);
+        Order order = orderRepository.findById(orderId).orElseThrow(IllegalArgumentException::new);
 
         OrderDto.AdminOrderResponse orderResponse = new OrderDto.AdminOrderResponse(order);
 
@@ -101,7 +101,7 @@ public class AdminOrderService {
     @Transactional
     public void updateOrderStatus(OrderDto.AdminOrderStatus request) {
 
-        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
         PaymentStatus status = PaymentStatus.fromString(request.getStatus());
 
@@ -114,7 +114,7 @@ public class AdminOrderService {
     @Transactional
     public void orderCancel(OrderDto.CancelRequest request) throws IOException {
 
-        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
 
         // 1. 토큰 발급받기

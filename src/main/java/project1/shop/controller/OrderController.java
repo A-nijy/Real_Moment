@@ -96,7 +96,7 @@ public class OrderController {
     }
 
 
-    // 구매 확정하기
+    // 구매 확정하기 (+ 회원 적립금, 올해 총 구매 금액 적용 및 등급 재정의)
     @PatchMapping("/member/{id}/order/done")
     public String orderDone(@PathVariable Long id, @RequestBody OrderDto.DoneRequest request){
 

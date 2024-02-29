@@ -36,9 +36,10 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final AddressRepository addressRepository;
     private final ItemRepository itemRepository;
-    private final OrdersRepository ordersRepository;
+    private final OrderRepository orderRepository;
     private final IamportClient iamportClient;
     private final OrderDetailRepository orderDetailRepository;
+    private final GradeRepository gradeRepository;
 
     @Value("${imp.api.key}")
     private String apiKey;
@@ -114,7 +115,7 @@ public class OrderService {
 
         // orders 객체 생성
         Order order = new Order(member, request);
-        ordersRepository.save(order);
+        orderRepository.save(order);
 
         // orderDetail 객체 생성
         for(OrderDto.OrderPageItemRequest itemRequest : request.getItems()){
@@ -142,7 +143,7 @@ public class OrderService {
             IamportResponse<Payment> iamportResponse = getIamportResponse(request);
 
             // 해당 주문 테이블 테이블를 가져온다.
-            Order order = ordersRepository.findByMerchantUid(request.getMerchantUid()).orElseThrow(NoSuchElementException::new);
+            Order order = orderRepository.findByMerchantUid(request.getMerchantUid()).orElseThrow(NoSuchElementException::new);
 
             // 포트원으로부터 받은 결제 데이터 iamportResponse와 주문 데이터를 가져와서 결제에 대해 검증한다.
             validatePaymentStatusAndPay(iamportResponse, order);
@@ -164,6 +165,9 @@ public class OrderService {
             // 상품 재고 차감
             subStock(order);
 
+            // 주문일 정의
+            order.updateOrderedDate();
+
             return iamportResponse;
 
         } catch (IamportResponseException | IOException e){
@@ -179,7 +183,7 @@ public class OrderService {
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
         log.info("1");
-        Page<Order> orders = ordersRepository.searchMyOrders(request, id, pageRequest);
+        Page<Order> orders = orderRepository.searchMyOrders(request, id, pageRequest);
         log.info("2");
         List<OrderDto.OrderResponse> ordersDto = orders.stream()
                 .map(OrderDto.OrderResponse::new)
@@ -205,7 +209,7 @@ public class OrderService {
     @Transactional
     public OrderDto.OrderDetailResponse showOrder(Long orderId) {
 
-        Order order = ordersRepository.findById(orderId).orElseThrow(IllegalArgumentException::new);
+        Order order = orderRepository.findById(orderId).orElseThrow(IllegalArgumentException::new);
 
         OrderDto.OrderResponse orderResponse = new OrderDto.OrderResponse(order);
 
@@ -229,7 +233,7 @@ public class OrderService {
     @Transactional
     public void orderCancel(OrderDto.CancelRequest request) throws IOException {
 
-        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
         if(!order.getStatus().equals(PaymentStatus.PAYMENT_DONE)){
 
@@ -326,7 +330,7 @@ public class OrderService {
     @Transactional
     public void orderRefound(OrderDto.RefundRequest request) {
 
-        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
         // 주문 상태가 배송 완료인지 확인
         if(!PaymentStatus.DELIVERY_DONE.equals(order.getStatus())){
@@ -337,18 +341,27 @@ public class OrderService {
     }
 
 
-    // 주문 상태 구매 확정으로 변경하기
+    // 주문 상태 구매 확정으로 변경하기 (+ 회원 적립금, 올해 총 구매 금액 적용 및 등급 재정의)
     @Transactional
     public void orderDone(OrderDto.DoneRequest request) {
 
-        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
         // 주문 상태가 배송 완료인지 확인
         if(!PaymentStatus.DELIVERY_DONE.equals(order.getStatus())){
             throw new IllegalArgumentException("구매 확정이 불가능한 주문 상태입니다.");
         }
 
+        // 주문 상태를 구매 확정으로 변경
         order.updateStatus(PaymentStatus.DONE);
+
+        // 회원에 적립금, 올해 총 구매 금액 적용
+        Member member = memberRepository.findById(order.getMember().getMemberId()).orElseThrow(IllegalArgumentException::new);
+        member.updateOrderMember(order);
+
+        // 회원의 올해 총 구매 금액에 따라 등급 재정의
+        Grade grade = gradeRepository.findHighestGrade(member.getThisYearPay());
+        member.updateGrade(grade);
     }
 
 
@@ -436,7 +449,7 @@ public class OrderService {
             orderDetailRepository.delete(orderDetail);
         }
 
-        ordersRepository.delete(order);
+        orderRepository.delete(order);
     }
 
 

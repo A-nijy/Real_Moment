@@ -56,37 +56,58 @@ public class Member extends TimeCheck {
         roles = request.getRoles();
     }
 
+    // 최근 접속일 업데이트
     public void loginStatus(){
         recentlyLogin = LocalDateTime.now();
     }
 
 
+    // 비밀번호 수정
     public void UpdatePassword(MemberDto.UpdatePasswordRequest request){
         loginPassword = request.getNewLoginPassword();
     }
 
 
+    // 이메일 수정
     public void UpdateEmail(String email){
         this.email = email;
     }
 
+    // 이름 수정
     public void UpdateName(String name){
         this.name = name;
     }
 
+    // 생년월일 수정
     public void UpdateBirth(LocalDate birth){
         this.birthDate = birth;
     }
 
+    // 전화번호 수정
     public void UpdateTel(String tel){
         this.tel = tel;
     }
 
+    // 포인트 차감
     public void deletePoint(int point){
         this.point -= point;
     }
 
 
+    // 구매 확정시 적립금, 올해 총 구매 금액 적용
+    public void updateOrderMember(Order order){
+
+        point += order.getGetPoint();
+        thisYearPay += order.getTotalPrice();
+    }
+
+    // 회원 등급 재정의
+    public void updateGrade(Grade grade){
+        this.grade = grade;
+    }
+
+
+    // 회원 탈퇴
     public void DeleteMember(){
         grade = null;
         loginId = null;
