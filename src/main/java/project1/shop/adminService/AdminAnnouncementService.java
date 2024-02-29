@@ -3,6 +3,8 @@ package project1.shop.adminService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Admin;
@@ -25,11 +27,13 @@ public class AdminAnnouncementService {
 
     // 공지사항 목록 조회
     @Transactional
-    public List<AnnouncementDto.response> showAnnouncements() {
+    public List<AnnouncementDto.response> showAnnouncements(int nowPage) {
 
-        List<Announcement> announcements = announcementRepository.findAll();
+        PageRequest pageRequest = PageRequest.of(nowPage - 1, 9);
 
-        List<AnnouncementDto.response> announcementsDto = announcements.stream()
+        Page<Announcement> announcementList = announcementRepository.searchPage(pageRequest);
+
+        List<AnnouncementDto.response> announcementsDto = announcementList.stream()
                 .map(AnnouncementDto.response::new)
                 .collect(Collectors.toList());
 

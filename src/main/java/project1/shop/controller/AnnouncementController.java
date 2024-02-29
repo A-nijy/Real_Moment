@@ -21,9 +21,9 @@ public class AnnouncementController {
 
     // 공지사항 목록 조회
     @GetMapping("/announcementList")
-    public List<AnnouncementDto.response> showAnnouncements() {
+    public List<AnnouncementDto.response> showAnnouncements(@RequestParam("nowPage") int nowPage) {
 
-        List<AnnouncementDto.response> announcementsDto = announceService.showAnnouncements();
+        List<AnnouncementDto.response> announcementsDto = announceService.showAnnouncements(nowPage);
 
         return announcementsDto;
     }

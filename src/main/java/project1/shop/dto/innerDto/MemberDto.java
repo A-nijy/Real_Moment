@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import project1.shop.domain.entity.Member;
+import project1.shop.enumeration.Gender;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -55,7 +56,7 @@ public class MemberDto {
         @NotBlank(message = "성별을 입력해주세요")
         @Size(min = 1, max = 1, message = "한 글자가 아닙니다.")
         @Pattern(regexp = "^[남여]$", message = "남 또는 여를 입력해주세요")
-        private String gender;
+        private Gender gender;
 
         private String roles;
     }
@@ -179,7 +180,7 @@ public class MemberDto {
         private String name;
         private String tel;
         private String birthDate;
-        private String gender;
+        private Gender gender;
         private int point;
         private LocalDateTime createdDate;
 
@@ -240,7 +241,7 @@ public class MemberDto {
         private String name;
         private String tel;
         private String birthDate;
-        private String gender;
+        private Gender gender;
         private int point;
         private LocalDateTime recentlyLogin;
         private boolean isDelete;

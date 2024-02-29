@@ -20,9 +20,9 @@ public class AdminAnnouncementController {
 
     // 공지사항 목록 조회
     @GetMapping("/admin/announcementList")
-    public List<AnnouncementDto.response> showAnnouncements() {
+    public List<AnnouncementDto.response> showAnnouncements(@RequestParam("nowPage") int nowPage) {
 
-        List<AnnouncementDto.response> announcementsDto = adminAnnouncementService.showAnnouncements();
+        List<AnnouncementDto.response> announcementsDto = adminAnnouncementService.showAnnouncements(nowPage);
 
         return announcementsDto;
     }

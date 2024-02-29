@@ -25,7 +25,7 @@ public class Admin extends TimeCheck {
     private String email = null;
     private String name = null;
     private String roles;
-    private boolean isDeleteCheck = false;
+    private boolean isDelete = false;
 
 
     public Admin(AdminDto.CreateRequest request){
@@ -49,7 +49,7 @@ public class Admin extends TimeCheck {
         email = null;
         name = null;
         roles = null;
-        isDeleteCheck = true;
+        isDelete = true;
     }
 
 

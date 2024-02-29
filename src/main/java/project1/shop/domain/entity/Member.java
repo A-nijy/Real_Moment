@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project1.shop.domain.AutoCheck.TimeCheck;
 import project1.shop.dto.innerDto.MemberDto;
+import project1.shop.enumeration.Gender;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,7 +33,9 @@ public class Member extends TimeCheck {
     private String name;
     private String tel;
     private LocalDate birthDate;
-    private String gender;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     private int thisYearPay = 0;
     private int point = 0;
     private LocalDateTime recentlyLogin = LocalDateTime.now();

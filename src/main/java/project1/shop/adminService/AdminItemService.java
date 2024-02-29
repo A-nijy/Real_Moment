@@ -26,6 +26,7 @@ public class AdminItemService {
     private final CategoryRepository categoryRepository;
 
 
+    // 상품 목록 조회
     @Transactional
     public List<ItemDto.SimpleItemResponse> showItems(SearchDto.Items request) {
 
@@ -41,6 +42,7 @@ public class AdminItemService {
     }
 
 
+    // 상품 상세 조회
     @Transactional
     public ItemDto.FullItemResponse showItem(Long itemId) {
 
@@ -52,6 +54,7 @@ public class AdminItemService {
     }
 
 
+    // 상품 저장
     @Transactional
     public void saveItem(ItemDto.SaveRequest request) {
 
@@ -63,6 +66,7 @@ public class AdminItemService {
     }
 
 
+    // 상품 수정
     @Transactional
     public void updateItem(ItemDto.UpdateRequest request) {
 
@@ -74,6 +78,7 @@ public class AdminItemService {
     }
 
 
+    // 상품 삭제
     @Transactional
     public void deleteItem(Long itemId) {
 

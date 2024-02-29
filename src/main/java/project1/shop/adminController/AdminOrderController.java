@@ -19,8 +19,8 @@ public class AdminOrderController {
     private final AdminOrderService adminOrderService;
 
     // 주문 내역 목록 조회
-    @PostMapping("/admin/orderList")
-    public List<OrderDto.OrderResponse> showOrders(@RequestBody SearchDto.OrdersSearch request){
+    @GetMapping("/admin/orderList")
+    public List<OrderDto.OrderResponse> showOrders(@RequestParam SearchDto.OrdersSearch request){
 
         List<OrderDto.OrderResponse> orders = adminOrderService.showOrders(request);
 

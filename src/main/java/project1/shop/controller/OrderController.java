@@ -26,8 +26,8 @@ public class OrderController {
 
 
     // 구매하기 버튼을 눌러 결제 정보 입력 창 호출 (이름 / 연락처 / 주소 / 요청사항 / 상품 / 총 상품 금액 / 총 할인 금액 / 보유 총 적립금 / 사용 적립금
-    @PostMapping("/member/{id}/order/page")
-    public OrderDto.OrderPageResponse giveOrderPage(@PathVariable Long id, @RequestBody List<OrderDto.OrderPageItemRequest> requestList){
+    @GetMapping("/member/{id}/order/page")
+    public OrderDto.OrderPageResponse giveOrderPage(@PathVariable Long id, @RequestParam List<OrderDto.OrderPageItemRequest> requestList){
 
         OrderDto.OrderPageResponse orderPageDto = orderService.giveOrderPage(id, requestList);
 
@@ -57,8 +57,8 @@ public class OrderController {
 
 
     // 주문 내역 목록 조회
-    @PostMapping("/member/{id}/orderList")
-    public List<OrderDto.OrderResponse> showOrders(@PathVariable Long id, @RequestBody SearchDto.MyOrdersSearch request){
+    @GetMapping("/member/{id}/orderList")
+    public List<OrderDto.OrderResponse> showOrders(@PathVariable Long id, @RequestParam SearchDto.MyOrdersSearch request){
 
         List<OrderDto.OrderResponse> myOrders = orderService.showOrders(id, request);
 

@@ -13,11 +13,11 @@ INSERT INTO grade (grade_name, grade_price, reward_rate) VALUES
 
 INSERT INTO member (grade_id, login_id, login_password, email, name, tel, birth_date, gender, this_year_pay, point, is_delete, roles, created_date, last_modified_date, recently_login)
 VALUES
-(2, 'member11', 'password1@', 'member1@gmail.com', 'A', '010-1111-1111', '1990-01-09', '남', 100000, 100, false, 'ROLE_USER', '2020-10-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(4, 'member22', 'password2@', 'member2@gmail.com', 'B', '010-2222-2222', '1993-05-06', '여', 1000000, 1000, false, 'ROLE_USER', '2023-01-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(3, 'member33', 'password3@', 'member3@gmail.com', 'C', '010-3333-3333', '1995-11-01', '여', 500000, 500, false, 'ROLE_USER', '2019-04-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(5, 'member44', 'password4@', 'member4@gmail.com', 'D', '010-4444-4444', '2000-01-01', '여', 12500000, 12500, false, 'ROLE_USER', '2020-07-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(5, 'member55', 'password5@', 'member5@gmail.com', 'E', '010-5555-5555', '1998-04-28', '남', 10000000, 10000, false, 'ROLE_USER', '2021-06-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00');
+(2, 'member11', 'password1@', 'member1@gmail.com', 'A', '010-1111-1111', '1990-01-09', 'MAN', 100000, 100, false, 'ROLE_USER', '2020-10-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(4, 'member22', 'password2@', 'member2@gmail.com', 'B', '010-2222-2222', '1993-05-06', 'WOMAN', 1000000, 1000, false, 'ROLE_USER', '2023-01-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(3, 'member33', 'password3@', 'member3@gmail.com', 'C', '010-3333-3333', '1995-11-01', 'WOMAN', 500000, 500, false, 'ROLE_USER', '2019-04-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(5, 'member44', 'password4@', 'member4@gmail.com', 'D', '010-4444-4444', '2000-01-01', 'MAN', 12500000, 12500, false, 'ROLE_USER', '2020-07-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(5, 'member55', 'password5@', 'member5@gmail.com', 'E', '010-5555-5555', '1998-04-28', 'MAN', 10000000, 10000, false, 'ROLE_USER', '2021-06-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00');
 
 
 
@@ -56,7 +56,7 @@ VALUES
 
 -- Admin 관리자 더미데이터
 
-INSERT INTO admin (login_id, login_password, email, name, roles, is_delete_check, created_date, last_modified_date)
+INSERT INTO admin (login_id, login_password, email, name, roles, is_delete, created_date, last_modified_date)
 VALUES
 ('admin1', 'password1', 'admin1@gmail.com', '대표', 'ROLE_ADMIN', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
 ('admin2', 'password2', 'admin2@gmail.com', '이사', 'ROLE_ADMIN', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
