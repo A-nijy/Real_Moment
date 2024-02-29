@@ -40,6 +40,17 @@ public class ReviewController {
     }
 
 
+    // 리뷰 수정 버튼 (해당 리뷰 데이터 가져옴)
+    @GetMapping("/member/{id}/review")
+    public ReviewDto.ReviewUpdateResponse getReview(@PathVariable Long id, @RequestParam("reviewId") Long reviewId){
+
+        ReviewDto.ReviewUpdateResponse reviewDto = reviewService.getReview(id, reviewId);
+
+        return reviewDto;
+    }
+
+
+
     // 리뷰 수정
     @PatchMapping("/member/{id}/review")
     public void updateReview(@PathVariable Long id, @RequestBody ReviewDto.ReviewUpdateRequest request){

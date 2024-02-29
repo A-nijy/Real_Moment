@@ -66,6 +66,19 @@ public class AdminItemService {
     }
 
 
+    // 상품 수정버튼 클릭시 해당 데이터 가져와서 반환
+    @Transactional
+    public ItemDto.UpdateResponse getItem(Long itemId) {
+
+        Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
+
+        ItemDto.UpdateResponse itemDto = new ItemDto.UpdateResponse(item);
+
+        return itemDto;
+    }
+
+
+
     // 상품 수정
     @Transactional
     public void updateItem(ItemDto.UpdateRequest request) {
@@ -86,4 +99,6 @@ public class AdminItemService {
 
         item.delete();
     }
+
+
 }

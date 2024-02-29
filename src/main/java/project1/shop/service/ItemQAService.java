@@ -57,6 +57,20 @@ public class ItemQAService {
         itemQARepository.save(itemQA);
     }
 
+
+    // 문의 수정하기 버튼 클릭시 해당 문의 데이터 반환하기
+    @Transactional
+    public ItemQADto.UpdateItemQAResponse getItemQA(Long id, Long itemQAId) {
+
+        ItemQA itemQA = itemQARepository.findById(itemQAId).orElseThrow(IllegalArgumentException::new);
+
+        ItemQADto.UpdateItemQAResponse itemQADto = new ItemQADto.UpdateItemQAResponse(itemQA);
+
+        return itemQADto;
+    }
+
+
+
     // Q&A 수정하기 (답변이 달리지 않았을 경우에만)
     @Transactional
     public void updateItemQA(Long id, ItemQADto.UpdateItemQARequest request) {
@@ -74,4 +88,6 @@ public class ItemQAService {
 
         itemQARepository.delete(itemQA);
     }
+
+
 }

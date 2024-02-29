@@ -33,6 +33,43 @@ public class ItemDto {
     }
 
 
+
+    // 상품 수정 버튼 클릭시 응답 데이터
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateResponse {
+        private Long itemId;
+        private Long categoryId;
+        private String name;
+        private String content;
+        private int price;
+        private int discountRate;
+        private int discountPrice;
+        private int sellPrice;
+        private int stock;
+        private boolean isSell;
+        private String mainImg;
+        private String serveImg;
+
+        public UpdateResponse(Item item){
+            itemId = item.getItemId();
+            categoryId = item.getItemId();
+            name = item.getName();
+            content = item.getContent();
+            price = item.getPrice();
+            discountRate = item.getDiscountRate();
+            discountPrice = item.getDiscountPrice();
+            sellPrice = item.getSellPrice();
+            stock = item.getStock();
+            isSell = item.isSell();
+            mainImg = item.getMainImg();
+            serveImg = item.getServeImg();
+        }
+    }
+
+
     // 상품 수정 요청
     @AllArgsConstructor
     @NoArgsConstructor

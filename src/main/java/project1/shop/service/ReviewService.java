@@ -53,6 +53,7 @@ public class ReviewService {
 
 
     // 리뷰 작성하기 (+ 주문 상태가 구매 확정인 경우에만 작성 가능)
+    @Transactional
     public void saveReview(Long id, ReviewDto.ReviewRequest request) {
 
         Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
@@ -71,7 +72,20 @@ public class ReviewService {
     }
 
 
+    // 리뷰 수정 버튼 클릭시 해당 리뷰 데이터 반환
+    @Transactional
+    public ReviewDto.ReviewUpdateResponse getReview(Long id, Long reviewId) {
+
+        Review review = reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new);
+
+        ReviewDto.ReviewUpdateResponse reviewDto = new ReviewDto.ReviewUpdateResponse(review);
+
+        return reviewDto;
+    }
+
+
     // 리뷰 수정하기
+    @Transactional
     public void updateReview(Long id, ReviewDto.ReviewUpdateRequest request) {
 
         Review review = reviewRepository.findById(request.getReviewId()).orElseThrow(IllegalArgumentException::new);
@@ -81,10 +95,13 @@ public class ReviewService {
     }
 
     // 리뷰 삭제하기
+    @Transactional
     public void deleteReview(Long id, Long reviewId) {
 
         Review review = reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new);
 
         reviewRepository.delete(review);
     }
+
+
 }

@@ -35,6 +35,18 @@ public class AdminQACommentService {
     }
 
 
+    // 문의 답변 수정버튼 클릭시 해당 데이터 가져와서 반환
+    @Transactional
+    public QACommentDto.UpdateResponse getQAComment(Long id, Long qaCommentId) {
+
+        QAComment qaComment = qaCommentRepository.findById(qaCommentId).orElseThrow(IllegalArgumentException::new);
+
+        QACommentDto.UpdateResponse qaCommentDto = new QACommentDto.UpdateResponse(qaComment);
+
+        return qaCommentDto;
+    }
+
+
     @Transactional
     public void updateQAComment(Long id, QACommentDto.UpdateRequest request) {
 
@@ -52,4 +64,6 @@ public class AdminQACommentService {
 
         qaCommentRepository.delete(qaComment);
     }
+
+
 }

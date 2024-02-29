@@ -35,13 +35,31 @@ public class ReviewDto {
     }
 
 
+    // 리뷰 수정 버튼 클릭시 해당 리뷰 데이터 가져옴
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ReviewUpdateResponse {
+        private Long reviewId;
+        private String title;
+        private String content;
+        private int star;
+
+        public ReviewUpdateResponse(Review review){
+            reviewId = review.getReviewId();
+            title = review.getTitle();
+            content = review.getContent();
+            star = review.getStar();
+        }
+    }
+
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
     public static class ReviewResponse {
         private Long reviewId;
-//        private String nickname;
         private String loginId;
         private String title;
         private String content;
@@ -53,7 +71,6 @@ public class ReviewDto {
 
         public ReviewResponse(Review review){
             reviewId = review.getReviewId();
-//            nickname = review.getMember().getNickname();
             loginId = review.getMember().getLoginId();
             title = review.getTitle();
             content = review.getContent();

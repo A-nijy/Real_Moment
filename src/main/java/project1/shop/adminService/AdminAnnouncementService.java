@@ -65,6 +65,19 @@ public class AdminAnnouncementService {
         announcementRepository.save(announcement);
     }
 
+
+    // 공지사항 수정버튼 클릭시 해당 데이터 가져와서 반환
+    @Transactional
+    public AnnouncementDto.UpdateResponse getAnnouncement(Long id, Long announcementId) {
+
+        Announcement announcement = announcementRepository.findById(announcementId).orElseThrow(IllegalArgumentException::new);
+
+        AnnouncementDto.UpdateResponse announcementDto = new AnnouncementDto.UpdateResponse(announcement);
+
+        return announcementDto;
+    }
+
+
     // 공지사항 수정
     @Transactional
     public void updateAnnouncement(Long id, AnnouncementDto.UpdateRequest request) {
@@ -84,6 +97,7 @@ public class AdminAnnouncementService {
 
         announcementRepository.delete(announcement);
     }
+
 
 
 }

@@ -56,6 +56,26 @@ public class AnnouncementDto {
     }
 
 
+    // 공지사항 수정버튼 클릭시 해당 공지사항 데이터 반환용
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateResponse {
+        private Long announcementId;
+        private String title;
+        private String content;
+        private boolean isFix;
+
+        public UpdateResponse(Announcement announcement){
+            announcementId = announcement.getAnnouncementId();
+            title = announcement.getTitle();
+            content = announcement.getContent();
+            isFix = announcement.isFix();
+        }
+    }
+
+
     // 공지사항 수정 요청
     @AllArgsConstructor
     @NoArgsConstructor

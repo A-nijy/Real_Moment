@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project1.shop.domain.entity.QAComment;
 
 public class QACommentDto {
 
@@ -16,6 +17,24 @@ public class QACommentDto {
 
         private Long itemQAId;
         private String content;
+    }
+
+
+    // 상품 문의 댓글 수정 버튼 클릭시 해당 데이터를 가져와서 반환
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateResponse{
+
+        private Long itemQAId;
+        private String content;
+
+        public UpdateResponse(QAComment qaComment){
+
+            itemQAId = qaComment.getQACommentId();
+            content = qaComment.getContent();
+        }
     }
 
 

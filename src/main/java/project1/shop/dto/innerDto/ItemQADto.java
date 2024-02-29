@@ -32,6 +32,24 @@ public class ItemQADto {
     }
 
 
+    // 상품 문의 수정버튼 클릭시 해당 문의 데이터 반환
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateItemQAResponse {
+        private Long itemQAId;
+        private String title;
+        private String content;
+
+
+        public UpdateItemQAResponse(ItemQA itemQA){
+            itemQAId = itemQA.getItemQAId();
+            title = itemQA.getTitle();
+            content = itemQA.getContent();
+        }
+    }
+
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
