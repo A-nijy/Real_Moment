@@ -15,6 +15,7 @@ public class ReviewDto {
     @Getter
     @Setter
     public static class ReviewRequest{
+        private Long orderId;
         private Long itemId;
         private String title;
         private String content;

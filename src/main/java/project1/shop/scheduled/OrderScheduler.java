@@ -25,7 +25,7 @@ public class OrderScheduler {
 
 
     // 매일 자정에 실행되는 스케줄러 (배송 완료 이후 7일이 지난 status는 자동으로 구매 확정으로 변경)
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     @Transactional
     public void updateOrderStatus() {
 

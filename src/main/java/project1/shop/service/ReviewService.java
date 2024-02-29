@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
 import project1.shop.domain.entity.Member;
+import project1.shop.domain.entity.Order;
 import project1.shop.domain.entity.Review;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.MemberRepository;
+import project1.shop.domain.repository.OrderRepository;
 import project1.shop.domain.repository.ReviewRepository;
 import project1.shop.dto.innerDto.ReviewDto;
 import project1.shop.dto.innerDto.SearchDto;
+import project1.shop.enumeration.PaymentStatus;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +30,10 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
+    private final OrderRepository orderRepository;
 
 
+    // 내가 작성한 리뷰 목록 조회하기
     @Transactional
     public List<ReviewDto.MyReviewResponse> showMyReviews(Long memberId, SearchDto.Page nowPage) {
 
@@ -46,7 +51,15 @@ public class ReviewService {
         return reviewsDto;
     }
 
+
+    // 리뷰 작성하기 (+ 주문 상태가 구매 확정인 경우에만 작성 가능)
     public void saveReview(Long id, ReviewDto.ReviewRequest request) {
+
+        Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+
+        if(!order.getStatus().equals(PaymentStatus.DONE)){
+            throw new IllegalArgumentException("주문상태가 구매 확정만 리뷰를 작성할 수 있습니다.");
+        }
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
@@ -57,6 +70,8 @@ public class ReviewService {
 
     }
 
+
+    // 리뷰 수정하기
     public void updateReview(Long id, ReviewDto.ReviewUpdateRequest request) {
 
         Review review = reviewRepository.findById(request.getReviewId()).orElseThrow(IllegalArgumentException::new);
@@ -65,6 +80,7 @@ public class ReviewService {
 
     }
 
+    // 리뷰 삭제하기
     public void deleteReview(Long id, Long reviewId) {
 
         Review review = reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new);
