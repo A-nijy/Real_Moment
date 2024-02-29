@@ -162,6 +162,9 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom {
             case REFUND_DONE:
                 return QOrder.order.status.eq(PaymentStatus.REFUND_DONE);
 
+            case DONE:
+                return QOrder.order.status.eq(PaymentStatus.DONE);
+
             default:
                 return null;
         }

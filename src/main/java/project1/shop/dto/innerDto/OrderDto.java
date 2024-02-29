@@ -176,9 +176,19 @@ public class OrderDto {
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class RefoundRequest{
+    public static class RefundRequest {
         private Long orderId;
         private String reasonText;
+    }
+
+
+    // 구매 확정 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class DoneRequest {
+        private Long orderId;
     }
 
 

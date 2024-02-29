@@ -12,7 +12,8 @@ public enum PaymentStatus {
     DELIVERY_DONE("배송완료"),              // 배송 완료
     CANCEL("결제취소"),                     // 결제 취소
     REFUND_REQUEST("환불요청"),             // 환불 요청
-    REFUND_DONE("환불완료")                 // 환불 완료
+    REFUND_DONE("환불완료"),                 // 환불 완료
+    DONE("구매 확정")                       // 구매 확정
     ;
 
 

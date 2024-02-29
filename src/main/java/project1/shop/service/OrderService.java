@@ -324,11 +324,31 @@ public class OrderService {
 
     // 주문 상태 환불요청으로 변경하기
     @Transactional
-    public void orderRefound(OrderDto.RefoundRequest request) {
+    public void orderRefound(OrderDto.RefundRequest request) {
 
         Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
+        // 주문 상태가 배송 완료인지 확인
+        if(!PaymentStatus.DELIVERY_DONE.equals(order.getStatus())){
+            throw new IllegalArgumentException("환불 요청이 불가능한 주문 상태입니다.");
+        }
+
         order.updateStatus(PaymentStatus.REFUND_REQUEST);
+    }
+
+
+    // 주문 상태 구매 확정으로 변경하기
+    @Transactional
+    public void orderDone(OrderDto.DoneRequest request) {
+
+        Order order = ordersRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+
+        // 주문 상태가 배송 완료인지 확인
+        if(!PaymentStatus.DELIVERY_DONE.equals(order.getStatus())){
+            throw new IllegalArgumentException("구매 확정이 불가능한 주문 상태입니다.");
+        }
+
+        order.updateStatus(PaymentStatus.DONE);
     }
 
 

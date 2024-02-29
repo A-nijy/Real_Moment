@@ -88,10 +88,20 @@ public class OrderController {
 
     // 환불 신청하기
     @PatchMapping("/member/{id}/order/refund")
-    public String orderRefund(@PathVariable Long id, @RequestBody OrderDto.RefoundRequest request) {
+    public String orderRefund(@PathVariable Long id, @RequestBody OrderDto.RefundRequest request) {
 
         orderService.orderRefound(request);
 
         return "주문 상태가 환불 요청으로 변경되었습니다.";
+    }
+
+
+    // 구매 확정하기
+    @PatchMapping("/member/{id}/order/done")
+    public String orderDone(@PathVariable Long id, @RequestBody OrderDto.DoneRequest request){
+
+        orderService.orderDone(request);
+
+        return "주문 상태가 구매 확정으로 변경되었습니다.";
     }
 }
