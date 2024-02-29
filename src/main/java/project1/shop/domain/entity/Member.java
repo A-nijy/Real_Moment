@@ -107,6 +107,12 @@ public class Member extends TimeCheck {
     }
 
 
+    // 올해 총 구매금액 초기화
+    public void resetThisYearPay(){
+        thisYearPay = 0;
+    }
+
+
     // 회원 탈퇴
     public void DeleteMember(){
         grade = null;

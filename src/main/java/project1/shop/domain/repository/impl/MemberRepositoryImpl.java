@@ -83,6 +83,18 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     }
 
 
+    @Override
+    public List<Member> findThisYearPayMember() {
+
+
+        List<Member> memberList = queryFactory.selectFrom(QMember.member)
+                .where(QMember.member.isDelete.eq(false),
+                        QMember.member.thisYearPay.gt(0))
+                .fetch();
+
+
+        return memberList;
+    }
 
 
     //-------------------------------------------------
