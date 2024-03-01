@@ -52,7 +52,7 @@ public class Member extends TimeCheck {
         name = request.getName();
         tel = request.getTel();
         birthDate = request.getBirthDate();
-        gender = request.getGender();
+        gender = Gender.fromString(request.getGender());
         roles = request.getRoles();
     }
 

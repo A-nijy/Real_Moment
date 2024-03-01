@@ -61,8 +61,9 @@ public class SearchDto {
         private String itemName = null;
         private LocalDateTime startDate = null;
         private LocalDateTime lastDate = null;
-        @Nullable
-        private PaymentStatus status;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
+//        @Nullable
+//        private PaymentStatus status;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
+        private String status;
         private int nowPage = 1;                // 페이지
     }
 
@@ -78,7 +79,8 @@ public class SearchDto {
         private String merchantUid = null;
         private LocalDateTime startDate = null;
         private LocalDateTime lastDate = null;
-        private PaymentStatus status = null;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
+//        private PaymentStatus status = null;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
+        private String status = null;
         private int nowPage = 1;                // 페이지
     }
 

@@ -56,7 +56,7 @@ public class MemberDto {
         @NotBlank(message = "성별을 입력해주세요")
         @Size(min = 1, max = 1, message = "한 글자가 아닙니다.")
         @Pattern(regexp = "^[남여]$", message = "남 또는 여를 입력해주세요")
-        private Gender gender;
+        private String gender;
 
         private String roles;
     }
@@ -180,7 +180,7 @@ public class MemberDto {
         private String name;
         private String tel;
         private String birthDate;
-        private Gender gender;
+        private String gender;
         private int point;
         private LocalDateTime createdDate;
 
@@ -193,7 +193,7 @@ public class MemberDto {
             name = member.getName();
             tel = member.getTel();
             birthDate = member.getEmail();
-            gender = member.getGender();
+            gender = member.getGender().getGender();
             point = member.getPoint();
             createdDate = member.getCreatedDate();
 
@@ -241,7 +241,7 @@ public class MemberDto {
         private String name;
         private String tel;
         private String birthDate;
-        private Gender gender;
+        private String gender;
         private int point;
         private LocalDateTime recentlyLogin;
         private boolean isDelete;
@@ -256,7 +256,7 @@ public class MemberDto {
             name = member.getName();
             tel = member.getTel();
             birthDate = member.getEmail();
-            gender = member.getGender();
+            gender = member.getGender().getGender();
             point = member.getPoint();
             recentlyLogin = member.getRecentlyLogin();
             isDelete = member.isDelete();

@@ -109,7 +109,8 @@ public class OrderDto {
         private String detAddress;
         private String requestText;
         private String tel;
-        private PaymentStatus status;
+//        private PaymentStatus status;
+        private String status;
         private String merchantUid;
 
         private List<OrderDetailDto.response> orderDetails;
@@ -123,7 +124,7 @@ public class OrderDto {
             detAddress = order.getDetAddress();
             requestText = order.getRequestText();
             tel = order.getTel();
-            status = order.getStatus();
+            status = order.getStatus().getPaymentStatus();
             merchantUid = order.getMerchantUid();
         }
 
@@ -210,7 +211,8 @@ public class OrderDto {
         private String detAddress;
         private String requestText;
         private String tel;
-        private PaymentStatus status;
+//        private PaymentStatus status;
+        private String status;
         private String merchantUid;
 
         private List<OrderDetailDto.response> orderDetails;
@@ -225,7 +227,7 @@ public class OrderDto {
             detAddress = order.getDetAddress();
             requestText = order.getRequestText();
             tel = order.getTel();
-            status = order.getStatus();
+            status = order.getStatus().getPaymentStatus();
             merchantUid = order.getMerchantUid();
         }
 

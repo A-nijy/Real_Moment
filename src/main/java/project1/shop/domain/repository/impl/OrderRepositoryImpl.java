@@ -145,7 +145,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         return loginId.isEmpty() ? null : QOrder.order.member.loginId.contains(loginId);
     }
 
-    private BooleanExpression statusEq(PaymentStatus status){
+    private BooleanExpression statusEq(String status){
 
         if(status == null){
             return null;
@@ -153,31 +153,31 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         switch (status) {
 
-            case PAYMENT_READY:
+            case "결제준비":
                 return QOrder.order.status.eq(PaymentStatus.PAYMENT_READY);
 
-            case PAYMENT_DONE:
+            case "결제완료":
                 return QOrder.order.status.eq(PaymentStatus.PAYMENT_DONE);
 
-            case DELIVERY_READY:
+            case "배송준비":
                 return QOrder.order.status.eq(PaymentStatus.DELIVERY_READY);
 
-            case DELIVERY_DOING:
+            case "배송중":
                 return QOrder.order.status.eq(PaymentStatus.DELIVERY_DOING);
 
-            case DELIVERY_DONE:
+            case "배송완료":
                 return QOrder.order.status.eq(PaymentStatus.DELIVERY_DONE);
 
-            case CANCEL:
+            case "결제취소":
                 return QOrder.order.status.eq(PaymentStatus.CANCEL);
 
-            case REFUND_REQUEST:
+            case "환불요청":
                 return QOrder.order.status.eq(PaymentStatus.REFUND_REQUEST);
 
-            case REFUND_DONE:
+            case "환불완료":
                 return QOrder.order.status.eq(PaymentStatus.REFUND_DONE);
 
-            case DONE:
+            case "구매확정":
                 return QOrder.order.status.eq(PaymentStatus.DONE);
 
             default:
