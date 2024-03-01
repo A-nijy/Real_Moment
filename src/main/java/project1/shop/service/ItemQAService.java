@@ -11,10 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
 import project1.shop.domain.entity.ItemQA;
 import project1.shop.domain.entity.Member;
+import project1.shop.domain.entity.QAComment;
 import project1.shop.domain.repository.ItemQARepository;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.MemberRepository;
+import project1.shop.domain.repository.QACommentRepository;
 import project1.shop.dto.innerDto.ItemQADto;
+import project1.shop.dto.innerDto.QACommentDto;
 import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
@@ -28,6 +31,7 @@ public class ItemQAService {
     private final ItemQARepository itemQARepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
+    private final QACommentRepository qaCommentRepository;
 
 
     // 내가 작성한 상품 Q&A 목록 보기
@@ -41,6 +45,14 @@ public class ItemQAService {
         List<ItemQADto.MyItemQAResponse> myItemQADto = myItemQAs.stream()
                 .map(ItemQADto.MyItemQAResponse::new)
                 .collect(Collectors.toList());
+
+        for(ItemQADto.MyItemQAResponse myItemQA : myItemQADto){
+            QAComment qaComment = qaCommentRepository.findById(myItemQA.getItemQAId()).orElse(null);
+
+            QACommentDto.Response qaCommentDto = new QACommentDto.Response(qaComment);
+
+            myItemQA.setQAComment(qaCommentDto);
+        }
 
         return myItemQADto;
     }
@@ -64,6 +76,10 @@ public class ItemQAService {
 
         ItemQA itemQA = itemQARepository.findById(itemQAId).orElseThrow(IllegalArgumentException::new);
 
+        if(itemQA.isAnswer() == true){
+            throw new IllegalArgumentException("답변이 달려서 해당 Q&A를 수정할 수 없습니다.");
+        }
+
         ItemQADto.UpdateItemQAResponse itemQADto = new ItemQADto.UpdateItemQAResponse(itemQA);
 
         return itemQADto;
@@ -77,14 +93,24 @@ public class ItemQAService {
 
         ItemQA itemQA = itemQARepository.findById(request.getItemQAId()).orElseThrow(IllegalArgumentException::new);
 
+        if(itemQA.isAnswer() == true){
+            throw new IllegalArgumentException("답변이 달려서 해당 Q&A를 수정할 수 없습니다.");
+        }
+
         itemQA.update(request);
     }
+
+
 
     // Q&A 삭제하기 (답변이 달리지 않았을 경우에만)
     @Transactional
     public void deleteItemQA(Long id, Long itemQAId) {
 
         ItemQA itemQA = itemQARepository.findById(itemQAId).orElseThrow(IllegalArgumentException::new);
+
+        if(itemQA.isAnswer() == true){
+            throw new IllegalArgumentException("답변이 달려서 해당 Q&A를 삭제할 수 없습니다.");
+        }
 
         itemQARepository.delete(itemQA);
     }

@@ -8,8 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.ItemQA;
+import project1.shop.domain.entity.QAComment;
 import project1.shop.domain.repository.ItemQARepository;
+import project1.shop.domain.repository.QACommentRepository;
 import project1.shop.dto.innerDto.ItemQADto;
+import project1.shop.dto.innerDto.QACommentDto;
 import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 public class AdminItemQAService {
 
     private final ItemQARepository itemQARepository;
+    private final QACommentRepository qaCommentRepository;
 
 
     // 모든 상품 Q&A 목록 조회
@@ -35,17 +39,25 @@ public class AdminItemQAService {
                 .map(ItemQADto.ItemQAResponse::new)
                 .collect(Collectors.toList());
 
-        return itemQADto;
-    }
+        for(ItemQADto.ItemQAResponse itemQA : itemQADto){
+            QAComment qaComment = qaCommentRepository.findById(itemQA.getItemQAId()).orElse(null);
 
+            QACommentDto.Response qaCommentDto = new QACommentDto.Response(qaComment);
 
-    // 상품 Q&A 상세 보기
-    public ItemQADto.ItemQAResponse showQA(Long itemQAId) {
-
-        ItemQA itemQA = itemQARepository.findById(itemQAId).orElse(null);
-
-        ItemQADto.ItemQAResponse itemQADto = new ItemQADto.ItemQAResponse(itemQA);
+            itemQA.setQAComment(qaCommentDto);
+        }
 
         return itemQADto;
     }
+
+
+//    // 상품 Q&A 상세 보기
+//    public ItemQADto.ItemQAResponse showQA(Long itemQAId) {
+//
+//        ItemQA itemQA = itemQARepository.findById(itemQAId).orElse(null);
+//
+//        ItemQADto.ItemQAResponse itemQADto = new ItemQADto.ItemQAResponse(itemQA);
+//
+//        return itemQADto;
+//    }
 }

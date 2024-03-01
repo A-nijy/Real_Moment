@@ -41,7 +41,7 @@ public class ReviewController {
 
 
     // 리뷰 수정 버튼 (해당 리뷰 데이터 가져옴)
-    @GetMapping("/member/{id}/review")
+    @GetMapping("/member/{id}/review/data")
     public ReviewDto.ReviewUpdateResponse getReview(@PathVariable Long id, @RequestParam("reviewId") Long reviewId){
 
         ReviewDto.ReviewUpdateResponse reviewDto = reviewService.getReview(id, reviewId);

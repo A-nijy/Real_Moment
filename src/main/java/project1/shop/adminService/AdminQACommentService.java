@@ -32,6 +32,7 @@ public class AdminQACommentService {
 
         qaCommentRepository.save(qaComment);
 
+        itemQA.saveAnswer();
     }
 
 
@@ -57,12 +58,18 @@ public class AdminQACommentService {
         qaComment.update(admin, request);
     }
 
+
+    // 문의 답변 삭제
     @Transactional
     public void deleteQAComment(Long qaCommentId) {
 
         QAComment qaComment = qaCommentRepository.findById(qaCommentId).orElseThrow(IllegalArgumentException::new);
 
         qaCommentRepository.delete(qaComment);
+
+        ItemQA itemQA = itemQARepository.findById(qaComment.getItemQA().getItemQAId()).orElseThrow(IllegalArgumentException::new);
+
+        itemQA.deleteAnswer();
     }
 
 

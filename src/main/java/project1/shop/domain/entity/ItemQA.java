@@ -40,4 +40,13 @@ public class ItemQA extends TimeCheck {
         title = request.getTitle();
         content = request.getContent();
     }
+
+
+    public void saveAnswer(){
+        isAnswer = true;
+    }
+
+    public void deleteAnswer() {
+        isAnswer = false;
+    }
 }

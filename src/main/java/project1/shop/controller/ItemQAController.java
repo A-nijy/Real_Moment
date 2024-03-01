@@ -38,7 +38,7 @@ public class ItemQAController {
 
 
     // 상품 문의 수정버튼 클릭시 해당 문의 데이터 가져오기
-    @GetMapping("/member/{id}/QA")
+    @GetMapping("/member/{id}/QA/data")
     public ItemQADto.UpdateItemQAResponse getItemQA(@PathVariable Long id, @RequestParam("itemQAId") Long itemQAId){
 
         ItemQADto.UpdateItemQAResponse itemQADto = itemQAService.getItemQA(id, itemQAId);

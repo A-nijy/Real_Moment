@@ -30,7 +30,7 @@ public enum PaymentStatus {
         return paymentStatus;
     }
 
-    // 상수 설명 문자열을 받아와서 상수 저장
+    // 상수 설명 문자열을 받아와서 상수 저장    (문자열을 받아와서 알맞는 상수로 저장)
     public static PaymentStatus fromString(String text) {
         for (PaymentStatus status : PaymentStatus.values()) {
             if (status.getPaymentStatus().equalsIgnoreCase(text)) {

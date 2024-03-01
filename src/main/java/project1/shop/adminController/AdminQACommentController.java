@@ -27,7 +27,7 @@ public class AdminQACommentController {
 
 
     // 상품 문의 댓글 수정 버튼 클릭시 해당 데이터 가져옴
-    @GetMapping("/admin/{id}/QAComment")
+    @GetMapping("/admin/{id}/QAComment/data")
     public QACommentDto.UpdateResponse getQAComment(@PathVariable Long id, @RequestParam("qaCommentId") Long qaCommentId){
 
         QACommentDto.UpdateResponse qaCommentDto = adminQACommentService.getQAComment(id, qaCommentId);

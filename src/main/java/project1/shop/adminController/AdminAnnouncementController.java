@@ -49,7 +49,7 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 수정버튼 클릭시 해당 공지사항 데이터 반환
-    @GetMapping("/admin/{id}/announcement")
+    @GetMapping("/admin/{id}/announcement/data")
     public AnnouncementDto.UpdateResponse getAnnouncement(@PathVariable Long id, @RequestParam("announcementId") Long announcementId){
 
         AnnouncementDto.UpdateResponse announcementDto = adminAnnouncementService.getAnnouncement(id, announcementId);

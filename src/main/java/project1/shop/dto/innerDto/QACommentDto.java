@@ -50,4 +50,22 @@ public class QACommentDto {
     }
 
 
+    // 상품 문의 댓글 응답
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class Response {
+
+        private Long qaCommentId;
+        private Long itemQAId;
+        private String content;
+
+        public Response(QAComment qaComment){
+
+            qaCommentId = qaComment.getQACommentId();
+            itemQAId = qaComment.getQACommentId();
+            content = qaComment.getContent();
+        }
+    }
 }

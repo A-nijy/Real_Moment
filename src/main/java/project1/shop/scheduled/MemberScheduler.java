@@ -18,7 +18,7 @@ public class MemberScheduler {
 
 
     // 매년 회원의 총 구매 금액 초기화 스케줄러 (매년 초마다 회원의 올해 총 구매 금액 값 0으로 초기화)
-    @Scheduled(cron = "0 0 0 0 * ?")
+    @Scheduled(cron = "0 0 0 1 1 ?")
     @Transactional
     public void updateMemberTotalPay(){
 

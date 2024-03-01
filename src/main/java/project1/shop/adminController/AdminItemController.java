@@ -49,7 +49,7 @@ public class AdminItemController {
 
 
     // 상품 수정 버튼 클릭시 해당 데이터 가져옴
-    @GetMapping("/admin/item")
+    @GetMapping("/admin/item/data")
     public ItemDto.UpdateResponse getItem(@RequestParam("itemId") Long itemId){
 
         ItemDto.UpdateResponse itemDto = adminItemService.getItem(itemId);

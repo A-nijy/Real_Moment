@@ -56,22 +56,29 @@ public class ItemQADto {
     @Setter
     public static class ItemQAResponse {
         private Long itemQAId;
-//        private String nickname;
         private String loginId;
         private String title;
         private String content;
+        private boolean isAnswer;
         private LocalDateTime createdDate;
         private LocalDateTime lastModifiedDate;
+
+        private QACommentDto.Response qaComment;
 
 
         public ItemQAResponse(ItemQA itemQA){
             itemQAId = itemQA.getItemQAId();
-//            nickname = itemQA.getMember().getNickname();
             loginId = itemQA.getMember().getLoginId();
             title = itemQA.getTitle();
             content = itemQA.getContent();
+            isAnswer = itemQA.isAnswer();
             createdDate = itemQA.getCreatedDate();
             lastModifiedDate = itemQA.getLastModifiedDate();
+        }
+
+        public void setQAComment(QACommentDto.Response qaComment){
+
+            this.qaComment = qaComment;
         }
     }
 
@@ -83,23 +90,30 @@ public class ItemQADto {
     public static class MyItemQAResponse {
         private Long itemQAId;
         private ItemDto.SimpleItemResponse item;
-//        private String nickname;
         private String loginId;
         private String title;
         private String content;
+        private boolean isAnswer;
         private LocalDateTime createdDate;
         private LocalDateTime lastModifiedDate;
+
+        private QACommentDto.Response qaComment;
 
 
         public MyItemQAResponse(ItemQA itemQA){
             itemQAId = itemQA.getItemQAId();
             item = new ItemDto.SimpleItemResponse(itemQA.getItem());
-//            nickname = itemQA.getMember().getNickname();
             loginId = itemQA.getMember().getLoginId();
             title = itemQA.getTitle();
             content = itemQA.getContent();
+            isAnswer = itemQA.isAnswer();
             createdDate = itemQA.getCreatedDate();
             lastModifiedDate = itemQA.getLastModifiedDate();
+        }
+
+        public void setQAComment(QACommentDto.Response qaComment){
+
+            this.qaComment = qaComment;
         }
     }
 }

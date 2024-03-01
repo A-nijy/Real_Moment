@@ -8,14 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
 import project1.shop.domain.entity.ItemQA;
+import project1.shop.domain.entity.QAComment;
 import project1.shop.domain.entity.Review;
 import project1.shop.domain.repository.ItemQARepository;
 import project1.shop.domain.repository.ItemRepository;
+import project1.shop.domain.repository.QACommentRepository;
 import project1.shop.domain.repository.ReviewRepository;
-import project1.shop.dto.innerDto.ItemDto;
-import project1.shop.dto.innerDto.ItemQADto;
-import project1.shop.dto.innerDto.ReviewDto;
-import project1.shop.dto.innerDto.SearchDto;
+import project1.shop.dto.innerDto.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +28,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final ReviewRepository reviewRepository;
     private final ItemQARepository itemQARepository;
+    private final QACommentRepository qaCommentRepository;
 
 
     @Transactional
@@ -65,6 +65,15 @@ public class ItemService {
         List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
                 .map(ItemQADto.ItemQAResponse::new)
                 .collect(Collectors.toList());
+
+        for(ItemQADto.ItemQAResponse itemQA : itemQADto){
+            QAComment qaComment = qaCommentRepository.findById(itemQA.getItemQAId()).orElse(null);
+
+            QACommentDto.Response qaCommentDto = new QACommentDto.Response(qaComment);
+
+            itemQA.setQAComment(qaCommentDto);
+        }
+
 
         ItemDto.ItemPageResponse itemPageDto = new ItemDto.ItemPageResponse(itemDto, reviewDto, itemQADto);
 
