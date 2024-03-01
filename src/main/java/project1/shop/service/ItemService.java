@@ -52,6 +52,10 @@ public class ItemService {
 
         Item item = itemRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
+        if(item.isDelete() == true){
+            throw new IllegalArgumentException("해당 상품은 조회할 수 없습니다.");
+        }
+
         List<Review> reviews = reviewRepository.findByItem_ItemId(id);
 
         List<ItemQA> itemQAs = itemQARepository.findByItem_ItemId(id);

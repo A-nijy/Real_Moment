@@ -67,6 +67,10 @@ public class Item extends TimeAndByCheck {
     public void subStock(int itemCount){
 
         stock -= itemCount;
+
+        if(stock == 0){
+            isSell = false;
+        }
     }
 
     // 재고 증가
