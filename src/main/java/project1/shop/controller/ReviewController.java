@@ -4,6 +4,7 @@ package project1.shop.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import project1.shop.domain.entity.Review;
 import project1.shop.dto.innerDto.ReviewDto;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.ReviewService;
@@ -21,23 +22,23 @@ public class ReviewController {
 
     // 상품 상세 정보에 응답할 특정 상품의 리뷰 목록 조회
     @GetMapping("/reviewList")
-    public List<ReviewDto.ReviewResponse> showItemReviews(SearchDto.Reviews request){
+    public ReviewDto.ReviewPageResponse showItemReviews(SearchDto.Reviews request){
 
-        List<ReviewDto.ReviewResponse> reviewListDto = reviewService.showItemReviews(request);
+        ReviewDto.ReviewPageResponse reviewPageDto = reviewService.showItemReviews(request);
 
-        return reviewListDto;
+        return reviewPageDto;
     }
 
 
 
     // 내가 작성한 리뷰 목록 조회
     @GetMapping("/member/{id}/reviewList")
-    public List<ReviewDto.MyReviewResponse> showMyReviews(@PathVariable Long id, SearchDto.Page nowPage){
+    public ReviewDto.MyReviewPageResponse showMyReviews(@PathVariable Long id, SearchDto.Page nowPage){
 
         System.out.println("값 받아옴");
-        List<ReviewDto.MyReviewResponse> reviewsDto = reviewService.showMyReviews(id, nowPage);
+        ReviewDto.MyReviewPageResponse reviewPageDto = reviewService.showMyReviews(id, nowPage);
 
-        return reviewsDto;
+        return reviewPageDto;
     }
 
 

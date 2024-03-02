@@ -22,11 +22,11 @@ public class AdminItemQAController {
 
     // 모든 상품 Q&A 목록 보기
     @GetMapping("/admin/QAList")
-    public List<ItemQADto.ItemQAResponse> showQAList(SearchDto.ItemQAs request){
+    public ItemQADto.ItemQAPageResponse showQAList(SearchDto.ItemQAs request){
 
-        List<ItemQADto.ItemQAResponse> QAListDto = adminItemQAService.showQAList(request);
+        ItemQADto.ItemQAPageResponse itemQAPageDto = adminItemQAService.showQAList(request);
 
-        return QAListDto;
+        return itemQAPageDto;
     }
 
 //    // 상품 Q&A 상세 보기

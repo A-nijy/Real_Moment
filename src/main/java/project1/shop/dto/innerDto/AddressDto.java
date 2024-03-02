@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project1.shop.domain.entity.Address;
 
+import java.util.List;
+
 public class AddressDto {
 
 
@@ -52,7 +54,6 @@ public class AddressDto {
         private boolean isDefault;
 
 
-
         public AddressResponse(Address address){
             addressId = address.getAddressId();
             name = address.getName();
@@ -61,5 +62,18 @@ public class AddressDto {
             detAddress = address.getDetAddress();
             isDefault = address.isDefault();
         }
+    }
+
+
+
+    // 배송지 목록 조회 응답 (페이지 포함)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class AddressPageResponse {
+        private List<AddressResponse> addressList;
+        private int totalPage;
+        private int nowPage;
     }
 }

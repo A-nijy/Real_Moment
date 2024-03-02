@@ -228,6 +228,18 @@ public class MemberDto {
     }
 
 
+    // 회원 목록 검색용 간단 회원 정보 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class MemberPageResponse{
+        private List<SimpleProfileResponse> memberList;
+        private int totalPage;
+        private int nowPage;
+    }
+
+
     // 회원의 개인정보 확인 응답 (관리자용)
     @AllArgsConstructor
     @NoArgsConstructor

@@ -7,16 +7,57 @@ import lombok.Setter;
 import project1.shop.domain.entity.Announcement;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class AnnouncementDto {
 
 
-    // 공지사항 목록 조회 응답 (+ 공지사항 상세 조회 응답)
+    // 공지사항 목록 조회 응답
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class response {
+    public static class SimpleResponse {
+        private Long announcementId;
+        private String adminName;
+        private String title;
+        private boolean isFix;
+        private int viewCount;
+        private LocalDateTime createdDate;
+        private LocalDateTime lastModifiedDate;
+
+
+        public SimpleResponse(Announcement announcement){
+            announcementId = announcement.getAnnouncementId();
+            adminName = announcement.getAdmin().getName();
+            title = announcement.getTitle();
+            isFix = announcement.isFix();
+            viewCount = announcement.getViewCount();
+            createdDate = announcement.getCreatedDate();
+            lastModifiedDate = announcement.getLastModifiedDate();
+
+        }
+    }
+
+
+    // 공지사항 목록 조회 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class SimplePageResponse{
+        private List<SimpleResponse> announementList;
+        private int totalPage;
+        private int nowPage;
+    }
+
+
+    // 공지사항 상세 조회 응답
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class FullResponse {
         private Long announcementId;
         private String adminName;
         private String title;
@@ -27,7 +68,7 @@ public class AnnouncementDto {
         private LocalDateTime lastModifiedDate;
 
 
-        public response(Announcement announcement){
+        public FullResponse(Announcement announcement){
             announcementId = announcement.getAnnouncementId();
             adminName = announcement.getAdmin().getName();
             title = announcement.getTitle();

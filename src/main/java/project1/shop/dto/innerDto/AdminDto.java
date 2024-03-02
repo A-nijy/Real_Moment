@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project1.shop.domain.entity.Admin;
 
+import java.util.List;
+
 public class AdminDto {
 
 
@@ -102,5 +104,17 @@ public class AdminDto {
             name = admin.getName();
             roles = admin.getRoles();
         }
+    }
+
+
+    // 관리자 목록 조회 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class PageResponse{
+        private List<Response> adminList;
+        private int totalPage;
+        private int nowPage;
     }
 }

@@ -22,11 +22,11 @@ public class AdminMemberController {
 
     // 회원 목록 조회
     @GetMapping("/admin/memberList")
-    public List<MemberDto.SimpleProfileResponse> showMembers(SearchDto.Members request){
+    public MemberDto.MemberPageResponse showMembers(SearchDto.Members request){
 
-        List<MemberDto.SimpleProfileResponse> membersDto = adminMemberService.showMembers(request);
+        MemberDto.MemberPageResponse memberPageDto = adminMemberService.showMembers(request);
 
-        return membersDto;
+        return memberPageDto;
     }
 
 

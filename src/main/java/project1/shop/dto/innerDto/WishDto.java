@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 public class WishDto {
 
 
@@ -17,7 +19,19 @@ public class WishDto {
 
         private Long wishId;
         private ItemDto.SimpleItemResponse item;
+    }
 
+
+    // 찜 목록 조회 응답 (페이지 포함)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class WishListPageResponse {
+
+        List<WishListResponse> wishList;
+        private int totalPage;
+        private int nowPage;
     }
 
 

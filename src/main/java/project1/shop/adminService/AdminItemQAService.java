@@ -29,7 +29,7 @@ public class AdminItemQAService {
 
     // 모든 상품 Q&A 목록 조회
     @Transactional
-    public List<ItemQADto.ItemQAResponse> showQAList(SearchDto.ItemQAs request) {
+    public ItemQADto.ItemQAPageResponse showQAList(SearchDto.ItemQAs request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
@@ -47,7 +47,9 @@ public class AdminItemQAService {
             itemQA.setQAComment(qaCommentDto);
         }
 
-        return itemQADto;
+        ItemQADto.ItemQAPageResponse itemQAPageDto = new ItemQADto.ItemQAPageResponse(itemQADto, itemQAs.getTotalPages(), request.getNowPage());
+
+        return itemQAPageDto;
     }
 
 

@@ -30,11 +30,11 @@ public class AddressController {
 
     // 배송지(주소) 목록 조회
     @GetMapping("/member/{id}/addressList")
-    public List<AddressDto.AddressResponse> showAddresses(@PathVariable Long id, SearchDto.Addresses request) {
+    public AddressDto.AddressPageResponse showAddresses(@PathVariable Long id, SearchDto.Page request) {
 
-        List<AddressDto.AddressResponse> addressesDto = addressService.showAddresses(id, request);
+        AddressDto.AddressPageResponse addressPageDto = addressService.showAddresses(id, request);
 
-        return addressesDto;
+        return addressPageDto;
     }
 
     // 배송지(주소) 추가

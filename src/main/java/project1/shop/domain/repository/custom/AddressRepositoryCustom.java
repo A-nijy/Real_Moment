@@ -9,5 +9,5 @@ public interface AddressRepositoryCustom {
 
     Address searchMainAddress(Long memberId);
 
-    Page<Address> searchMyAddressList(Long memberId, SearchDto.Addresses searchDto , Pageable pageable);
+    Page<Address> searchMyAddressList(Long memberId, SearchDto.Page searchDto , Pageable pageable);
 }

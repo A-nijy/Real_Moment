@@ -36,7 +36,7 @@ public class ItemQAService {
 
     // 상품 상세 정보에 응답할 특정 상품의 문의 목록 조회
     @Transactional
-    public List<ItemQADto.ItemQAResponse> showItemQAList(SearchDto.ItemQAs request) {
+    public ItemQADto.ItemQAPageResponse showItemQAList(SearchDto.ItemQAs request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
@@ -54,16 +54,18 @@ public class ItemQAService {
             itemQA.setQAComment(qaCommentDto);
         }
 
-        return itemQADto;
+        ItemQADto.ItemQAPageResponse itemQAPageDto = new ItemQADto.ItemQAPageResponse(itemQADto, itemQAs.getTotalPages(), request.getNowPage());
+
+        return itemQAPageDto;
     }
 
 
 
     // 내가 작성한 상품 Q&A 목록 보기
     @Transactional
-    public List<ItemQADto.MyItemQAResponse> showMyQAList(Long id, SearchDto.Page nowPage) {
+    public ItemQADto.MyItemQAPageResponse showMyQAList(Long id, SearchDto.Page request) {
 
-        PageRequest pageRequest = PageRequest.of(nowPage.getNowPage() - 1, 10);
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
         Page<ItemQA> myItemQAs = itemQARepository.searchMyItemQAs(id, pageRequest);
 
@@ -79,7 +81,9 @@ public class ItemQAService {
             myItemQA.setQAComment(qaCommentDto);
         }
 
-        return myItemQADto;
+        ItemQADto.MyItemQAPageResponse myItemQAPageDto = new ItemQADto.MyItemQAPageResponse(myItemQADto, myItemQAs.getTotalPages(), request.getNowPage());
+
+        return myItemQAPageDto;
     }
 
     // Q&A 작성하기

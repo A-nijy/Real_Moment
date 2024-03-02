@@ -3,11 +3,9 @@ package project1.shop.domain.repository.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import project1.shop.domain.entity.Address;
-import project1.shop.domain.entity.QAddress;
-import project1.shop.domain.entity.QItem;
-import project1.shop.domain.entity.QMember;
+import project1.shop.domain.entity.*;
 import project1.shop.domain.repository.custom.AddressRepositoryCustom;
 import project1.shop.dto.innerDto.SearchDto;
 
@@ -40,7 +38,7 @@ public class AddressRepositoryImpl implements AddressRepositoryCustom {
 
 
     @Override
-    public Page<Address> searchMyAddressList(Long memberId, SearchDto.Addresses searchDto, Pageable pageable) {
+    public Page<Address> searchMyAddressList(Long memberId, SearchDto.Page searchDto, Pageable pageable) {
 
         List<Address> addressList = queryFactory.selectFrom(QAddress.address)
                 .join(QAddress.address.member, QMember.member)
@@ -51,7 +49,14 @@ public class AddressRepositoryImpl implements AddressRepositoryCustom {
                 .fetch();
 
 
-        return null;
+        Long total = queryFactory
+                .select(QAddress.address.count())
+                .from(QAddress.address)
+                .where(QMember.member.memberId.eq(memberId))
+                .fetchOne();
+
+
+        return new PageImpl<>(addressList, pageable, total);
     }
 
 

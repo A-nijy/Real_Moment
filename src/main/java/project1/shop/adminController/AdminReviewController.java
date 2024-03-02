@@ -21,11 +21,11 @@ public class AdminReviewController {
 
     // 상품의 리뷰 목록 조회
     @GetMapping("/admin/reviewList")
-    public List<ReviewDto.ReviewResponse> showReviews(SearchDto.Reviews request){
+    public ReviewDto.ReviewPageResponse showReviews(SearchDto.Reviews request){
 
         log.info("서비스 호출");
-        List<ReviewDto.ReviewResponse> reviewListDto = adminReviewService.showReviews(request);
+        ReviewDto.ReviewPageResponse reviewPageDto = adminReviewService.showReviews(request);
 
-        return reviewListDto;
+        return reviewPageDto;
     }
 }

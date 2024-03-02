@@ -43,7 +43,7 @@ public class AddressService {
 
     // 배송지 목록 조회
     @Transactional
-    public List<AddressDto.AddressResponse> showAddresses(Long id, SearchDto.Addresses request) {
+    public AddressDto.AddressPageResponse showAddresses(Long id, SearchDto.Page request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
@@ -53,7 +53,9 @@ public class AddressService {
                 .map(AddressDto.AddressResponse::new)
                 .collect(Collectors.toList());
 
-        return addressesDto;
+        AddressDto.AddressPageResponse addressPageDto = new AddressDto.AddressPageResponse(addressesDto, addressList.getTotalPages(), request.getNowPage());
+
+        return addressPageDto;
     }
 
 

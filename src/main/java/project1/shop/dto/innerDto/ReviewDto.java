@@ -7,6 +7,7 @@ import lombok.Setter;
 import project1.shop.domain.entity.Review;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ReviewDto {
 
@@ -54,6 +55,8 @@ public class ReviewDto {
         }
     }
 
+
+    // 리뷰 목록 조회
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -67,8 +70,6 @@ public class ReviewDto {
         private LocalDateTime createdDate;
         private LocalDateTime lastModifiedDate;
 
-
-
         public ReviewResponse(Review review){
             reviewId = review.getReviewId();
             loginId = review.getMember().getLoginId();
@@ -81,6 +82,19 @@ public class ReviewDto {
     }
 
 
+    // 리뷰 목록 조회 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ReviewPageResponse{
+        private List<ReviewResponse> reviewList;
+        private int totalPage;
+        private int nowPage;
+    }
+
+
+    // 내 리뷰 목록 조회
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -108,5 +122,17 @@ public class ReviewDto {
             createdDate = review.getCreatedDate();
             lastModifiedDate = review.getLastModifiedDate();
         }
+    }
+
+
+    // 내 리뷰 목록 조회 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class MyReviewPageResponse{
+        private List<MyReviewResponse> reviewList;
+        private int totalPage;
+        private int nowPage;
     }
 }

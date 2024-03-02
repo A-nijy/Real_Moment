@@ -55,7 +55,7 @@ public class OrderDto {
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class OrderPageResponse{
+    public static class OrderGetResponse {
 //        private AddressDto.AddressResponse orderAddress;                   // 주소에 적힌 이름, 연락처, 주소
         private List<ItemDto.OrderPageItemResponse> orderItems;                 // 심플한 상품 정보
         private OrderDto.PriceAndPointResponse orderPrice;                      // 총 가격 정보 및 포인트 정보
@@ -132,6 +132,18 @@ public class OrderDto {
 
             this.orderDetails = orderDetails;
         }
+    }
+
+
+    // 주문 목록 조회 응답 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class OrderPageResponse{
+        private List<OrderResponse> orderList;
+        private int totalPage;
+        private int nowPage;
     }
 
 

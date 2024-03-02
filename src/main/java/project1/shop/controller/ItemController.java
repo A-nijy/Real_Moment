@@ -22,13 +22,13 @@ public class ItemController {
 
     // (카테고리 or 검색 등) 상품 목록 조회
     @GetMapping("/itemList")
-    public List<ItemDto.SimpleItemResponse> showItems(SearchDto.Items request){
+    public ItemDto.SimpleItemPageResponse showItems(SearchDto.Items request){
 
         log.info("컨트롤러 시작 -> 서비스 이동");
-        List<ItemDto.SimpleItemResponse> items = itemService.showItems(request);
+        ItemDto.SimpleItemPageResponse itemPageDto = itemService.showItems(request);
 
         log.info("서비스 종료 -> 반환");
-        return items;
+        return itemPageDto;
     }
 
 

@@ -77,11 +77,11 @@ public class AdminController {
 
     // 관리자 목록 조회
     @GetMapping("/admin/adminList")
-    public List<AdminDto.Response> showAdmins(SearchDto.Admins request){
+    public AdminDto.PageResponse showAdmins(SearchDto.Admins request){
 
-        List<AdminDto.Response> adminsDto = adminService.showAdmins(request);
+        AdminDto.PageResponse adminPageDto = adminService.showAdmins(request);
 
-        return adminsDto;
+        return adminPageDto;
     }
 
 

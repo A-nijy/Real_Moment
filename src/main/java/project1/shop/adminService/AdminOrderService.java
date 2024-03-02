@@ -46,30 +46,32 @@ public class AdminOrderService {
 
     // 주문 목록 조회
     @Transactional
-    public List<OrderDto.OrderResponse> showOrders(SearchDto.OrdersSearch request) {
+    public OrderDto.OrderPageResponse showOrders(SearchDto.OrdersSearch request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
-        log.info("1");
+
         Page<Order> orders = orderRepository.searchOrders(request, pageRequest);
-        log.info("2");
+
         List<OrderDto.OrderResponse> ordersDto = orders.stream()
                 .map(OrderDto.OrderResponse::new)
                 .collect(Collectors.toList());
 
-        log.info("3");
+
         for (OrderDto.OrderResponse orderDto : ordersDto){
-            log.info("4");
+
             List<OrderDetail> orderDetails = orderDetailRepository.findByOrder_OrderId(orderDto.getOrderId());
-            log.info("5");
+
             List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
                     .map(OrderDetailDto.response::new)
                     .collect(Collectors.toList());
-            log.info("6");
+
             orderDto.plusOrderDetails(orderDetailsDto);
         }
-        log.info("7");
-        return ordersDto;
+
+        OrderDto.OrderPageResponse orderPageDto = new OrderDto.OrderPageResponse(ordersDto, orders.getTotalPages(), request.getNowPage());
+
+        return orderPageDto;
     }
 
 

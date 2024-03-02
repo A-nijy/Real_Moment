@@ -3,6 +3,8 @@ package project1.shop.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
@@ -12,6 +14,7 @@ import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.MemberRepository;
 import project1.shop.domain.repository.WishRepository;
 import project1.shop.dto.innerDto.ItemDto;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.dto.innerDto.WishDto;
 
 import java.util.List;
@@ -29,15 +32,19 @@ public class WishService {
 
     // 찜 목록 조회
     @Transactional
-    public List<WishDto.WishListResponse> showWishList(Long id) {
+    public WishDto.WishListPageResponse showWishList(Long id, SearchDto.Page request) {
 
-        List<Wish> wish = wishRepository.findByMember_MemberId(id);
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 9);
+
+        Page<Wish> wish = wishRepository.searchPageWishList(id, pageRequest);
 
         List<WishDto.WishListResponse> wishListResponses = wish.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
 
-        return wishListResponses;
+        WishDto.WishListPageResponse wishListPageDto = new WishDto.WishListPageResponse(wishListResponses, wish.getTotalPages(), request.getNowPage());
+
+        return wishListPageDto;
     }
 
     // WishList엔티티 -> WishListDto 변환 과정 (WishListDto 내부에 ItemDto가 있는데 WishList엔티티의 Item을 ItemDto로 변환)

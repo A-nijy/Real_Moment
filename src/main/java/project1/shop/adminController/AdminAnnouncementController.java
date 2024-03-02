@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import project1.shop.adminService.AdminAnnouncementService;
 import project1.shop.dto.innerDto.AnnouncementDto;
+import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
 
@@ -20,19 +21,19 @@ public class AdminAnnouncementController {
 
     // 공지사항 목록 조회
     @GetMapping("/admin/announcementList")
-    public List<AnnouncementDto.response> showAnnouncements(@RequestParam("nowPage") int nowPage) {
+    public AnnouncementDto.SimplePageResponse showAnnouncements(SearchDto.Page request) {
 
-        List<AnnouncementDto.response> announcementsDto = adminAnnouncementService.showAnnouncements(nowPage);
+        AnnouncementDto.SimplePageResponse announcementPageDto = adminAnnouncementService.showAnnouncements(request);
 
-        return announcementsDto;
+        return announcementPageDto;
     }
 
 
     // 공지사항 상세 조회
     @GetMapping("/admin/announcement")
-    public AnnouncementDto.response showAnnouncement(@RequestParam("announcementId") Long announcementId) {
+    public AnnouncementDto.FullResponse showAnnouncement(@RequestParam("announcementId") Long announcementId) {
 
-        AnnouncementDto.response announcementDto = adminAnnouncementService.showAnnouncement(announcementId);
+        AnnouncementDto.FullResponse announcementDto = adminAnnouncementService.showAnnouncement(announcementId);
 
         return announcementDto;
     }

@@ -122,6 +122,18 @@ public class ItemDto {
     }
 
 
+    // 상품 간단 정보 응답 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class SimpleItemPageResponse{
+        private List<SimpleItemResponse> itemList;
+        private int totalPage;
+        private int nowPage;
+    }
+
+
     // 상품 상세 정보
     @AllArgsConstructor
     @NoArgsConstructor

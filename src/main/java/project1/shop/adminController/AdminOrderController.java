@@ -20,11 +20,11 @@ public class AdminOrderController {
 
     // 주문 내역 목록 조회
     @GetMapping("/admin/orderList")
-    public List<OrderDto.OrderResponse> showOrders(@RequestParam SearchDto.OrdersSearch request){
+    public OrderDto.OrderPageResponse showOrders(@RequestParam SearchDto.OrdersSearch request){
 
-        List<OrderDto.OrderResponse> orders = adminOrderService.showOrders(request);
+        OrderDto.OrderPageResponse orderPageDto = adminOrderService.showOrders(request);
 
-        return orders;
+        return orderPageDto;
     }
 
 

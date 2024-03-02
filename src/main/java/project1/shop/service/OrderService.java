@@ -50,7 +50,7 @@ public class OrderService {
 
     // 주문 페이지 접속시 기본 세팅 데이터 응답
     @Transactional
-    public OrderDto.OrderPageResponse giveOrderPage(Long id, List<OrderDto.OrderPageItemRequest> requestList) {
+    public OrderDto.OrderGetResponse giveOrderPage(Long id, List<OrderDto.OrderPageItemRequest> requestList) {
 
         // 판매중인 상품인지, 재고가 있는지 확인
         sellCheck(requestList);
@@ -82,10 +82,10 @@ public class OrderService {
         priceAndPoint.autoSetting(member);
 
 
-        OrderDto.OrderPageResponse orderPageResponse = new OrderDto.OrderPageResponse(orderItems, priceAndPoint);
+        OrderDto.OrderGetResponse orderGetResponse = new OrderDto.OrderGetResponse(orderItems, priceAndPoint);
 
 
-        return orderPageResponse;
+        return orderGetResponse;
     }
 
 
@@ -178,30 +178,30 @@ public class OrderService {
 
     // 내 주문 내역 목록 조회
     @Transactional
-    public List<OrderDto.OrderResponse> showOrders(Long id, SearchDto.MyOrdersSearch request) {
+    public OrderDto.OrderPageResponse showOrders(Long id, SearchDto.MyOrdersSearch request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
-        log.info("1");
         Page<Order> orders = orderRepository.searchMyOrders(request, id, pageRequest);
-        log.info("2");
+
         List<OrderDto.OrderResponse> ordersDto = orders.stream()
                 .map(OrderDto.OrderResponse::new)
                 .collect(Collectors.toList());
 
-        log.info("3");
         for (OrderDto.OrderResponse orderDto : ordersDto){
-            log.info("4");
+
             List<OrderDetail> orderDetails = orderDetailRepository.findByOrder_OrderId(orderDto.getOrderId());
-            log.info("5");
+
             List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
                     .map(OrderDetailDto.response::new)
                     .collect(Collectors.toList());
-            log.info("6");
+
             orderDto.plusOrderDetails(orderDetailsDto);
         }
-        log.info("7");
-        return ordersDto;
+
+        OrderDto.OrderPageResponse orderPageDto = new OrderDto.OrderPageResponse(ordersDto, orders.getTotalPages(), request.getNowPage());
+
+        return orderPageDto;
     }
 
 

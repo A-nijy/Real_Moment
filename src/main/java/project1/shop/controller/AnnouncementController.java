@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import project1.shop.dto.innerDto.AnnouncementDto;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.AnnounceService;
 
 import java.util.List;
@@ -21,19 +22,19 @@ public class AnnouncementController {
 
     // 공지사항 목록 조회
     @GetMapping("/announcementList")
-    public List<AnnouncementDto.response> showAnnouncements(@RequestParam("nowPage") int nowPage) {
+    public AnnouncementDto.SimplePageResponse showAnnouncements(SearchDto.Page request) {
 
-        List<AnnouncementDto.response> announcementsDto = announceService.showAnnouncements(nowPage);
+        AnnouncementDto.SimplePageResponse announcementPageDto = announceService.showAnnouncements(request);
 
-        return announcementsDto;
+        return announcementPageDto;
     }
 
 
     // 공지사항 상세 조회
     @GetMapping("/announcement")
-    public AnnouncementDto.response showAnnouncement(@RequestParam("announcementId") Long announcementId) {
+    public AnnouncementDto.FullResponse showAnnouncement(@RequestParam("announcementId") Long announcementId) {
 
-        AnnouncementDto.response announcementDto = announceService.showAnnouncement(announcementId);
+        AnnouncementDto.FullResponse announcementDto = announceService.showAnnouncement(announcementId);
 
         return announcementDto;
     }

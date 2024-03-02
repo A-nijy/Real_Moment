@@ -32,7 +32,7 @@ public class ItemService {
 
 
     @Transactional
-    public List<ItemDto.SimpleItemResponse> showItems(SearchDto.Items request) {
+    public ItemDto.SimpleItemPageResponse showItems(SearchDto.Items request) {
 
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 9);
@@ -43,7 +43,9 @@ public class ItemService {
                                                         .map(ItemDto.SimpleItemResponse::new)
                                                         .collect(Collectors.toList());
 
-        return itemsDto;
+        ItemDto.SimpleItemPageResponse itemPageDto = new ItemDto.SimpleItemPageResponse(itemsDto, items.getTotalPages(), request.getNowPage());
+
+        return itemPageDto;
 
     }
 

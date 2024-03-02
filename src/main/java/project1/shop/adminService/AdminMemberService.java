@@ -24,7 +24,7 @@ public class AdminMemberService {
 
 
     @Transactional
-    public List<MemberDto.SimpleProfileResponse> showMembers(SearchDto.Members request) {
+    public MemberDto.MemberPageResponse showMembers(SearchDto.Members request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
@@ -34,7 +34,9 @@ public class AdminMemberService {
                 .map(MemberDto.SimpleProfileResponse::new)
                 .collect(Collectors.toList());
 
-        return membersDto;
+        MemberDto.MemberPageResponse memberPageDto = new MemberDto.MemberPageResponse(membersDto, members.getTotalPages(), request.getNowPage());
+
+        return memberPageDto;
     }
 
 

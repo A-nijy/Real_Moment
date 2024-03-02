@@ -25,7 +25,7 @@ public class AdminReviewService {
 
     // 상품 리뷰 목록 조회
     @Transactional
-    public List<ReviewDto.ReviewResponse> showReviews(SearchDto.Reviews request) {
+    public ReviewDto.ReviewPageResponse showReviews(SearchDto.Reviews request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
@@ -35,6 +35,8 @@ public class AdminReviewService {
                 .map(ReviewDto.ReviewResponse::new)
                 .collect(Collectors.toList());
 
-        return reviewsDto;
+        ReviewDto.ReviewPageResponse reviewPageDto = new ReviewDto.ReviewPageResponse(reviewsDto, reviews.getTotalPages(), request.getNowPage());
+
+        return reviewPageDto;
     }
 }

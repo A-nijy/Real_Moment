@@ -4,6 +4,7 @@ package project1.shop.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.dto.innerDto.WishDto;
 import project1.shop.service.WishService;
 
@@ -19,11 +20,11 @@ public class WishController {
 
     // 찜 목록 조회
     @GetMapping("/member/{id}/wishList")
-    public List<WishDto.WishListResponse> showWishList(@PathVariable Long id) {
+    public WishDto.WishListPageResponse showWishList(@PathVariable Long id, SearchDto.Page request) {
 
-        List<WishDto.WishListResponse> wishList = wishService.showWishList(id);
+        WishDto.WishListPageResponse wishListPageDto = wishService.showWishList(id, request);
 
-        return wishList;
+        return wishListPageDto;
     }
 
 

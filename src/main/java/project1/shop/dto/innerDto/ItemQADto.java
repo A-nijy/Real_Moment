@@ -7,9 +7,12 @@ import lombok.Setter;
 import project1.shop.domain.entity.ItemQA;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ItemQADto {
 
+
+    // 상품 문의 등록
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -21,6 +24,7 @@ public class ItemQADto {
     }
 
 
+    // 상품 문의 수정
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -50,6 +54,8 @@ public class ItemQADto {
         }
     }
 
+
+    // 상품 문의 목록 조회
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -83,6 +89,19 @@ public class ItemQADto {
     }
 
 
+    // 상품 문의 목록 조회 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ItemQAPageResponse{
+        private List<ItemQAResponse> itemQAList;
+        private int totalPage;
+        private int nowPage;
+    }
+
+
+    // 내 상품 문의 목록 조회
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -115,5 +134,17 @@ public class ItemQADto {
 
             this.qaComment = qaComment;
         }
+    }
+
+
+    // 내 상품 문의 목록 조회 (페이지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class MyItemQAPageResponse{
+        private List<MyItemQAResponse> itemQAList;
+        private int totalPage;
+        private int nowPage;
     }
 }

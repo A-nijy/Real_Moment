@@ -36,7 +36,7 @@ public class ReviewService {
 
     // 특정 상품에 대한 리뷰 목록 조회
     @Transactional
-    public List<ReviewDto.ReviewResponse> showItemReviews(SearchDto.Reviews request) {
+    public ReviewDto.ReviewPageResponse showItemReviews(SearchDto.Reviews request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
@@ -46,17 +46,19 @@ public class ReviewService {
                 .map(ReviewDto.ReviewResponse::new)
                 .collect(Collectors.toList());
 
-        return reviewsDto;
+        ReviewDto.ReviewPageResponse reviewPageDto = new ReviewDto.ReviewPageResponse(reviewsDto, reviews.getTotalPages(), request.getNowPage());
+
+        return reviewPageDto;
     }
 
 
 
     // 내가 작성한 리뷰 목록 조회하기
     @Transactional
-    public List<ReviewDto.MyReviewResponse> showMyReviews(Long memberId, SearchDto.Page nowPage) {
+    public ReviewDto.MyReviewPageResponse showMyReviews(Long memberId, SearchDto.Page request) {
 
 
-        PageRequest pageRequest = PageRequest.of(nowPage.getNowPage() - 1, 10);
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
         Page<Review> reviews = reviewRepository.searchMyReviews(memberId, pageRequest);
 
@@ -65,8 +67,10 @@ public class ReviewService {
                                                             .map(ReviewDto.MyReviewResponse::new)
                                                             .collect(Collectors.toList());
 
+        ReviewDto.MyReviewPageResponse reviewPageDto = new ReviewDto.MyReviewPageResponse(reviewsDto, reviews.getTotalPages(), request.getNowPage());
+
         log.info("컨트롤러로 반환");
-        return reviewsDto;
+        return reviewPageDto;
     }
 
 
