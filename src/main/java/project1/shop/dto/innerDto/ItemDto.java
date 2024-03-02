@@ -163,16 +163,16 @@ public class ItemDto {
     }
 
 
-    // 상품 상세 페이지에 출력 (상품, 리뷰, 문의)
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class ItemPageResponse{
-        private ItemDto.FullItemResponse itemResponseDto;
-        private List<ReviewDto.ReviewResponse> reviewResponseDto;
-        private List<ItemQADto.ItemQAResponse> itemQAResponseDto;
-    }
+//    // 상품 상세 페이지에 출력 (상품, 리뷰, 문의)
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Getter
+//    @Setter
+//    public static class ItemPageResponse{
+//        private ItemDto.FullItemResponse item;
+//        private List<ReviewDto.ReviewResponse> review;
+//        private List<ItemQADto.ItemQAResponse> itemQA;
+//    }
 
 
     // 주문 페이지에 응답할 상품 정보

@@ -16,7 +16,7 @@ public class OrderDetailDto {
     public static class response{
 
         private Long orderDetailId;
-        private ItemDto.SimpleItemResponse simpleItem;
+        private ItemDto.SimpleItemResponse item;
         private int Price;                      // 결제 당시 정가
         private int discountRate;               // 결제 당시 할인율
         private int discountPrice;              // 결제 당시 할인가
@@ -28,7 +28,7 @@ public class OrderDetailDto {
         public response(OrderDetail orderDetail){
 
             orderDetailId = orderDetail.getOrderDetailId();
-            simpleItem = new ItemDto.SimpleItemResponse(orderDetail.getItem());
+            item = new ItemDto.SimpleItemResponse(orderDetail.getItem());
             Price = orderDetail.getPrice();
             discountRate = orderDetail.getDiscountRate();
             discountPrice = orderDetail.getDiscountPrice();

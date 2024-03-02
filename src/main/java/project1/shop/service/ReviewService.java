@@ -33,6 +33,24 @@ public class ReviewService {
     private final OrderRepository orderRepository;
 
 
+
+    // 특정 상품에 대한 리뷰 목록 조회
+    @Transactional
+    public List<ReviewDto.ReviewResponse> showItemReviews(SearchDto.Reviews request) {
+
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
+
+        Page<Review> reviews = reviewRepository.searchReviews(request, pageRequest);
+
+        List<ReviewDto.ReviewResponse> reviewsDto = reviews.stream()
+                .map(ReviewDto.ReviewResponse::new)
+                .collect(Collectors.toList());
+
+        return reviewsDto;
+    }
+
+
+
     // 내가 작성한 리뷰 목록 조회하기
     @Transactional
     public List<ReviewDto.MyReviewResponse> showMyReviews(Long memberId, SearchDto.Page nowPage) {
@@ -102,6 +120,7 @@ public class ReviewService {
 
         reviewRepository.delete(review);
     }
+
 
 
 }

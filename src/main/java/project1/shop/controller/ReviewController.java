@@ -19,6 +19,15 @@ public class ReviewController {
 
 
 
+    // 상품 상세 정보에 응답할 특정 상품의 리뷰 목록 조회
+    @GetMapping("/reviewList")
+    public List<ReviewDto.ReviewResponse> showItemReviews(SearchDto.Reviews request){
+
+        List<ReviewDto.ReviewResponse> reviewListDto = reviewService.showItemReviews(request);
+
+        return reviewListDto;
+    }
+
 
 
     // 내가 작성한 리뷰 목록 조회

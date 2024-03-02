@@ -32,13 +32,23 @@ public class ItemController {
     }
 
 
-    // 상세 상품 조회
+//    // 상세 상품 조회
+//    @GetMapping("/item")
+//    public ItemDto.ItemPageResponse showItem(@RequestParam("itemId") Long id){
+//
+//        ItemDto.ItemPageResponse itemPageDto = itemService.showItem(id);
+//
+//        return itemPageDto;
+//    }
+
+
+    // 상품 상세 조회
     @GetMapping("/item")
-    public ItemDto.ItemPageResponse showItem(@RequestParam("itemId") Long id){
+    public ItemDto.FullItemResponse showItem(@RequestParam("itemId") Long itemId){
 
-        ItemDto.ItemPageResponse itemPageDto = itemService.showItem(id);
+        ItemDto.FullItemResponse itemDto = itemService.showItem(itemId);
 
-        return itemPageDto;
+        return itemDto;
     }
 
 

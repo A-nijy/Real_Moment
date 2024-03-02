@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project1.shop.domain.entity.Member;
 import project1.shop.domain.entity.Order;
-import project1.shop.enumeration.PaymentStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,7 +57,7 @@ public class OrderDto {
     @Setter
     public static class OrderPageResponse{
         private AddressDto.OrderAddressResponse orderAddress;                   // 주소에 적힌 이름, 연락처, 주소
-        private List<ItemDto.OrderPageItemResponse> orderPageItemList;          // 심플한 상품 정보
+        private List<ItemDto.OrderPageItemResponse> orderItems;          // 심플한 상품 정보
         private OrderDto.PriceAndPointResponse orderPrice;                      // 총 가격 정보 및 포인트 정보
 
     }
@@ -142,7 +141,7 @@ public class OrderDto {
     @Getter
     @Setter
     public static class OrderDetailResponse{
-        private OrderResponse orderResponse;
+        private OrderResponse order;
         private int totalPrice;
         private int totalDiscountPrice;
         private int usePoint;
@@ -151,7 +150,7 @@ public class OrderDto {
 
 
         public OrderDetailResponse(OrderResponse orderResponse, Order order){
-            this.orderResponse = orderResponse;
+            this.order = orderResponse;
             totalPrice = order.getTotalPrice();
             totalDiscountPrice = order.getTotalDiscountPrice();
             usePoint = order.getUsePoint();
@@ -245,7 +244,7 @@ public class OrderDto {
     @Getter
     @Setter
     public static class AdminOrderDetailResponse{
-        private AdminOrderResponse adminOrderResponse;
+        private AdminOrderResponse order;
         private int totalPrice;
         private int totalDiscountPrice;
         private int usePoint;
@@ -254,7 +253,7 @@ public class OrderDto {
 
 
         public AdminOrderDetailResponse(AdminOrderResponse adminOrderResponse, Order order){
-            this.adminOrderResponse = adminOrderResponse;
+            this.order = adminOrderResponse;
             totalPrice = order.getTotalPrice();
             totalDiscountPrice = order.getTotalDiscountPrice();
             usePoint = order.getUsePoint();

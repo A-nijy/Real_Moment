@@ -34,6 +34,31 @@ public class ItemQAService {
     private final QACommentRepository qaCommentRepository;
 
 
+    // 상품 상세 정보에 응답할 특정 상품의 문의 목록 조회
+    @Transactional
+    public List<ItemQADto.ItemQAResponse> showItemQAList(SearchDto.ItemQAs request) {
+
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
+
+        Page<ItemQA> itemQAs = itemQARepository.searchItemQAs(request, pageRequest);
+
+        List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
+                .map(ItemQADto.ItemQAResponse::new)
+                .collect(Collectors.toList());
+
+        for(ItemQADto.ItemQAResponse itemQA : itemQADto){
+            QAComment qaComment = qaCommentRepository.findById(itemQA.getItemQAId()).orElse(null);
+
+            QACommentDto.Response qaCommentDto = new QACommentDto.Response(qaComment);
+
+            itemQA.setQAComment(qaCommentDto);
+        }
+
+        return itemQADto;
+    }
+
+
+
     // 내가 작성한 상품 Q&A 목록 보기
     @Transactional
     public List<ItemQADto.MyItemQAResponse> showMyQAList(Long id, SearchDto.Page nowPage) {
@@ -114,6 +139,7 @@ public class ItemQAService {
 
         itemQARepository.delete(itemQA);
     }
+
 
 
 }

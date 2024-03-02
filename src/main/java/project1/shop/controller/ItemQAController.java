@@ -19,6 +19,17 @@ public class ItemQAController {
 
 
 
+    // 상품 상세 정보에 응답할 특정 상품의 문의 목록 조회
+    @GetMapping("/QAList")
+    public List<ItemQADto.ItemQAResponse> showItemQAList(SearchDto.ItemQAs request){
+
+        List<ItemQADto.ItemQAResponse> itemQAListDto = itemQAService.showItemQAList(request);
+
+        return itemQAListDto;
+    }
+
+
+
     // 내가 작성한 상품 문의 목록 조회
     @GetMapping("/member/{id}/QAList")
     public List<ItemQADto.MyItemQAResponse> showMyQAList(@PathVariable Long id, SearchDto.Page nowPage){
