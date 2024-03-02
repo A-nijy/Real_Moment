@@ -58,11 +58,11 @@ public class OrderService {
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
-        Address address = addressRepository.searchMainAddress(id);
-        AddressDto.OrderAddressResponse orderAddress = null;
-        if (!(address == null)){
-            orderAddress = new AddressDto.OrderAddressResponse(address);
-        }
+//        Address address = addressRepository.searchMainAddress(id);
+//        AddressDto.AddressResponse orderAddress = null;
+//        if (!(address == null)){
+//            orderAddress = new AddressDto.AddressResponse(address);
+//        }
 
         List<ItemDto.OrderPageItemResponse> orderItems = new ArrayList<>();
         OrderDto.PriceAndPointResponse priceAndPoint = new OrderDto.PriceAndPointResponse();
@@ -82,7 +82,7 @@ public class OrderService {
         priceAndPoint.autoSetting(member);
 
 
-        OrderDto.OrderPageResponse orderPageResponse = new OrderDto.OrderPageResponse(orderAddress, orderItems, priceAndPoint);
+        OrderDto.OrderPageResponse orderPageResponse = new OrderDto.OrderPageResponse(orderItems, priceAndPoint);
 
 
         return orderPageResponse;

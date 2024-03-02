@@ -62,29 +62,4 @@ public class AddressDto {
             isDefault = address.isDefault();
         }
     }
-
-
-
-    // 주문 페이지 이동시 기본 배송지 응답용
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class OrderAddressResponse {
-        private Long addressId;
-        private String name;
-        private String tel;
-        private String mainAddress;
-        private String detAddress;
-        private boolean isDefault;
-
-        public OrderAddressResponse(Address address){
-            addressId = address.getAddressId();
-            name = address.getName();
-            tel = address.getTel();
-            this.mainAddress = address.getMainAddress();
-            detAddress = address.getDetAddress();
-            isDefault = address.isDefault();
-        }
-    }
 }

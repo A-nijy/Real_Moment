@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import project1.shop.dto.innerDto.AddressDto;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.AddressService;
 
 import java.util.List;
@@ -17,15 +18,21 @@ public class AddressController {
     private final AddressService addressService;
 
 
+    // 기본 설정 배송지 조회 (주문 페이지로 이동할 때 미리 세팅하기 위해 가져오기 위한 api)
+    @GetMapping("/member/{id}/address")
+    public AddressDto.AddressResponse getDefaultAddress(@PathVariable Long id){
+
+        AddressDto.AddressResponse addressDto = addressService.getDefaultAddress(id);
+
+        return addressDto;
+    }
+
+
     // 배송지(주소) 목록 조회
     @GetMapping("/member/{id}/addressList")
-    public List<AddressDto.AddressResponse> showAddresses(@PathVariable Long id) {
+    public List<AddressDto.AddressResponse> showAddresses(@PathVariable Long id, SearchDto.Addresses request) {
 
-        log.info("id = {}", id);
-        log.info("컨트롤러 수행 -> 서비스 호출");
-        List<AddressDto.AddressResponse> addressesDto = addressService.showAddresses(id);
-
-        log.info("데이터 받아옴");
+        List<AddressDto.AddressResponse> addressesDto = addressService.showAddresses(id, request);
 
         return addressesDto;
     }

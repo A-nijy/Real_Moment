@@ -3,6 +3,8 @@ package project1.shop.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Address;
@@ -10,6 +12,7 @@ import project1.shop.domain.entity.Member;
 import project1.shop.domain.repository.AddressRepository;
 import project1.shop.domain.repository.MemberRepository;
 import project1.shop.dto.innerDto.AddressDto;
+import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,22 +26,32 @@ public class AddressService {
     private final MemberRepository memberRepository;
 
 
+    // 기본 설정 배송지 조회 (주문 페이지로 이동할 때 미리 세팅하기 위해 가져오기 위한 api)
+    @Transactional
+    public AddressDto.AddressResponse getDefaultAddress(Long id) {
+
+        Address address = addressRepository.searchMainAddress(id);
+        AddressDto.AddressResponse addressDto = null;
+        if (!(address == null)){
+            addressDto = new AddressDto.AddressResponse(address);
+        }
+
+        return addressDto;
+    }
+
+
+
     // 배송지 목록 조회
     @Transactional
-    public List<AddressDto.AddressResponse> showAddresses(Long id) {
+    public List<AddressDto.AddressResponse> showAddresses(Long id, SearchDto.Addresses request) {
 
-        log.info("id = {}", id);
-        log.info("id로 데이터 가져오기");
-        List<Address> addresses = addressRepository.findByMember_MemberId(id);
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
-        log.info("엔티티 리스트 = {}", addresses);
-        log.info("엔티티 -> dto 변환");
-        List<AddressDto.AddressResponse> addressesDto = addresses.stream()
+        Page<Address> addressList = addressRepository.searchMyAddressList(id, request, pageRequest);
+
+        List<AddressDto.AddressResponse> addressesDto = addressList.stream()
                 .map(AddressDto.AddressResponse::new)
                 .collect(Collectors.toList());
-
-        log.info("dto 리스트 = {}", addressesDto);
-        log.info("dto 리스트 다시 컨트롤러에 반환");
 
         return addressesDto;
     }
@@ -74,4 +87,7 @@ public class AddressService {
 
         addressRepository.delete(address);
     }
+
+
+
 }

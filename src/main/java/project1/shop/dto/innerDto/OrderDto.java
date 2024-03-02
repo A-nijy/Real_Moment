@@ -56,8 +56,8 @@ public class OrderDto {
     @Getter
     @Setter
     public static class OrderPageResponse{
-        private AddressDto.OrderAddressResponse orderAddress;                   // 주소에 적힌 이름, 연락처, 주소
-        private List<ItemDto.OrderPageItemResponse> orderItems;          // 심플한 상품 정보
+//        private AddressDto.AddressResponse orderAddress;                   // 주소에 적힌 이름, 연락처, 주소
+        private List<ItemDto.OrderPageItemResponse> orderItems;                 // 심플한 상품 정보
         private OrderDto.PriceAndPointResponse orderPrice;                      // 총 가격 정보 및 포인트 정보
 
     }
