@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import project1.shop.domain.entity.Grade;
 import project1.shop.domain.entity.Member;
 import project1.shop.domain.entity.QGrade;
 import project1.shop.domain.entity.QMember;
@@ -106,6 +107,20 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         List<Member> memberList = queryFactory.selectFrom(QMember.member)
                 .where(QMember.member.isDelete.eq(false),
                         QMember.member.thisYearPay.gt(0))
+                .fetch();
+
+
+        return memberList;
+    }
+
+
+    // 두 등급 사이에 해당하는 회원 목록 조회
+    @Override
+    public List<Member> findBetweenThisYearPay(Grade grade, Grade highGrade) {
+
+        List<Member> memberList = queryFactory.selectFrom(QMember.member)
+                .where(QMember.member.thisYearPay.goe(grade.getGradePrice()),
+                        QMember.member.thisYearPay.lt(highGrade.getGradePrice()))
                 .fetch();
 
 

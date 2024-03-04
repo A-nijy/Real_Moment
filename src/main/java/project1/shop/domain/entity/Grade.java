@@ -32,7 +32,6 @@ public class Grade {
 
     public void update(GradeDto.UpdateRequest request){
         gradeName = request.getGradeName();
-        gradePrice = request.getGradePrice();
         rewardRate = request.getRewardRate();
     }
 }

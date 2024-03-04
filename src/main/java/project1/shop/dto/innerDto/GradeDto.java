@@ -28,7 +28,6 @@ public class GradeDto {
     public static class UpdateRequest{
         private Long gradeId;
         private String gradeName;
-        private int gradePrice;
         private int rewardRate;
     }
 

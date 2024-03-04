@@ -26,4 +26,30 @@ public class GradeRepositoryImpl implements GradeRepositoryCustom {
 
         return grade;
     }
+
+    @Override
+    public Grade findOneLowGrade(Grade grade) {
+
+        Grade lowGrade = queryFactory.selectFrom(QGrade.grade)
+                .where(QGrade.grade.gradePrice.lt(grade.getGradePrice()))
+                .orderBy(QGrade.grade.gradePrice.desc())
+                .limit(1)
+                .fetchOne();
+
+
+        return lowGrade;
+    }
+
+    @Override
+    public Grade findOneHighGrade(Grade grade) {
+
+        Grade highGrade = queryFactory.selectFrom(QGrade.grade)
+                .where(QGrade.grade.gradePrice.gt(grade.getGradePrice()))
+                .orderBy(QGrade.grade.gradePrice.asc())
+                .limit(1)
+                .fetchOne();
+
+
+        return highGrade;
+    }
 }
