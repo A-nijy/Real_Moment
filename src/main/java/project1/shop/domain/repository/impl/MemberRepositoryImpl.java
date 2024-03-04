@@ -2,6 +2,7 @@ package project1.shop.domain.repository.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import project1.shop.dto.innerDto.SearchDto;
 
 import java.util.List;
 
+@Slf4j
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
@@ -26,9 +28,10 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     @Override
     public Page<Member> searchMembers(SearchDto.Members searchDto, Pageable pageable) {
 
+        log.info("test");
         List<Member> members;
 
-        if(searchDto.getMemberSort().equals("day")){
+         if (searchDto.getMemberSort() == null){
 
             members = queryFactory
                     .selectFrom(QMember.member)
@@ -36,10 +39,24 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                     .where(loginIdContains(searchDto.getLoginId()),
                             gradeIdEq(searchDto.getGradeId()),
                             memberDeleteCheck(searchDto.getIsDelete()))
-                    .orderBy(QMember.member.createdDate.desc(), QMember.member.createdDate.desc().nullsLast())
+                    .orderBy(QMember.member.createdDate.desc().nullsLast())
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .fetch();
+
+        } else if(searchDto.getMemberSort().equals("day")){
+
+            members = queryFactory
+                    .selectFrom(QMember.member)
+                    .join(QMember.member.grade, QGrade.grade)
+                    .where(loginIdContains(searchDto.getLoginId()),
+                            gradeIdEq(searchDto.getGradeId()),
+                            memberDeleteCheck(searchDto.getIsDelete()))
+                    .orderBy(QMember.member.createdDate.desc().nullsLast())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetch();
+
         } else if(searchDto.getMemberSort().equals("point")){
 
             members = queryFactory
@@ -52,7 +69,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .fetch();
-        } else {
+        } else{
 
             members = queryFactory
                     .selectFrom(QMember.member)
@@ -74,7 +91,6 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                 .where(loginIdContains(searchDto.getLoginId()),
                         gradeIdEq(searchDto.getGradeId()),
                         memberDeleteCheck(searchDto.getIsDelete()))
-                .orderBy(QMember.member.createdDate.desc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchOne();

@@ -3,6 +3,7 @@ package project1.shop.adminService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Grade;
@@ -23,7 +24,7 @@ public class AdminGradeService {
     @Transactional
     public List<GradeDto.Response> showGrades() {
 
-        List<Grade> grades = gradeRepository.findAll();
+        List<Grade> grades = gradeRepository.findAll(Sort.by("gradePrice"));
 
         List<GradeDto.Response> gradesDto = grades.stream()
                 .map(GradeDto.Response::new)

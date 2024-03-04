@@ -41,4 +41,8 @@ public class Address {
         detAddress = request.getDetAddress();
         isDefault = request.isDefault();
     }
+
+    public void defaultFalse(){
+        isDefault = false;
+    }
 }

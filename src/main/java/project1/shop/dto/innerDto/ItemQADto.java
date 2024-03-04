@@ -69,7 +69,7 @@ public class ItemQADto {
         private LocalDateTime createdDate;
         private LocalDateTime lastModifiedDate;
 
-        private QACommentDto.Response qaComment;
+        private QACommentDto.Response qaComment = null;
 
 
         public ItemQAResponse(ItemQA itemQA){

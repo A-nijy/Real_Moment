@@ -11,4 +11,6 @@ public interface AddressRepository extends JpaRepository<Address, Long>, Address
 
     List<Address> findByMember_MemberId(Long id);
 
+    Optional<Address> findByMember_MemberIdAndIsDefault(Long id, boolean isDefault);
+
 }

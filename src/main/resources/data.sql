@@ -128,13 +128,13 @@ VALUES
 
 -- Cart 장바구니 더미데이터
 
-INSERT INTO cart (member_id, item_id, stock, price, is_check) VALUES
-(1, 1, 1, 7200, TRUE),
-(1, 13, 10, 8000, TRUE),
-(2, 3, 2, 14400, TRUE),
-(4, 6, 2, 14400, TRUE),
-(4, 9, 2, 16000, TRUE),
-(4, 13, 1, 800, TRUE);
+INSERT INTO cart (member_id, item_id, stock) VALUES
+(1, 1, 1),
+(1, 13, 10),
+(2, 3, 2),
+(4, 6, 2),
+(4, 9, 2),
+(4, 13, 1);
 
 
 

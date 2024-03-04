@@ -47,7 +47,7 @@ public class AddressService {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
-        Page<Address> addressList = addressRepository.searchMyAddressList(id, request, pageRequest);
+        Page<Address> addressList = addressRepository.searchMyAddressList(id, pageRequest);
 
         List<AddressDto.AddressResponse> addressesDto = addressList.stream()
                 .map(AddressDto.AddressResponse::new)
@@ -63,11 +63,20 @@ public class AddressService {
     @Transactional
     public void saveAddress(Long id, AddressDto.SaveRequest requestDto) {
 
-        log.info("서비스 호출 -> member 엔티티 조회");
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
-        log.info("Address 엔티티 생성과 동시에 저장");
-        addressRepository.save(new Address(requestDto, member));
+        // 만약 기본 배송지로 추가한다면?
+        if (requestDto.isDefault()){
+            Address defaultAddress = addressRepository.findByMember_MemberIdAndIsDefault(id, true).orElse(null);
+
+            if (defaultAddress != null){
+                defaultAddress.defaultFalse();
+            }
+        }
+
+        Address address = new Address(requestDto, member);
+
+        addressRepository.save(address);
     }
 
 
@@ -76,6 +85,16 @@ public class AddressService {
     public void updateAddress(Long id, AddressDto.UpdateRequest request) {
 
         Address address = addressRepository.findById(request.getAddressId()).orElseThrow(IllegalArgumentException::new);
+
+        // 일반 배송지에서 기본 배송지로 변경하려고 하면? (배송지 중에 기본 배송지가 있는지 확인 후 진행)
+        if (!address.isDefault() && request.isDefault()){
+
+            Address defaultAddress = addressRepository.findByMember_MemberIdAndIsDefault(id, true).orElse(null);
+
+            if (defaultAddress != null){
+                defaultAddress.defaultFalse();
+            }
+        }
 
         address.update(request);
     }

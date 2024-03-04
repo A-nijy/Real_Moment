@@ -41,8 +41,9 @@ public class AdminAnnouncementController {
 
     // 공지사항 추가하기
     @PostMapping("/admin/{id}/announcement")
-    public String saveAnnouncement(@PathVariable Long id, AnnouncementDto.SaveRequest request){
+    public String saveAnnouncement(@PathVariable Long id, @RequestBody AnnouncementDto.SaveRequest request){
 
+        log.info("{}", request.isFix());
         adminAnnouncementService.saveAnnouncement(id, request);
 
         return "공지사항 추가 완료!";
@@ -61,7 +62,7 @@ public class AdminAnnouncementController {
 
     // 공지사항 수정하기
     @PatchMapping("/admin/{id}/announcement")
-    public String updateAnnouncement(@PathVariable Long id, AnnouncementDto.UpdateRequest request){
+    public String updateAnnouncement(@PathVariable Long id, @RequestBody AnnouncementDto.UpdateRequest request){
 
         adminAnnouncementService.updateAnnouncement(id, request);
 

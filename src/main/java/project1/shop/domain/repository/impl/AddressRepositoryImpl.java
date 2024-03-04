@@ -38,7 +38,7 @@ public class AddressRepositoryImpl implements AddressRepositoryCustom {
 
 
     @Override
-    public Page<Address> searchMyAddressList(Long memberId, SearchDto.Page searchDto, Pageable pageable) {
+    public Page<Address> searchMyAddressList(Long memberId, Pageable pageable) {
 
         List<Address> addressList = queryFactory.selectFrom(QAddress.address)
                 .join(QAddress.address.member, QMember.member)
@@ -52,6 +52,7 @@ public class AddressRepositoryImpl implements AddressRepositoryCustom {
         Long total = queryFactory
                 .select(QAddress.address.count())
                 .from(QAddress.address)
+                .join(QAddress.address.member, QMember.member)
                 .where(QMember.member.memberId.eq(memberId))
                 .fetchOne();
 

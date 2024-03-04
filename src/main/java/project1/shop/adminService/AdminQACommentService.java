@@ -28,6 +28,10 @@ public class AdminQACommentService {
         Admin admin = adminRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         ItemQA itemQA = itemQARepository.findById(request.getItemQAId()).orElseThrow(IllegalArgumentException::new);
 
+        if (itemQA.isAnswer()){
+            throw new IllegalArgumentException("이미 답변이 달려있습니다.");
+        }
+
         QAComment qaComment = new QAComment(admin, itemQA, request);
 
         qaCommentRepository.save(qaComment);

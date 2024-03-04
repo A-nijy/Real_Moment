@@ -93,7 +93,7 @@ public class AnnouncementDto {
     public static class SaveRequest {
         private String title;
         private String content;
-        private boolean isFix;
+        private boolean isFix = false;
     }
 
 

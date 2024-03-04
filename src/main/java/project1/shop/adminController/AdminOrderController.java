@@ -20,7 +20,7 @@ public class AdminOrderController {
 
     // 주문 내역 목록 조회
     @GetMapping("/admin/orderList")
-    public OrderDto.OrderPageResponse showOrders(@RequestParam SearchDto.OrdersSearch request){
+    public OrderDto.OrderPageResponse showOrders(SearchDto.OrdersSearch request){
 
         OrderDto.OrderPageResponse orderPageDto = adminOrderService.showOrders(request);
 
@@ -40,7 +40,7 @@ public class AdminOrderController {
 
 
 
-    // 주문 상태 변경하기   [ 결제준비, 결제완료, 배송준비, 배송중, 배송완료, 결제취소, 환불요청, 환불완료, 구매확정 ]
+    // 주문 상태 변경하기   [ 결제준비, 결제완료, 배송준비, 배송중, 배송완료, 결제취소, 환불완료]
     @PatchMapping("/admin/order")
     public String updateOrderStatus(@RequestBody OrderDto.AdminOrderStatus request){
 

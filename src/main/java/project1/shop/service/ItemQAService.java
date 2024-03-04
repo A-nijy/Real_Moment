@@ -49,7 +49,11 @@ public class ItemQAService {
         for(ItemQADto.ItemQAResponse itemQA : itemQADto){
             QAComment qaComment = qaCommentRepository.findById(itemQA.getItemQAId()).orElse(null);
 
-            QACommentDto.Response qaCommentDto = new QACommentDto.Response(qaComment);
+            QACommentDto.Response qaCommentDto = null;
+
+            if(qaComment != null){
+                qaCommentDto = new QACommentDto.Response(qaComment);
+            }
 
             itemQA.setQAComment(qaCommentDto);
         }

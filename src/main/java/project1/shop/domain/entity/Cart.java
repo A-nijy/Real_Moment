@@ -24,31 +24,17 @@ public class Cart {
     @JoinColumn(name = "item_id")
     private Item item;
     private int stock;
-    private int price;
-    private boolean isCheck = true;
 
 
     public Cart(Member member, Item item, int stock){
         this.member = member;
         this.item = item;
         this.stock = stock;
-        price = item.getPrice()*((100 - item.getDiscountRate()) / 100) * stock;
     }
 
 
     public void updateStockCart(int stock){
         this.stock = stock;
-        log.info("getPrice = {}, getDiscountRate = {}, this.stock = {}, stock = {}, price = {}", item.getPrice(), item.getDiscountRate(), this.stock, stock, price);
-
-        double discount = (double)(100 - item.getDiscountRate()) / 100;
-        log.info("price = {}", discount);
-
-
-        price = (int)(item.getPrice() * discount * this.stock);
-        log.info("price = {}", price);
     }
 
-    public void updateCheckCart(boolean isCheck){
-        this.isCheck = isCheck;
-    }
 }

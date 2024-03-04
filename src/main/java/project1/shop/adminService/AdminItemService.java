@@ -11,6 +11,7 @@ import project1.shop.domain.entity.Category;
 import project1.shop.domain.entity.Item;
 import project1.shop.domain.repository.CategoryRepository;
 import project1.shop.domain.repository.ItemRepository;
+import project1.shop.domain.repository.WishRepository;
 import project1.shop.dto.innerDto.ItemDto;
 import project1.shop.dto.innerDto.SearchDto;
 
@@ -98,6 +99,8 @@ public class AdminItemService {
     public void deleteItem(Long itemId) {
 
         Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
+
+
 
         item.delete();
     }

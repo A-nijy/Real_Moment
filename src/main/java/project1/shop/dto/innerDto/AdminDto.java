@@ -65,7 +65,6 @@ public class AdminDto {
     @Getter
     @Setter
     public static class UpdateRequest{
-        private Long adminId;
         private String email;
         private String name;
     }
@@ -116,5 +115,16 @@ public class AdminDto {
         private List<Response> adminList;
         private int totalPage;
         private int nowPage;
+    }
+
+
+
+    // 관리자 계정 삭제 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class AdminIdRequest{
+        private long adminId;
     }
 }

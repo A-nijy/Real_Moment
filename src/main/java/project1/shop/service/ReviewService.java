@@ -100,6 +100,10 @@ public class ReviewService {
 
         Review review = reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new);
 
+        if(id != review.getMember().getMemberId()){
+            throw new IllegalArgumentException("다른 회원의 리뷰입니다.");
+        }
+
         ReviewDto.ReviewUpdateResponse reviewDto = new ReviewDto.ReviewUpdateResponse(review);
 
         return reviewDto;
@@ -112,6 +116,10 @@ public class ReviewService {
 
         Review review = reviewRepository.findById(request.getReviewId()).orElseThrow(IllegalArgumentException::new);
 
+        if(id != review.getMember().getMemberId()){
+            throw new IllegalArgumentException("다른 회원의 리뷰입니다.");
+        }
+
         review.Update(request);
 
     }
@@ -121,6 +129,10 @@ public class ReviewService {
     public void deleteReview(Long id, Long reviewId) {
 
         Review review = reviewRepository.findById(reviewId).orElseThrow(IllegalArgumentException::new);
+
+        if(id != review.getMember().getMemberId()){
+            throw new IllegalArgumentException("다른 회원의 리뷰입니다.");
+        }
 
         reviewRepository.delete(review);
     }

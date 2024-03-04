@@ -46,7 +46,7 @@ public class CartService {
 
         ItemDto.SimpleItemResponse simpleItemDto = new ItemDto.SimpleItemResponse(cart.getItem());
 
-        CartDto.CartResponse cartResponse = new CartDto.CartResponse(cart.getCartId(), simpleItemDto, cart.getStock(), cart.getPrice(), cart.isCheck());
+        CartDto.CartResponse cartResponse = new CartDto.CartResponse(cart.getCartId(), simpleItemDto, cart.getStock());
 
         return cartResponse;
     }
@@ -77,20 +77,10 @@ public class CartService {
 
     // 장바구니 수량 수정
     @Transactional
-    public void updateStockCart(Long id, CartDto.CartUpdateStockRequest request) {
+    public void updateStockCart(Long id, CartDto.CartUpdateCountRequest request) {
 
         Cart cart = cartRepository.findById(request.getCartId()).orElseThrow(IllegalArgumentException::new);
 
         cart.updateStockCart(request.getStock());
-    }
-
-
-    // 장바구니 구매 체크
-    @Transactional
-    public void updateCheckCart(Long id, CartDto.CartUpdateCheckRequest request) {
-
-        Cart cart = cartRepository.findById(request.getCartId()).orElseThrow(IllegalArgumentException::new);
-
-        cart.updateCheckCart(request.isCheck());
     }
 }

@@ -44,18 +44,10 @@ public class CartController {
 
 
     // 장바구니 수정 (수량 수정)
-    @PatchMapping("/member/{id}/cart/stock")
-    public void updateStockCart(@PathVariable Long id, @RequestBody CartDto.CartUpdateStockRequest request){
+    @PatchMapping("/member/{id}/cart/count")
+    public void updateStockCart(@PathVariable Long id, @RequestBody CartDto.CartUpdateCountRequest request){
 
         cartService.updateStockCart(id, request);
-    }
-
-
-    // 장바구니 수정 (체크 수정)
-    @PatchMapping("/member/{id}/cart/check")
-    public void updatedCheckCart(@PathVariable Long id, @RequestBody CartDto.CartUpdateCheckRequest request){
-
-        cartService.updateCheckCart(id, request);
     }
 
 }

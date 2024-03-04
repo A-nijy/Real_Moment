@@ -21,7 +21,7 @@ public class Announcement extends TimeAndByCheck {
     private Admin admin;
     private String title;
     private String content;
-    private boolean isFix;
+    private boolean isFix = false;
     private int viewCount = 0;
 
 

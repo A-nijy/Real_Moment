@@ -105,6 +105,14 @@ public class AdminOrderService {
 
         Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
+//        // 주문 상태가 배송 완료인지 확인
+//        if(!PaymentStatus.DELIVERY_DONE.equals(order.getStatus()) && request.getStatus().equals("구매확정")){
+//            throw new IllegalArgumentException("구매 확정이 불가능한 주문 상태입니다.");
+//        }
+//        if(!PaymentStatus.DELIVERY_DONE.equals(order.getStatus()) && request.getStatus().equals("")){
+//            throw new IllegalArgumentException("구매 확정이 불가능한 주문 상태입니다.");
+//        }
+
         PaymentStatus status = PaymentStatus.fromString(request.getStatus());
 
         order.updateStatus(status);

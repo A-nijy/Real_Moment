@@ -71,8 +71,8 @@ public class OrderService {
 
             Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
-            priceAndPoint.plusTotalPrice(item.getPrice());
-            priceAndPoint.plusTotalDiscountPrice(item.getDiscountPrice());
+            priceAndPoint.plusTotalPrice(item.getPrice() * request.getCount());
+            priceAndPoint.plusTotalDiscountPrice(item.getDiscountPrice() * request.getCount());
 
             ItemDto.OrderPageItemResponse orderItem = new ItemDto.OrderPageItemResponse(item, request.getCount());
 

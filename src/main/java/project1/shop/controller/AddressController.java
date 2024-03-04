@@ -8,8 +8,6 @@ import project1.shop.dto.innerDto.AddressDto;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.AddressService;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -42,6 +40,7 @@ public class AddressController {
     public void saveAddress(@PathVariable Long id, @RequestBody AddressDto.SaveRequest request) {
 
         log.info("컨트롤러 수행 -> 서비스 호출");
+        log.info("0 : {}", request.isDefault());
         addressService.saveAddress(id, request);
 
         log.info("배송지 저장 완료");

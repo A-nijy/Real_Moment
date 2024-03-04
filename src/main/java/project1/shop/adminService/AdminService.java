@@ -69,7 +69,7 @@ public class AdminService {
     @Transactional
     public AdminDto.Response updateAdmin(Long id, AdminDto.UpdateRequest request) {
 
-        Admin admin = adminRepository.findById(request.getAdminId()).orElseThrow(IllegalArgumentException::new);
+        Admin admin = adminRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
         admin.update(request);
 
@@ -80,6 +80,10 @@ public class AdminService {
 
     @Transactional
     public void roleUpdateAdmin(AdminDto.RoleUpdateRequest request) {
+
+        if (!request.getRoles().equals("ROLE_USER") && !request.getRoles().equals("ROLE_ADMIN")){
+            throw new IllegalArgumentException("권한 입력이 잘못되었습니다.");
+        }
 
         Admin admin = adminRepository.findById(request.getAdminId()).orElseThrow(IllegalArgumentException::new);
 

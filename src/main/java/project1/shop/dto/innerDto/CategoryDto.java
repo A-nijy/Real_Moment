@@ -15,7 +15,7 @@ public class CategoryDto {
     @Setter
     public static class CreateRequest{
         private String name;
-        private Long parentId;
+        private Long parentId = null;
     }
 
 

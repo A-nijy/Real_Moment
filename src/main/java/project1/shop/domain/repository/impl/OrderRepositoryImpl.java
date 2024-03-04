@@ -11,6 +11,7 @@ import project1.shop.domain.repository.custom.OrderRepositoryCustom;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.enumeration.PaymentStatus;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -187,16 +188,27 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
 
     // startDate ~ LastDate
-    private BooleanExpression betweenDate(LocalDateTime startDate, LocalDateTime lastDate){
+    private BooleanExpression betweenDate(LocalDate startDate, LocalDate lastDate){
+
+        LocalDateTime startDateTime = null;
+        LocalDateTime lastDateTime = null;
+
+        if(startDate != null){
+            startDateTime = startDate.atStartOfDay();
+        }
+
+        if (lastDate != null){
+            lastDateTime = lastDate.atStartOfDay();
+        }
 
         if (lastDate == null){
-            lastDate = LocalDateTime.now();
+            lastDateTime = LocalDateTime.now();
         }
         if(startDate == null){
-            startDate = lastDate.minusMonths(3);
+            startDateTime = lastDateTime.minusMonths(3);
         }
 
-        return QOrder.order.orderedDate.between(startDate, lastDate);
+        return QOrder.order.orderedDate.between(startDateTime, lastDateTime);
     }
 
 

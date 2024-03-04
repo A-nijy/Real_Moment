@@ -18,8 +18,6 @@ public class CartDto {
         private Long cartId;
         private ItemDto.SimpleItemResponse item;
         private int stock;
-        private int price;
-        private boolean isCheck;
     }
 
 
@@ -31,7 +29,6 @@ public class CartDto {
     @Setter
     public static class CartSaveRequest {
 
-        private Long memberId;
         private Long itemId;
         private int stock;
     }
@@ -42,10 +39,9 @@ public class CartDto {
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class CartUpdateStockRequest {
+    public static class CartUpdateCountRequest {
 
         private Long cartId;
-        private Long memberId;
         private int stock;
     }
 
@@ -58,8 +54,6 @@ public class CartDto {
     public static class CartUpdateCheckRequest {
 
         private Long cartId;
-        private Long memberId;
-        private boolean isCheck;
     }
 
 }

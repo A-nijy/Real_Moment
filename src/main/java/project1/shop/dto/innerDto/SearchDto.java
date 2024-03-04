@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class SearchDto {
@@ -16,7 +17,7 @@ public class SearchDto {
     @Getter
     @Setter
     public static class Items{
-        private String itemSort = null;                // 정렬 = new, hot, sale
+        private String itemSort = "new";                // 정렬 = new, hot, sale
         private Long categoryId = null;                // 카테고리
         private String itemName = null;                // 상품 이름
         private Boolean isDelete = null;                // 상품 삭제 여부
@@ -56,11 +57,11 @@ public class SearchDto {
     @Setter
     public static class MyOrdersSearch {
         private String itemName = null;
-        private LocalDateTime startDate = null;
-        private LocalDateTime lastDate = null;
+        private LocalDate startDate = null;
+        private LocalDate lastDate = null;
 //        @Nullable
 //        private PaymentStatus status;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
-        private String status;
+        private String status = null;
         private int nowPage = 1;                // 페이지
     }
 
@@ -74,8 +75,8 @@ public class SearchDto {
         private String itemName = null;
         private String loginId = null;
         private String merchantUid = null;
-        private LocalDateTime startDate = null;
-        private LocalDateTime lastDate = null;
+        private LocalDate startDate = null;
+        private LocalDate lastDate = null;
 //        private PaymentStatus status = null;                  // 주문 상태 - 결제완료, 출고준비, 출고완료, 배송준비, 주문취소 등등
         private String status = null;
         private int nowPage = 1;                // 페이지

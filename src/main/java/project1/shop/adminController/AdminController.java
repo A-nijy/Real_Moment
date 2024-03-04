@@ -50,6 +50,7 @@ public class AdminController {
             throw new IllegalArgumentException("형식에 알맞게 입력해주세요");
         }
 
+        log.info("aaaaaaaa");
         adminService.createAdmin(request);
 
         return "관리자 가입 완료!";
@@ -116,10 +117,10 @@ public class AdminController {
 
 
     // 관리자 삭제 (고위 관리자)
-    @DeleteMapping("/admin/admin")
-    public String deleteAdmin(@RequestParam("adminId") Long adminId){
+    @PatchMapping("/admin/admin")
+    public String deleteAdmin(@RequestBody AdminDto.AdminIdRequest request){
 
-        adminService.deleteAdmin(adminId);
+        adminService.deleteAdmin(request.getAdminId());
 
         return "관리자 삭제 완료!";
     }

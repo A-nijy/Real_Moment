@@ -181,6 +181,7 @@ public class MemberDto {
         private String tel;
         private String birthDate;
         private String gender;
+        private int thisYearPay;
         private int point;
         private LocalDateTime createdDate;
 
@@ -194,6 +195,7 @@ public class MemberDto {
             tel = member.getTel();
             birthDate = member.getEmail();
             gender = member.getGender().getGender();
+            thisYearPay = member.getThisYearPay();
             point = member.getPoint();
             createdDate = member.getCreatedDate();
 
