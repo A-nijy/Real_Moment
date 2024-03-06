@@ -135,7 +135,7 @@ public class OrderService {
 
 
     // 2. 결제 완료시 결제를 검증하고 임시 orders객체를 완성 시키고 최종적으로 포트원에 저장된 결제 데이터를 가져와서 반환 (+ 상품 재고 차감)
-    @Transactional
+    @Transactional(noRollbackFor = IllegalArgumentException.class)
     public IamportResponse<Payment> validatePayment(Long id, PortOneDto.InicisRequest request) {
 
         try{
@@ -412,7 +412,8 @@ public class OrderService {
             // 결제 서비스 클라이언트(iamportClient)를 이용해서 결제 고유 번호를 기반으로 결제를 취소하는데 이때 취소에 필요한 정보가 있는 CancelDate 객체를 제공
             iamportClient.cancelPaymentByImpUid(cancelData);
 
-            throw new RuntimeException("결제금액 상이하여 취소, 클라이언트 측의 위변조 가능성 있음");
+//            throw new RuntimeException("결제금액 상이하여 취소, 클라이언트 측의 위변조 가능성 있음");
+            throw new IllegalArgumentException("결제금액 상이하여 취소, 클라이언트 측의 위변조 가능성 있음");
         }
 
         log.info("결제 예정 금액과 결제한 금액이 동일함 -> 결제 완료 판단과 결제 금액이 정확한지 검증 완료");
@@ -442,14 +443,18 @@ public class OrderService {
     // 특정 orders와 해당 orderDetail를 DB에서 제거하기
     public void deleteOrderDetailsAndOrders(Order order){
 
+        log.info("제거 메서드 동작");
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         for(OrderDetail orderDetail : orderDetails){
 
             orderDetailRepository.delete(orderDetail);
+            orderDetailRepository.flush();
         }
 
         orderRepository.delete(order);
+        orderRepository.flush();
+
     }
 
 
