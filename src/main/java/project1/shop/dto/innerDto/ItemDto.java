@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 import project1.shop.domain.entity.Item;
 
 import java.time.LocalDateTime;
@@ -28,8 +29,8 @@ public class ItemDto {
         private int sellPrice;
         private int stock;
         private boolean isSell;
-        private String mainImg;
-        private String serveImg;
+        private List<MultipartFile> mainImgList;
+        private List<MultipartFile> serveImgList;
     }
 
 
@@ -50,10 +51,11 @@ public class ItemDto {
         private int sellPrice;
         private int stock;
         private boolean isSell;
-        private String mainImg;
-        private String serveImg;
+        private List<S3Dto.ImgDataResponse> imgDataDataListResponse;
+        private List<S3Dto.ImgDataResponse> serveImgDataResponseList;
 
-        public UpdateResponse(Item item){
+
+        public UpdateResponse(Item item, List<S3Dto.ImgDataResponse> imgDataDataListResponse, List<S3Dto.ImgDataResponse> serveImgDataResponseList){
             itemId = item.getItemId();
             categoryId = item.getItemId();
             name = item.getName();
@@ -64,8 +66,9 @@ public class ItemDto {
             sellPrice = item.getSellPrice();
             stock = item.getStock();
             isSell = item.isSell();
-            mainImg = item.getMainImg();
-            serveImg = item.getServeImg();
+
+            this.imgDataDataListResponse = imgDataDataListResponse;
+            this.serveImgDataResponseList = serveImgDataResponseList;
         }
     }
 
@@ -86,8 +89,61 @@ public class ItemDto {
         private int sellPrice;
         private int stock;
         private boolean isSell;
-        private String mainImg;
-        private String serveImg;
+
+        private List<MultipartFile> mainImgList;
+        private List<MultipartFile> serveImgList;
+
+        private List<S3Dto.ImgDataResponse> imgDataDataListResponse;
+        private List<S3Dto.ImgDataResponse> serveImgDataResponseList;
+    }
+
+
+    // 상품 수정 요청 (상품 정보)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateDataRequest {
+        private Long itemId;
+        private Long categoryId;
+        private String name;
+        private String content;
+        private int price;
+        private int discountRate;
+        private int discountPrice;
+        private int sellPrice;
+        private int stock;
+        private boolean isSell;
+    }
+
+
+    // 상품 수정 요청 (상품 메인 이미지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateMainImgRequest {
+
+        private Long itemId;
+        private List<MultipartFile> mainImgList;
+
+        // 삭제된 이미지 id
+        private List<Long> s3FileId;
+    }
+
+
+    // 상품 수정 요청 (상품 서브 이미지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class UpdateServeImgRequest {
+
+        private Long itemId;
+        private List<MultipartFile> serveImgList;
+
+        // 삭제된 이미지 id
+        private List<Long> s3FileId;
     }
 
 
@@ -117,7 +173,7 @@ public class ItemDto {
             discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
             isSell = item.isSell();
-            mainImg = item.getMainImg();
+//            mainImg = item.getMainImg();
         }
     }
 
@@ -169,8 +225,8 @@ public class ItemDto {
             stock = item.getStock();
             isSell = item.isSell();
             isDelete = item.isDelete();
-            mainImg = item.getMainImg();
-            serveImg = item.getServeImg();
+//            mainImg = item.getMainImg();
+//            serveImg = item.getServeImg();
         }
     }
 
@@ -213,9 +269,21 @@ public class ItemDto {
             discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
             isSell = item.isSell();
-            mainImg = item.getMainImg();
+//            mainImg = item.getMainImg();
             this.count = count;
             totalSellPrice = item.getSellPrice() * count;
         }
+    }
+
+
+
+    // S3에 저장한 파일 데이터 응답용
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class S3Data{
+        private String uuidFileName;
+        private String s3Url;
     }
 }

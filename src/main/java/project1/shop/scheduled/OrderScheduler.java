@@ -5,11 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import project1.shop.domain.entity.Grade;
-import project1.shop.domain.entity.Member;
-import project1.shop.domain.entity.Order;
+import project1.shop.domain.entity.*;
 import project1.shop.domain.repository.GradeRepository;
 import project1.shop.domain.repository.MemberRepository;
+import project1.shop.domain.repository.OrderDetailRepository;
 import project1.shop.domain.repository.OrderRepository;
 import project1.shop.enumeration.PaymentStatus;
 
@@ -22,6 +21,7 @@ public class OrderScheduler {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final GradeRepository gradeRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
 
     // 매일 자정에 실행되는 스케줄러 (배송 완료 이후 7일이 지난 status는 자동으로 구매 확정으로 변경)
@@ -37,6 +37,15 @@ public class OrderScheduler {
             order.updateStatus(PaymentStatus.DONE);
             // 회원에 적립금, 올해 총 구매 금액 적용 및 등급 재정의
             StatusDoneSetting(order);
+            // 상품 판매수량 업데이트
+            List<OrderDetail> orderDetailList = orderDetailRepository.findByOrder(order);
+
+            for (OrderDetail orderDetail : orderDetailList){
+
+                Item item = orderDetail.getItem();
+
+                item.plusSellCount(orderDetail.getItemCount());
+            }
         }
     }
 

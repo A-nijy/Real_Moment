@@ -355,6 +355,16 @@ public class OrderService {
         // 주문 상태를 구매 확정으로 변경
         order.updateStatus(PaymentStatus.DONE);
 
+        // 상품 판매수량 업데이트
+        List<OrderDetail> orderDetailList = orderDetailRepository.findByOrder(order);
+
+        for (OrderDetail orderDetail : orderDetailList){
+
+            Item item = orderDetail.getItem();
+
+            item.plusSellCount(orderDetail.getItemCount());
+        }
+
         // 회원에 적립금, 올해 총 구매 금액 적용
         Member member = memberRepository.findById(order.getMember().getMemberId()).orElseThrow(IllegalArgumentException::new);
         member.updateOrderMember(order);

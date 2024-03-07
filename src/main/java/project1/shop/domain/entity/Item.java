@@ -26,10 +26,9 @@ public class Item extends TimeAndByCheck {
     private int discountPrice;
     private int sellPrice;
     private int stock;
+    private int sellCount = 0;
     private boolean isSell;
     private boolean isDelete = false;
-    private String mainImg;
-    private String serveImg;
 
 
 
@@ -43,13 +42,11 @@ public class Item extends TimeAndByCheck {
         sellPrice = request.getSellPrice();
         stock = request.getStock();
         isSell = request.isSell();
-        mainImg = request.getMainImg();
-        serveImg = request.getServeImg();
     }
 
 
 
-    public void update(Category category, ItemDto.UpdateRequest request){
+    public void updateData(Category category, ItemDto.UpdateDataRequest request){
         this.category = category;
         name = request.getName();
         content = request.getContent();
@@ -58,8 +55,6 @@ public class Item extends TimeAndByCheck {
         sellPrice = request.getSellPrice();
         stock = request.getStock();
         isSell = request.isSell();
-        mainImg = request.getMainImg();
-        serveImg = request.getServeImg();
     }
 
 
@@ -79,6 +74,18 @@ public class Item extends TimeAndByCheck {
         stock += itemCount;
     }
 
+    // 판매량 추가
+    public void plusSellCount(int sellCount){
+
+        this.sellCount += sellCount;
+    }
+
+    // 판매량 복구
+    public void subSellCount(int sellCount){
+
+        this.sellCount -= sellCount;
+    }
+
 
     public void delete(){
         category = null;
@@ -86,7 +93,5 @@ public class Item extends TimeAndByCheck {
         content = null;
         isSell = false;
         isDelete = true;
-        mainImg = null;
-        serveImg = null;
     }
 }

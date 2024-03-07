@@ -8,6 +8,7 @@ import project1.shop.adminService.AdminItemService;
 import project1.shop.dto.innerDto.ItemDto;
 import project1.shop.dto.innerDto.SearchDto;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -40,7 +41,7 @@ public class AdminItemController {
 
     // 상품 추가
     @PostMapping("/admin/item")
-    public String saveItem(@RequestBody ItemDto.SaveRequest request){
+    public String saveItem(ItemDto.SaveRequest request) throws IOException {
 
         adminItemService.saveItem(request);
 
@@ -58,13 +59,33 @@ public class AdminItemController {
     }
 
 
-    // 상품 수정
-    @PatchMapping("/admin/item")
-    public String updateItem(@RequestBody ItemDto.UpdateRequest request){
+    // 상품 수정 (상품 정보)
+    @PatchMapping("/admin/item/data")
+    public String updateItemData(@RequestBody ItemDto.UpdateDataRequest request){
 
-        adminItemService.updateItem(request);
+        adminItemService.updateItemData(request);
 
-        return "상품 수정 완료!";
+        return "상품 정보 수정 완료";
+    }
+
+
+    // 상품 수정 (메인 이미지)
+    @PatchMapping("/admin/item/mainImg")
+    public String updateItemMainImg(@RequestBody ItemDto.UpdateMainImgRequest request){
+
+        adminItemService.updateItemMainImg(request);
+
+        return "메인 이미지 수정 완료";
+    }
+
+
+    // 상품 수정 (서브 이미지)
+    @PatchMapping("/admin/item/serveImg")
+    public String updateItemServeImg(@RequestBody ItemDto.UpdateServeImgRequest request) {
+
+        adminItemService.updateItemServeImg(request);
+
+        return "서브 이미지 수정 완료";
     }
 
 
