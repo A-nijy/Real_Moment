@@ -50,6 +50,29 @@ public class SearchDto {
     }
 
 
+    // 1대1 문의 목록 조회 (내꺼)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class OneOnOnes{
+        private Boolean isAnswer = null;
+        private int nowPage = 1;
+    }
+
+
+    // 1대1 문의 목록 조회 (관리자)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class OneOnOneSearch{
+        private String loginId = null;
+        private Boolean isAnswer = null;
+        private int nowPage = 1;
+    }
+
+
     // 나의 주문 내역 목록 조회
     @AllArgsConstructor
     @NoArgsConstructor

@@ -78,11 +78,13 @@ public class ItemQAService {
                 .collect(Collectors.toList());
 
         for(ItemQADto.MyItemQAResponse myItemQA : myItemQADto){
-            QAComment qaComment = qaCommentRepository.findById(myItemQA.getItemQAId()).orElse(null);
+            QAComment qaComment = qaCommentRepository.findByItemQA_ItemQAId(myItemQA.getItemQAId()).orElse(null);
 
             QACommentDto.Response qaCommentDto = new QACommentDto.Response(qaComment);
 
-            myItemQA.setQAComment(qaCommentDto);
+            if (qaComment.getItemQA().isAnswer()){
+                myItemQA.setQAComment(qaCommentDto);
+            }
         }
 
         ItemQADto.MyItemQAPageResponse myItemQAPageDto = new ItemQADto.MyItemQAPageResponse(myItemQADto, myItemQAs.getTotalPages(), request.getNowPage());
@@ -110,7 +112,7 @@ public class ItemQAService {
         ItemQA itemQA = itemQARepository.findById(itemQAId).orElseThrow(IllegalArgumentException::new);
 
         if(itemQA.isAnswer() == true){
-            throw new IllegalArgumentException("답변이 달려서 해당 Q&A를 수정할 수 없습니다.");
+            throw new IllegalArgumentException("답변이 달려있는 Q&A는 수정할 수 없습니다.");
         }
 
         ItemQADto.UpdateItemQAResponse itemQADto = new ItemQADto.UpdateItemQAResponse(itemQA);
