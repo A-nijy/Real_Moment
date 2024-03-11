@@ -63,6 +63,12 @@ public class AdminCategoryService {
 
         Category parentCategory;
 
+        if (category.getParent() == null && request.getParentId() != null){
+            throw new IllegalArgumentException("부모 카테고리 -> 자식 카테고리 변경이 불가능합니다.");
+        } else if (category.getParent() != null && request.getParentId() == null){
+            throw new IllegalArgumentException("자식 카테고리 -> 부모 카테고리 변경이 불가능합니다.");
+        }
+
         if(request.getParentId() != null){
             parentCategory = categoryRepository.findById(request.getParentId()).orElseThrow(IllegalArgumentException::new);
         } else {
