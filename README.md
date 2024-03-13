@@ -44,8 +44,23 @@ server:
 
 # 아임포트 가맹점 번호 / 키 / 비밀키
 imp:
-  code: "포트원 가맹점 번호 (큰 따옴표 없이)"
+  code: 포트원 가맹점 번호
   api:
-    key: "일반 키 (큰 따옴표 없이)"
-    secret_key: "시크릿 키 (큰 따옴표 없이)"
+    key: 일반 키
+    secret_key: 시크릿 키
+
+
+# AWS S3
+cloud:
+  aws:
+    s3:
+      bucket: 버킷 이름
+    credentials:
+      access-key: 에세스 키
+      secret-key: 비밀 키
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
 </code></pre>
