@@ -28,29 +28,65 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
         System.out.println("실행중");
         List<Item> items;
 
-        if (searchDto.getItemSort().equals("hot")){
+        if (searchDto.getItemSort().equals("new")){
 
             items = queryFactory.selectFrom(QItem.item)
                                             .join(QItem.item.category, QCategory.category)
                                             .where(itemNameContains(searchDto.getItemName()),
                                                     categoryIdEq(searchDto.getCategoryId()),
                                                     itemDeleteCheck(searchDto.getIsDelete()))
-                                            .orderBy(QItem.item.discountRate.desc(), QItem.item.createdDate.desc().nullsLast())
+                                            .orderBy(QItem.item.createdDate.desc().nullsLast())
                                             .offset(pageable.getOffset())
                                             .limit(pageable.getPageSize())
                                             .fetch();
+
+        } else if (searchDto.getItemSort().equals("sell")){
+
+            items = queryFactory.selectFrom(QItem.item)
+                                            .join(QItem.item.category, QCategory.category)
+                                            .where(itemNameContains(searchDto.getItemName()),
+                                                    categoryIdEq(searchDto.getCategoryId()),
+                                                    itemDeleteCheck(searchDto.getIsDelete()))
+                                            .orderBy(QItem.item.sellCount.desc(), QItem.item.createdDate.desc().nullsLast())
+                                            .offset(pageable.getOffset())
+                                            .limit(pageable.getPageSize())
+                                            .fetch();
+
+        } else if (searchDto.getItemSort().equals("low")){
+
+            items = queryFactory.selectFrom(QItem.item)
+                    .join(QItem.item.category, QCategory.category)
+                    .where(itemNameContains(searchDto.getItemName()),
+                            categoryIdEq(searchDto.getCategoryId()),
+                            itemDeleteCheck(searchDto.getIsDelete()))
+                    .orderBy(QItem.item.sellPrice.asc(), QItem.item.createdDate.desc().nullsLast())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetch();
+
+        } else if (searchDto.getItemSort().equals("high")){
+
+            items = queryFactory.selectFrom(QItem.item)
+                    .join(QItem.item.category, QCategory.category)
+                    .where(itemNameContains(searchDto.getItemName()),
+                            categoryIdEq(searchDto.getCategoryId()),
+                            itemDeleteCheck(searchDto.getIsDelete()))
+                    .orderBy(QItem.item.sellPrice.desc(), QItem.item.createdDate.desc().nullsLast())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetch();
 
         } else if (searchDto.getItemSort().equals("sale")){
 
             items = queryFactory.selectFrom(QItem.item)
-                                            .join(QItem.item.category, QCategory.category)
-                                            .where(itemNameContains(searchDto.getItemName()),
-                                                    categoryIdEq(searchDto.getCategoryId()),
-                                                    itemDeleteCheck(searchDto.getIsDelete()))
-                                            .orderBy(QItem.item.discountRate.desc(), QItem.item.createdDate.desc().nullsLast())
-                                            .offset(pageable.getOffset())
-                                            .limit(pageable.getPageSize())
-                                            .fetch();
+                    .join(QItem.item.category, QCategory.category)
+                    .where(itemNameContains(searchDto.getItemName()),
+                            categoryIdEq(searchDto.getCategoryId()),
+                            itemDeleteCheck(searchDto.getIsDelete()))
+                    .orderBy(QItem.item.discountRate.desc(), QItem.item.createdDate.desc().nullsLast())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetch();
 
         } else {
 

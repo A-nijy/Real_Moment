@@ -58,7 +58,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                     .limit(pageable.getPageSize())
                     .fetch();
 
-        } else if(searchDto.getMemberSort().equals("point")){
+        } else if(searchDto.getMemberSort().equals("totalPay")){
 
             members = queryFactory
                     .selectFrom(QMember.member)
@@ -66,7 +66,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                     .where(loginIdContains(searchDto.getLoginId()),
                             gradeIdEq(searchDto.getGradeId()),
                             memberDeleteCheck(searchDto.getIsDelete()))
-                    .orderBy(QMember.member.point.desc(), QMember.member.createdDate.desc().nullsLast())
+                    .orderBy(QMember.member.thisYearPay.desc(), QMember.member.createdDate.desc().nullsLast())
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .fetch();

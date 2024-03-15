@@ -112,7 +112,7 @@ public class SearchDto {
     @Getter
     @Setter
     public static class Members{
-        private String memberSort = null;                   // 회원 정렬 - day 가입일, point 적립금
+        private String memberSort = null;                   // 회원 정렬 - day 가입일, totalPay 올해 총 구매 금액
         private String loginId = null;                    // 특정 회원 아이디
         private Long gradeId = null;                       // 등급
         private Boolean isDelete = null;               // 탈퇴 여부

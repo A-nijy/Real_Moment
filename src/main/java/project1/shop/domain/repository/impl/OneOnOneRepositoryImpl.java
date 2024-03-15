@@ -55,7 +55,6 @@ public class OneOnOneRepositoryImpl implements OneOnOneRepositoryCustom {
     @Override
     public Page<OneOnOne> searchOneOnOne(SearchDto.OneOnOneSearch searchDto, Pageable pageable) {
 
-        log.info("?");
         List<OneOnOne> oneOnOneList = queryFactory.selectFrom(QOneOnOne.oneOnOne)
                 .join(QOneOnOne.oneOnOne.member, QMember.member)
                 .where(answerEq(searchDto.getIsAnswer()),
@@ -65,7 +64,6 @@ public class OneOnOneRepositoryImpl implements OneOnOneRepositoryCustom {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        log.info("??");
         Long total = queryFactory
                 .select(QOneOnOne.oneOnOne.count())
                 .from(QOneOnOne.oneOnOne)
