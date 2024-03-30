@@ -17,10 +17,11 @@ public class SearchDto {
     @Getter
     @Setter
     public static class Items{
-        private String itemSort = "new";                // 정렬 = new, hot, sale
+        private String itemSort = "new";                // 정렬 = new, sell, low, high, sale
         private Long categoryId = null;                // 카테고리
         private String itemName = null;                // 상품 이름
-        private Boolean isDelete = null;                // 상품 삭제 여부
+        private Boolean isSell = null;                   // 상품 판매 여부
+        private Boolean isDelete = false;                // 상품 삭제 여부
         private int nowPage = 1;                       // 페이지
     }
 

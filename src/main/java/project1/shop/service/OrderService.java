@@ -363,6 +363,7 @@ public class OrderService {
             Item item = orderDetail.getItem();
 
             item.plusSellCount(orderDetail.getItemCount());
+            item.plusRevenue(orderDetail.getTotalPrice());
         }
 
         // 회원에 적립금, 올해 총 구매 금액 적용

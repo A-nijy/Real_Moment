@@ -53,7 +53,8 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
 
         List<Review> reviews = queryFactory.selectFrom(QReview.review)
                 .join(QReview.review.member, QMember.member)
-                .where(QMember.member.memberId.eq(memberId))
+                .where(QMember.member.memberId.eq(memberId),
+                        QReview.review.item.isDelete.eq(false))
                 .orderBy(QReview.review.createdDate.desc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -63,7 +64,8 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .select(QReview.review.count())
                 .from(QReview.review)
                 .join(QReview.review.member, QMember.member)
-                .where(QMember.member.memberId.eq(memberId))
+                .where(QMember.member.memberId.eq(memberId),
+                        QReview.review.item.isDelete.eq(false))
                 .fetchOne();
 
 

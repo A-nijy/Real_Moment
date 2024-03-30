@@ -34,6 +34,7 @@ public class ItemQAController {
     @GetMapping("/member/{id}/QAList")
     public ItemQADto.MyItemQAPageResponse showMyQAList(@PathVariable Long id, SearchDto.Page nowPage){
 
+        log.info("진입");
         ItemQADto.MyItemQAPageResponse myItemQAPageDto = itemQAService.showMyQAList(id, nowPage);
 
         return myItemQAPageDto;

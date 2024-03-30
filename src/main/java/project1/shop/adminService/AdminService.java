@@ -94,6 +94,10 @@ public class AdminService {
     @Transactional
     public void deleteAdmin(Long adminId) {
 
+        if (adminId == 1){
+            throw new IllegalArgumentException("대표의 아이디는 삭제가 불가능합니다.");
+        }
+
         Admin admin = adminRepository.findById(adminId).orElseThrow(IllegalArgumentException::new);
 
         admin.delete();

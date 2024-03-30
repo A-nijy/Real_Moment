@@ -47,7 +47,7 @@ public class OneOnOneService {
 
         OneOnOne oneOnOne = oneOnOneRepository.findById(oneOnOneId).orElseThrow(IllegalArgumentException::new);
 
-        if (oneOnOne.isAnswer() == true){
+        if (oneOnOne.isAnswer()){
             throw new IllegalArgumentException("답변이 달려있는 문의는 수정이 불가능합니다.");
         }
 
@@ -89,27 +89,26 @@ public class OneOnOneService {
     @Transactional
     public OneOnOneDto.MyPageResponse showOneOnOneList(Long id, SearchDto.OneOnOnes request) {
 
-        log.info("1");
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
-        log.info("2");
+
         Page<OneOnOne> oneOnOneList = oneOnOneRepository.searchMyOneOnOne(request, id, pageRequest);
-        log.info("3");
+
         List<OneOnOneDto.MyResponse> oneOnOneDtoList = oneOnOneList.stream()
                 .map(OneOnOneDto.MyResponse::new)
                 .collect(Collectors.toList());
-        log.info("4");
+
         for (OneOnOneDto.MyResponse oneOnOneDto : oneOnOneDtoList){
-            log.info("5");
+
             Comment comment = commentRepository.findByOneOnOne_OneOnOneId(oneOnOneDto.getOneOnOneId()).orElse(null);
-            log.info("6");
+
             if (comment != null){
                 oneOnOneDto.setComment(comment);
             }
 
         }
-        log.info("7");
+
         OneOnOneDto.MyPageResponse myOneOnOneList = new OneOnOneDto.MyPageResponse(oneOnOneDtoList, oneOnOneList.getTotalPages(), request.getNowPage());
-        log.info("8");
+
         return myOneOnOneList;
     }
 }

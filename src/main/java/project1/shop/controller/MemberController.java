@@ -80,11 +80,12 @@ public class MemberController {
     @PatchMapping("/member/{id}/password")
     public void memberUpdatePassword(@PathVariable Long id, @Valid @RequestBody MemberDto.UpdatePasswordRequest request, BindingResult bindingResult){
 
+        log.info("0");
         // 비밀번호 유효성 검사
         if(bindingResult.hasErrors()){
             throw new IllegalArgumentException(String.format("잘못된 형식입니다. ID = (%s)", request.getLoginPassword()));
         }
-
+        log.info("1");
         memberService.memberUpdatePassword(id, request);
     }
 

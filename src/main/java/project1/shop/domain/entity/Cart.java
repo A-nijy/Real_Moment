@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import project1.shop.dto.innerDto.CartDto;
 
 @Entity
 @AllArgsConstructor
@@ -23,18 +22,18 @@ public class Cart {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
-    private int stock;
+    private int count;
 
 
-    public Cart(Member member, Item item, int stock){
+    public Cart(Member member, Item item, int count){
         this.member = member;
         this.item = item;
-        this.stock = stock;
+        this.count = count;
     }
 
 
-    public void updateStockCart(int stock){
-        this.stock = stock;
+    public void updateCountCart(int count){
+        this.count = count;
     }
 
 }

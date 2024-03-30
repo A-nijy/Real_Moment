@@ -24,10 +24,8 @@ public class ItemController {
     @GetMapping("/itemList")
     public ItemDto.SimpleItemPageResponse showItems(SearchDto.Items request){
 
-        log.info("컨트롤러 시작 -> 서비스 이동");
         ItemDto.SimpleItemPageResponse itemPageDto = itemService.showItems(request);
 
-        log.info("서비스 종료 -> 반환");
         return itemPageDto;
     }
 

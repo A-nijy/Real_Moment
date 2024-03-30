@@ -45,6 +45,7 @@ public class OrderScheduler {
                 Item item = orderDetail.getItem();
 
                 item.plusSellCount(orderDetail.getItemCount());
+                item.plusRevenue(orderDetail.getTotalPrice());
             }
         }
     }

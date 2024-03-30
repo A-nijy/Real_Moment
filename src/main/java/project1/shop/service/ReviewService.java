@@ -7,14 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project1.shop.domain.entity.Item;
-import project1.shop.domain.entity.Member;
-import project1.shop.domain.entity.Order;
-import project1.shop.domain.entity.Review;
-import project1.shop.domain.repository.ItemRepository;
-import project1.shop.domain.repository.MemberRepository;
-import project1.shop.domain.repository.OrderRepository;
-import project1.shop.domain.repository.ReviewRepository;
+import project1.shop.domain.entity.*;
+import project1.shop.domain.repository.*;
 import project1.shop.dto.innerDto.ReviewDto;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.enumeration.PaymentStatus;
@@ -31,6 +25,7 @@ public class ReviewService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
     private final OrderRepository orderRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
 
 
@@ -83,6 +78,10 @@ public class ReviewService {
         if(!order.getStatus().equals(PaymentStatus.DONE)){
             throw new IllegalArgumentException("주문상태가 구매 확정만 리뷰를 작성할 수 있습니다.");
         }
+
+        // 해당 상품을 주문한 적이 있는지 확인
+        OrderDetail orderDetail = orderDetailRepository.findByOrder_OrderIdAndItem_ItemId(request.getOrderId(), request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
 
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);

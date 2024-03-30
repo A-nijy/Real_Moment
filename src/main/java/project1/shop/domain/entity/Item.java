@@ -27,6 +27,7 @@ public class Item extends TimeAndByCheck {
     private int sellPrice;
     private int stock;
     private int sellCount = 0;
+    private long revenue = 0;
     private boolean isSell;
     private boolean isDelete = false;
 
@@ -84,6 +85,18 @@ public class Item extends TimeAndByCheck {
     public void subSellCount(int sellCount){
 
         this.sellCount -= sellCount;
+    }
+
+    // 매출 증가
+    public void plusRevenue(int price){
+
+        this.revenue += price;
+    }
+
+    // 매출 복구
+    public void subRevenue(int price){
+
+        this.revenue -= price;
     }
 
 

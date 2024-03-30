@@ -21,6 +21,7 @@ public class AnnouncementDto {
         private Long announcementId;
         private String adminName;
         private String title;
+        private String content;
         private boolean isFix;
         private int viewCount;
         private LocalDateTime createdDate;
@@ -31,6 +32,7 @@ public class AnnouncementDto {
             announcementId = announcement.getAnnouncementId();
             adminName = announcement.getAdmin().getName();
             title = announcement.getTitle();
+            content = announcement.getContent();
             isFix = announcement.isFix();
             viewCount = announcement.getViewCount();
             createdDate = announcement.getCreatedDate();

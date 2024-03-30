@@ -80,11 +80,13 @@ public class ItemQAService {
         for(ItemQADto.MyItemQAResponse myItemQA : myItemQADto){
             QAComment qaComment = qaCommentRepository.findByItemQA_ItemQAId(myItemQA.getItemQAId()).orElse(null);
 
-            QACommentDto.Response qaCommentDto = new QACommentDto.Response(qaComment);
+            QACommentDto.Response qaCommentDto = null;
 
-            if (qaComment.getItemQA().isAnswer()){
-                myItemQA.setQAComment(qaCommentDto);
+            if(qaComment != null){
+                qaCommentDto = new QACommentDto.Response(qaComment);
             }
+
+            myItemQA.setQAComment(qaCommentDto);
         }
 
         ItemQADto.MyItemQAPageResponse myItemQAPageDto = new ItemQADto.MyItemQAPageResponse(myItemQADto, myItemQAs.getTotalPages(), request.getNowPage());

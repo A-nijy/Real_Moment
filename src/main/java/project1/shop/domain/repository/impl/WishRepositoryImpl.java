@@ -25,7 +25,8 @@ public class WishRepositoryImpl implements WishRepositoryCustom {
     public Page<Wish> searchPageWishList(Long memberId, Pageable pageable) {
 
         List<Wish> WishList = queryFactory.selectFrom(QWish.wish)
-                .where(QWish.wish.member.memberId.eq(memberId))
+                .where(QWish.wish.member.memberId.eq(memberId),
+                        QWish.wish.item.isDelete.eq(false))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -34,7 +35,8 @@ public class WishRepositoryImpl implements WishRepositoryCustom {
         Long total = queryFactory
                 .select(QWish.wish.count())
                 .from(QWish.wish)
-                .where(QWish.wish.member.memberId.eq(memberId))
+                .where(QWish.wish.member.memberId.eq(memberId),
+                        QWish.wish.item.isDelete.eq(false))
                 .fetchOne();
 
 

@@ -43,10 +43,18 @@ public class AdminCategoryService {
 
         Category category;
 
+        // 자식 카테고리를 추가한다면?
         if(request.getParentId() != null){
             Category parentCategory = categoryRepository.findById(request.getParentId()).orElseThrow(IllegalArgumentException::new);
 
+            // 대상 카테고리가 부모카테고리가 아니고 이미 자식카테고리라면?
+            if(parentCategory.getParent() != null){
+                throw new IllegalArgumentException("자식 카테고리에 자식카테고리를 추가할 수 없습니다.");
+            }
+
             category = new Category(request, parentCategory);
+
+        // 부모 카테고리를 추가한다면?
         } else {
             category = new Category(request);
         }

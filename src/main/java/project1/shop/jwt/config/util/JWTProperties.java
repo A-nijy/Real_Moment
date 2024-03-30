@@ -13,7 +13,7 @@ public interface JWTProperties {
     byte[] refreshKeyBytes = Decoders.BASE64.decode(JWTProperties.REFRESH_SECRET);
     Key ACCESS_KEY = Keys.hmacShaKeyFor(accessKeyBytes);
     Key REFRESH_KEY = Keys.hmacShaKeyFor(refreshKeyBytes);
-    int ACCESS_TIME = 60000; // access Token 만료(1분 * 30)
+    int ACCESS_TIME = 60000*30; // access Token 만료(1분 * 30)
     int REFRESH_TIME = 60000*60*24; // refresh Token 만료(1분 * 60 * 24)
     String TOKEN_PREFIX = "Bearer ";
     String HEADER_STRING = "Authorization";

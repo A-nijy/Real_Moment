@@ -34,7 +34,7 @@ public class WishService {
     @Transactional
     public WishDto.WishListPageResponse showWishList(Long id, SearchDto.Page request) {
 
-        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 9);
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
         Page<Wish> wish = wishRepository.searchPageWishList(id, pageRequest);
 

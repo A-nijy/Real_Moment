@@ -51,11 +51,12 @@ public class ItemDto {
         private int sellPrice;
         private int stock;
         private boolean isSell;
-        private List<S3Dto.ImgDataResponse> imgDataDataListResponse;
-        private List<S3Dto.ImgDataResponse> serveImgDataResponseList;
+        private boolean isDelete;
+        private List<S3Dto.ImgDataResponse> mainImgDataList;
+        private List<S3Dto.ImgDataResponse> serveImgDataList;
 
 
-        public UpdateResponse(Item item, List<S3Dto.ImgDataResponse> imgDataDataListResponse, List<S3Dto.ImgDataResponse> serveImgDataResponseList){
+        public UpdateResponse(Item item, List<S3Dto.ImgDataResponse> mainImgDataList, List<S3Dto.ImgDataResponse> serveImgDataList){
             itemId = item.getItemId();
             categoryId = item.getItemId();
             name = item.getName();
@@ -66,9 +67,10 @@ public class ItemDto {
             sellPrice = item.getSellPrice();
             stock = item.getStock();
             isSell = item.isSell();
+            isDelete = item.isDelete();
 
-            this.imgDataDataListResponse = imgDataDataListResponse;
-            this.serveImgDataResponseList = serveImgDataResponseList;
+            this.mainImgDataList = mainImgDataList;
+            this.serveImgDataList = serveImgDataList;
         }
     }
 
@@ -93,8 +95,8 @@ public class ItemDto {
         private List<MultipartFile> mainImgList;
         private List<MultipartFile> serveImgList;
 
-        private List<S3Dto.ImgDataResponse> imgDataDataListResponse;
-        private List<S3Dto.ImgDataResponse> serveImgDataResponseList;
+        private List<S3Dto.ImgDataResponse> mainImgDataList;
+        private List<S3Dto.ImgDataResponse> serveImgDataList;
     }
 
 
@@ -178,6 +180,42 @@ public class ItemDto {
     }
 
 
+    // 상품 간단 정보 (목록용)(관리자)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class SimpleItemAdminResponse {
+        private Long itemId;
+        private String name;
+        private int price;
+        private int discountRate;
+        private int discountPrice;
+        private int sellPrice;
+        private int sellCount;
+        private int stock;
+        private long revenue;
+        private boolean isSell;
+        private String mainImg;
+
+
+        @QueryProjection
+        public SimpleItemAdminResponse (Item item){
+            itemId = item.getItemId();
+            name = item.getName();
+            price = item.getPrice();
+            discountRate = item.getDiscountRate();
+            discountPrice = item.getDiscountPrice();
+            sellPrice = item.getSellPrice();
+            sellCount = item.getSellCount();
+            stock = item.getStock();
+            revenue = item.getRevenue();
+            isSell = item.isSell();
+//            mainImg = item.getMainImg();
+        }
+    }
+
+
     // 상품 간단 정보 응답 (페이지)
     @AllArgsConstructor
     @NoArgsConstructor
@@ -185,6 +223,17 @@ public class ItemDto {
     @Setter
     public static class SimpleItemPageResponse{
         private List<SimpleItemResponse> itemList;
+        private int totalPage;
+        private int nowPage;
+    }
+
+    // 상품 간단 정보 응답 (페이지) (관리자)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class SimpleItemPageAdminResponse{
+        private List<SimpleItemAdminResponse> itemList;
         private int totalPage;
         private int nowPage;
     }
@@ -223,6 +272,51 @@ public class ItemDto {
             createdDate = item.getCreatedDate();
             lastModifiedDate = item.getLastModifiedDate();
             stock = item.getStock();
+            isSell = item.isSell();
+            isDelete = item.isDelete();
+//            mainImg = item.getMainImg();
+//            serveImg = item.getServeImg();
+        }
+    }
+
+
+    // 상품 상세 정보 (관리자)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class FullItemAdminResponse{
+        private Long itemId;
+        private String name;
+        private String content;
+        private int price;
+        private int discountRate;
+        private int discountPrice;
+        private int sellPrice;
+        private int stock;
+        private int sellCount;
+        private long revenue;
+        private LocalDateTime createdDate;
+        private LocalDateTime lastModifiedDate;
+        private boolean isSell;
+        private boolean isDelete;
+        private String mainImg;
+        private String serveImg;
+
+
+        public FullItemAdminResponse(Item item){
+            itemId = item.getItemId();
+            name = item.getName();
+            content = item.getContent();
+            price = item.getPrice();
+            discountRate = item.getDiscountRate();
+            discountPrice = item.getDiscountPrice();
+            sellPrice = item.getSellPrice();
+            stock = item.getStock();
+            sellCount = item.getSellCount();
+            revenue = item.getRevenue();
+            createdDate = item.getCreatedDate();
+            lastModifiedDate = item.getLastModifiedDate();
             isSell = item.isSell();
             isDelete = item.isDelete();
 //            mainImg = item.getMainImg();

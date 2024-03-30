@@ -27,12 +27,12 @@ public class QACommentDto {
     @Setter
     public static class UpdateResponse{
 
-        private Long itemQAId;
+        private Long qaCommentId;
         private String content;
 
         public UpdateResponse(QAComment qaComment){
 
-            itemQAId = qaComment.getQACommentId();
+            qaCommentId = qaComment.getQACommentId();
             content = qaComment.getContent();
         }
     }

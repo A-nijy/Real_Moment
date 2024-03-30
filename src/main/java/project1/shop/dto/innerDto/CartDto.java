@@ -17,7 +17,7 @@ public class CartDto {
 
         private Long cartId;
         private ItemDto.SimpleItemResponse item;
-        private int stock;
+        private int count;
     }
 
 
@@ -30,7 +30,7 @@ public class CartDto {
     public static class CartSaveRequest {
 
         private Long itemId;
-        private int stock;
+        private int count;
     }
 
 
@@ -42,7 +42,7 @@ public class CartDto {
     public static class CartUpdateCountRequest {
 
         private Long cartId;
-        private int stock;
+        private int count;
     }
 
 

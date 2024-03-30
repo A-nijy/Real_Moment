@@ -46,7 +46,7 @@ public class CartService {
 
         ItemDto.SimpleItemResponse simpleItemDto = new ItemDto.SimpleItemResponse(cart.getItem());
 
-        CartDto.CartResponse cartResponse = new CartDto.CartResponse(cart.getCartId(), simpleItemDto, cart.getStock());
+        CartDto.CartResponse cartResponse = new CartDto.CartResponse(cart.getCartId(), simpleItemDto, cart.getCount());
 
         return cartResponse;
     }
@@ -56,10 +56,16 @@ public class CartService {
     @Transactional
     public void saveCart(Long memberId, CartDto.CartSaveRequest request) {
 
+        Cart cartCheck = cartRepository.findByItem_ItemId(request.getItemId()).orElse(null);
+
+        if(cartCheck != null){
+            throw new IllegalArgumentException("이미 장바구니에 존재한 상품입니다.");
+        }
+
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
-        Cart cart = new Cart(member, item, request.getStock());
+        Cart cart = new Cart(member, item, request.getCount());
 
         cartRepository.save(cart);
     }
@@ -81,6 +87,6 @@ public class CartService {
 
         Cart cart = cartRepository.findById(request.getCartId()).orElseThrow(IllegalArgumentException::new);
 
-        cart.updateStockCart(request.getStock());
+        cart.updateCountCart(request.getCount());
     }
 }

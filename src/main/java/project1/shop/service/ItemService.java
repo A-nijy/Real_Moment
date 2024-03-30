@@ -35,7 +35,7 @@ public class ItemService {
     public ItemDto.SimpleItemPageResponse showItems(SearchDto.Items request) {
 
 
-        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 9);
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 12);
 
         Page<Item> items = itemRepository.searchPageSimple(request, pageRequest);
 

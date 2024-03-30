@@ -121,15 +121,15 @@ public class MemberService {
     // 회원 비밀번호 수정
     @Transactional
     public void memberUpdatePassword(Long id, MemberDto.UpdatePasswordRequest request) {
-
+        log.info("2");
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-
+        log.info("3");
         if(!bCryptPasswordEncoder.matches(request.getLoginPassword(), member.getLoginPassword())){
             throw new IllegalArgumentException("기존 비밀번호가 일치하지 않습니다.");
         }
-
+        log.info("4");
         request.setNewLoginPassword(bCryptPasswordEncoder.encode(request.getNewLoginPassword()));
-
+        log.info("5");
         member.UpdatePassword(request);
     }
 

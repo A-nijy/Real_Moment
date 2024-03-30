@@ -46,17 +46,17 @@ public class AdminItemService {
 
     // 상품 목록 조회
     @Transactional
-    public ItemDto.SimpleItemPageResponse showItems(SearchDto.Items request) {
+    public ItemDto.SimpleItemPageAdminResponse showItems(SearchDto.Items request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 9);
 
         Page<Item> items = itemRepository.searchPageSimple(request, pageRequest);
 
-        List<ItemDto.SimpleItemResponse> itemsDto = items.stream()
-                .map(ItemDto.SimpleItemResponse::new)
+        List<ItemDto.SimpleItemAdminResponse> itemsDto = items.stream()
+                .map(ItemDto.SimpleItemAdminResponse::new)
                 .collect(Collectors.toList());
 
-        ItemDto.SimpleItemPageResponse itemPageDto = new ItemDto.SimpleItemPageResponse(itemsDto, items.getTotalPages(), request.getNowPage());
+        ItemDto.SimpleItemPageAdminResponse itemPageDto = new ItemDto.SimpleItemPageAdminResponse(itemsDto, items.getTotalPages(), request.getNowPage());
 
         return itemPageDto;
     }
@@ -64,11 +64,11 @@ public class AdminItemService {
 
     // 상품 상세 조회
     @Transactional
-    public ItemDto.FullItemResponse showItem(Long itemId) {
+    public ItemDto.FullItemAdminResponse showItem(Long itemId) {
 
         Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
 
-        ItemDto.FullItemResponse itemDto = new ItemDto.FullItemResponse(item);
+        ItemDto.FullItemAdminResponse itemDto = new ItemDto.FullItemAdminResponse(item);
 
         return itemDto;
     }
