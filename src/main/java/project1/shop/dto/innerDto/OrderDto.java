@@ -108,7 +108,6 @@ public class OrderDto {
         private String detAddress;
         private String requestText;
         private String tel;
-//        private PaymentStatus status;
         private String status;
         private String merchantUid;
 
@@ -222,7 +221,6 @@ public class OrderDto {
         private String detAddress;
         private String requestText;
         private String tel;
-//        private PaymentStatus status;
         private String status;
         private String merchantUid;
 

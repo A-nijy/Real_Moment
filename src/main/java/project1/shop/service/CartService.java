@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Cart;
 import project1.shop.domain.entity.Item;
+import project1.shop.domain.entity.ItemFile;
 import project1.shop.domain.entity.Member;
 import project1.shop.domain.repository.CartRepository;
+import project1.shop.domain.repository.ItemFileRepository;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.MemberRepository;
 import project1.shop.dto.innerDto.CartDto;
@@ -25,6 +27,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
+    private final ItemFileRepository itemFileRepository;
 
 
     // 장바구니 목록 조회
@@ -44,7 +47,15 @@ public class CartService {
     // Cart엔티티 -> CartDto 변환 과정 (CartDto 내부에 ItemDto가 있는데 Cart엔티티의 Item을 ItemDto로 변환)
     public CartDto.CartResponse mapToDto(Cart cart) {
 
-        ItemDto.SimpleItemResponse simpleItemDto = new ItemDto.SimpleItemResponse(cart.getItem());
+        ItemFile itemFile = itemFileRepository.searchFirstMainImg(cart.getItem()).orElse(null);
+
+        ItemDto.SimpleItemResponse simpleItemDto = null;
+
+        if (itemFile == null){
+            simpleItemDto = new ItemDto.SimpleItemResponse(cart.getItem(), null);
+        } else {
+            simpleItemDto = new ItemDto.SimpleItemResponse(cart.getItem(), itemFile.getS3File().getFileUrl());
+        }
 
         CartDto.CartResponse cartResponse = new CartDto.CartResponse(cart.getCartId(), simpleItemDto, cart.getCount());
 

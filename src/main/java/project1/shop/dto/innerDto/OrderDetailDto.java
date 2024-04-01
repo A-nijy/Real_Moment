@@ -25,10 +25,10 @@ public class OrderDetailDto {
         private int totalPrice;                 // 결제 당시 총 구매가
 
 
-        public response(OrderDetail orderDetail){
+        public response(OrderDetail orderDetail, ItemDto.SimpleItemResponse simpleItemResponse){
 
             orderDetailId = orderDetail.getOrderDetailId();
-            item = new ItemDto.SimpleItemResponse(orderDetail.getItem());
+            item = simpleItemResponse;
             Price = orderDetail.getPrice();
             discountRate = orderDetail.getDiscountRate();
             discountPrice = orderDetail.getDiscountPrice();

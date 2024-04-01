@@ -2,11 +2,13 @@ package project1.shop.domain.repository.impl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import project1.shop.domain.entity.Item;
+import project1.shop.domain.entity.ItemFile;
 import project1.shop.domain.entity.QItemFile;
 import project1.shop.domain.entity.S3File;
 import project1.shop.domain.repository.custom.ItemFileRepositoryCustom;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ItemFileRepositoryImpl implements ItemFileRepositoryCustom {
 
@@ -44,5 +46,17 @@ public class ItemFileRepositoryImpl implements ItemFileRepositoryCustom {
                 .fetch();
 
         return serveImgList;
+    }
+
+    @Override
+    public Optional<ItemFile> searchFirstMainImg(Item item) {
+
+        ItemFile firstMainImg = queryFactory.selectFrom(QItemFile.itemFile)
+                .where(QItemFile.itemFile.item.eq(item),
+                        QItemFile.itemFile.mainOrSub.eq("main"),
+                        QItemFile.itemFile.number.eq(0))
+                .fetchOne();
+
+        return Optional.ofNullable(firstMainImg);
     }
 }

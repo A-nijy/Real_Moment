@@ -102,7 +102,6 @@ public class ReviewDto {
     public static class MyReviewResponse {
         private Long reviewId;
         private ItemDto.SimpleItemResponse item;
-//        private String nickname;
         private String loginId;
         private String title;
         private String content;
@@ -111,10 +110,9 @@ public class ReviewDto {
         private LocalDateTime lastModifiedDate;
 
 
-        public MyReviewResponse(Review review){
+        public MyReviewResponse(Review review, ItemDto.SimpleItemResponse simpleItemResponse){
             reviewId = review.getReviewId();
-            item = new ItemDto.SimpleItemResponse(review.getItem());
-//            nickname = review.getMember().getNickname();
+            item = simpleItemResponse;
             loginId = review.getMember().getLoginId();
             title = review.getTitle();
             content = review.getContent();

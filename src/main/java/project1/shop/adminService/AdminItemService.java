@@ -53,12 +53,29 @@ public class AdminItemService {
         Page<Item> items = itemRepository.searchPageSimple(request, pageRequest);
 
         List<ItemDto.SimpleItemAdminResponse> itemsDto = items.stream()
-                .map(ItemDto.SimpleItemAdminResponse::new)
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
 
         ItemDto.SimpleItemPageAdminResponse itemPageDto = new ItemDto.SimpleItemPageAdminResponse(itemsDto, items.getTotalPages(), request.getNowPage());
 
         return itemPageDto;
+    }
+
+
+    // DTO 변환
+    public ItemDto.SimpleItemAdminResponse mapToDto(Item item){
+
+        ItemFile itemFile = itemFileRepository.searchFirstMainImg(item).orElse(null);
+
+        ItemDto.SimpleItemAdminResponse simpleItemDto = null;
+
+        if (itemFile == null){
+            simpleItemDto = new ItemDto.SimpleItemAdminResponse(item, null);
+        } else {
+            simpleItemDto = new ItemDto.SimpleItemAdminResponse(item, itemFile.getS3File().getFileUrl());
+        }
+
+        return simpleItemDto;
     }
 
 
@@ -68,7 +85,19 @@ public class AdminItemService {
 
         Item item = itemRepository.findById(itemId).orElseThrow(IllegalArgumentException::new);
 
-        ItemDto.FullItemAdminResponse itemDto = new ItemDto.FullItemAdminResponse(item);
+        List<S3File> mainImgList = itemFileRepository.searchMainImgList(item);
+
+        List<S3File> serveImgList = itemFileRepository.searchServeImgList(item);
+
+        List<S3Dto.ImgDataResponse> imgDataDataListResponse = mainImgList.stream()
+                .map(S3Dto.ImgDataResponse::new)
+                .collect(Collectors.toList());
+
+        List<S3Dto.ImgDataResponse> subImgDataResponseList = serveImgList.stream()
+                .map(S3Dto.ImgDataResponse::new)
+                .collect(Collectors.toList());
+
+        ItemDto.FullItemAdminResponse itemDto = new ItemDto.FullItemAdminResponse(item, imgDataDataListResponse, subImgDataResponseList);
 
         return itemDto;
     }
@@ -78,6 +107,9 @@ public class AdminItemService {
     @Transactional
     public void saveItem(ItemDto.SaveRequest request) throws IOException {
 
+        if (request.getMainImgList() == null || request.getMainImgList().isEmpty()){
+            throw new IllegalArgumentException("메인 이미지는 하나 이상 추가해야합니다.");
+        }
 
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(IllegalArgumentException::new);
 
@@ -111,11 +143,11 @@ public class AdminItemService {
                 .map(S3Dto.ImgDataResponse::new)
                 .collect(Collectors.toList());
 
-        List<S3Dto.ImgDataResponse> serveImgDataResponseList = serveImgList.stream()
+        List<S3Dto.ImgDataResponse> subImgDataResponseList = serveImgList.stream()
                 .map(S3Dto.ImgDataResponse::new)
                 .collect(Collectors.toList());
 
-        ItemDto.UpdateResponse itemDto = new ItemDto.UpdateResponse(item, imgDataDataListResponse, serveImgDataResponseList);
+        ItemDto.UpdateResponse itemDto = new ItemDto.UpdateResponse(item, imgDataDataListResponse, subImgDataResponseList);
 
         return itemDto;
     }
@@ -136,6 +168,10 @@ public class AdminItemService {
     // 상품 이미지 교체 (메인 이미지)
     @Transactional
     public void replaceItemMainImg(ItemDto.ReplaceImgRequest request) throws IOException {
+
+        if (request.getImgFile() == null || request.getS3FileId() == null){
+            throw new IllegalArgumentException("변경될 이미지 id와 새로 추가될 이미지 파일이 있어야합니다.");
+        }
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
@@ -185,6 +221,12 @@ public class AdminItemService {
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
+        ItemFile itemFile = itemFileRepository.findByItemAndS3File_S3FileId(item, request.getS3FileId()).orElseThrow(IllegalArgumentException::new);
+
+        if (itemFile.getNumber() == 0){
+            throw new IllegalArgumentException("대표 이미지는 삭제가 불가능합니다. 위치 변경 or 이미지 교체만 가능합니다.");
+        }
+
         // 삭제된 이미지 관련(ItemFile, S3File, AWS S3) 삭제
         DeleteImg(item, request.getS3FileId());
     }
@@ -193,6 +235,10 @@ public class AdminItemService {
     // 상품 이미지 교체 (서브 이미지)
     @Transactional
     public void replaceItemSubImg(ItemDto.ReplaceImgRequest request) throws IOException {
+
+        if (request.getImgFile() == null || request.getS3FileId() == null){
+            throw new IllegalArgumentException("변경될 이미지 id와 새로 추가될 이미지 파일이 있어야합니다.");
+        }
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 

@@ -8,14 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project1.shop.domain.entity.Item;
-import project1.shop.domain.entity.ItemQA;
-import project1.shop.domain.entity.Member;
-import project1.shop.domain.entity.QAComment;
-import project1.shop.domain.repository.ItemQARepository;
-import project1.shop.domain.repository.ItemRepository;
-import project1.shop.domain.repository.MemberRepository;
-import project1.shop.domain.repository.QACommentRepository;
+import project1.shop.domain.entity.*;
+import project1.shop.domain.repository.*;
+import project1.shop.dto.innerDto.ItemDto;
 import project1.shop.dto.innerDto.ItemQADto;
 import project1.shop.dto.innerDto.QACommentDto;
 import project1.shop.dto.innerDto.SearchDto;
@@ -32,6 +27,7 @@ public class ItemQAService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final QACommentRepository qaCommentRepository;
+    private final ItemFileRepository itemFileRepository;
 
 
     // 상품 상세 정보에 응답할 특정 상품의 문의 목록 조회
@@ -74,25 +70,42 @@ public class ItemQAService {
         Page<ItemQA> myItemQAs = itemQARepository.searchMyItemQAs(id, pageRequest);
 
         List<ItemQADto.MyItemQAResponse> myItemQADto = myItemQAs.stream()
-                .map(ItemQADto.MyItemQAResponse::new)
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
-
-        for(ItemQADto.MyItemQAResponse myItemQA : myItemQADto){
-            QAComment qaComment = qaCommentRepository.findByItemQA_ItemQAId(myItemQA.getItemQAId()).orElse(null);
-
-            QACommentDto.Response qaCommentDto = null;
-
-            if(qaComment != null){
-                qaCommentDto = new QACommentDto.Response(qaComment);
-            }
-
-            myItemQA.setQAComment(qaCommentDto);
-        }
 
         ItemQADto.MyItemQAPageResponse myItemQAPageDto = new ItemQADto.MyItemQAPageResponse(myItemQADto, myItemQAs.getTotalPages(), request.getNowPage());
 
         return myItemQAPageDto;
     }
+
+
+    // DTO 변환
+    public ItemQADto.MyItemQAResponse mapToDto(ItemQA itemQA){
+
+        ItemFile itemFile = itemFileRepository.searchFirstMainImg(itemQA.getItem()).orElse(null);
+
+        ItemDto.SimpleItemResponse simpleItemDto = null;
+
+        if (itemFile == null){
+            simpleItemDto = new ItemDto.SimpleItemResponse(itemQA.getItem(), null);
+        } else {
+            simpleItemDto = new ItemDto.SimpleItemResponse(itemQA.getItem(), itemFile.getS3File().getFileUrl());
+        }
+
+        QAComment qaComment = qaCommentRepository.findByItemQA_ItemQAId(itemQA.getItemQAId()).orElse(null);
+
+        QACommentDto.Response qaCommentDto = null;
+
+        if(qaComment != null){
+            qaCommentDto = new QACommentDto.Response(qaComment);
+        }
+
+        ItemQADto.MyItemQAResponse myItemQAResponse = new ItemQADto.MyItemQAResponse(itemQA, simpleItemDto, qaCommentDto);
+
+        return myItemQAResponse;
+    }
+
+
 
     // Q&A 작성하기
     @Transactional

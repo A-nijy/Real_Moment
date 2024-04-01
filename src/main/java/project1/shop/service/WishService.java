@@ -8,8 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
+import project1.shop.domain.entity.ItemFile;
 import project1.shop.domain.entity.Member;
 import project1.shop.domain.entity.Wish;
+import project1.shop.domain.repository.ItemFileRepository;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.MemberRepository;
 import project1.shop.domain.repository.WishRepository;
@@ -28,6 +30,7 @@ public class WishService {
     private final WishRepository wishRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
+    private final ItemFileRepository itemFileRepository;
 
 
     // 찜 목록 조회
@@ -50,7 +53,15 @@ public class WishService {
     // WishList엔티티 -> WishListDto 변환 과정 (WishListDto 내부에 ItemDto가 있는데 WishList엔티티의 Item을 ItemDto로 변환)
     public WishDto.WishListResponse mapToDto(Wish wish) {
 
-        ItemDto.SimpleItemResponse simpleItemDto = new ItemDto.SimpleItemResponse(wish.getItem());
+        ItemFile itemFile = itemFileRepository.searchFirstMainImg(wish.getItem()).orElse(null);
+
+        ItemDto.SimpleItemResponse simpleItemDto = null;
+
+        if (itemFile == null){
+            simpleItemDto = new ItemDto.SimpleItemResponse(wish.getItem(), null);
+        } else {
+            simpleItemDto = new ItemDto.SimpleItemResponse(wish.getItem(), itemFile.getS3File().getFileUrl());
+        }
 
         WishDto.WishListResponse wishListResponse = new WishDto.WishListResponse(wish.getWishId(), simpleItemDto);
 

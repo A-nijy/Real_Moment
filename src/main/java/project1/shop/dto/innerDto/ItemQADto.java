@@ -115,23 +115,18 @@ public class ItemQADto {
         private boolean isAnswer;
         private LocalDateTime createdDate;
         private LocalDateTime lastModifiedDate;
-
         private QACommentDto.Response qaComment = null;
 
 
-        public MyItemQAResponse(ItemQA itemQA){
+        public MyItemQAResponse(ItemQA itemQA, ItemDto.SimpleItemResponse simpleItemResponse, QACommentDto.Response qaComment){
             itemQAId = itemQA.getItemQAId();
-            item = new ItemDto.SimpleItemResponse(itemQA.getItem());
+            item = simpleItemResponse;
             loginId = itemQA.getMember().getLoginId();
             title = itemQA.getTitle();
             content = itemQA.getContent();
             isAnswer = itemQA.isAnswer();
             createdDate = itemQA.getCreatedDate();
             lastModifiedDate = itemQA.getLastModifiedDate();
-        }
-
-        public void setQAComment(QACommentDto.Response qaComment){
-
             this.qaComment = qaComment;
         }
     }

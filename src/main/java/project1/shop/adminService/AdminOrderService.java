@@ -11,11 +11,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.Item;
+import project1.shop.domain.entity.ItemFile;
 import project1.shop.domain.entity.OrderDetail;
 import project1.shop.domain.entity.Order;
+import project1.shop.domain.repository.ItemFileRepository;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.OrderDetailRepository;
 import project1.shop.domain.repository.OrderRepository;
+import project1.shop.dto.innerDto.ItemDto;
 import project1.shop.dto.innerDto.OrderDetailDto;
 import project1.shop.dto.innerDto.OrderDto;
 import project1.shop.dto.innerDto.SearchDto;
@@ -36,6 +39,7 @@ public class AdminOrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ItemRepository itemRepository;
+    private final ItemFileRepository itemFileRepository;
 
     @Value("${imp.api.key}")
     private String apiKey;
@@ -50,20 +54,18 @@ public class AdminOrderService {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
-
         Page<Order> orders = orderRepository.searchOrders(request, pageRequest);
 
         List<OrderDto.OrderResponse> ordersDto = orders.stream()
                 .map(OrderDto.OrderResponse::new)
                 .collect(Collectors.toList());
 
-
         for (OrderDto.OrderResponse orderDto : ordersDto){
 
             List<OrderDetail> orderDetails = orderDetailRepository.findByOrder_OrderId(orderDto.getOrderId());
 
             List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
-                    .map(OrderDetailDto.response::new)
+                    .map(this::mapToDto)
                     .collect(Collectors.toList());
 
             orderDto.plusOrderDetails(orderDetailsDto);
@@ -72,6 +74,24 @@ public class AdminOrderService {
         OrderDto.OrderPageResponse orderPageDto = new OrderDto.OrderPageResponse(ordersDto, orders.getTotalPages(), request.getNowPage());
 
         return orderPageDto;
+    }
+
+    // DTO 변환
+    public OrderDetailDto.response mapToDto (OrderDetail orderDetail){
+
+        ItemFile itemFile = itemFileRepository.searchFirstMainImg(orderDetail.getItem()).orElse(null);
+
+        ItemDto.SimpleItemResponse simpleItemDto = null;
+
+        if (itemFile == null){
+            simpleItemDto = new ItemDto.SimpleItemResponse(orderDetail.getItem(), null);
+        } else {
+            simpleItemDto = new ItemDto.SimpleItemResponse(orderDetail.getItem(), itemFile.getS3File().getFileUrl());
+        }
+
+        OrderDetailDto.response orderDetailDto = new OrderDetailDto.response(orderDetail, simpleItemDto);
+
+        return orderDetailDto;
     }
 
 
@@ -86,7 +106,7 @@ public class AdminOrderService {
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
-                .map(OrderDetailDto.response::new)
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
 
         orderResponse.plusOrderDetails(orderDetailsDto);

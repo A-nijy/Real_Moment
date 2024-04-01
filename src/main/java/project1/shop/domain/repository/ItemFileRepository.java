@@ -13,6 +13,8 @@ public interface ItemFileRepository extends JpaRepository<ItemFile, Long>, ItemF
     List<ItemFile> findByItem(Item item);
 
     Optional<ItemFile> findByNumber(int number);
+
     Optional<ItemFile> findByItemAndS3File_S3FileId(Item item, Long s3FileId);
+
     List<ItemFile> findByNumberGreaterThanEqual(int number);
 }

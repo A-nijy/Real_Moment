@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.*;
 import project1.shop.domain.repository.*;
+import project1.shop.dto.innerDto.ItemDto;
 import project1.shop.dto.innerDto.ReviewDto;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.enumeration.PaymentStatus;
@@ -26,6 +27,7 @@ public class ReviewService {
     private final ItemRepository itemRepository;
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
+    private final ItemFileRepository itemFileRepository;
 
 
 
@@ -59,13 +61,32 @@ public class ReviewService {
 
         log.info("엔티티 -> dto 변환");
         List<ReviewDto.MyReviewResponse> reviewsDto = reviews.stream()
-                                                            .map(ReviewDto.MyReviewResponse::new)
+                                                            .map(this::mapToDto)
                                                             .collect(Collectors.toList());
 
         ReviewDto.MyReviewPageResponse reviewPageDto = new ReviewDto.MyReviewPageResponse(reviewsDto, reviews.getTotalPages(), request.getNowPage());
 
         log.info("컨트롤러로 반환");
         return reviewPageDto;
+    }
+
+
+    // DTO 변환
+    public ReviewDto.MyReviewResponse mapToDto (Review review){
+
+        ItemFile itemFile = itemFileRepository.searchFirstMainImg(review.getItem()).orElse(null);
+
+        ItemDto.SimpleItemResponse simpleItemDto = null;
+
+        if (itemFile == null){
+            simpleItemDto = new ItemDto.SimpleItemResponse(review.getItem(), null);
+        } else {
+            simpleItemDto = new ItemDto.SimpleItemResponse(review.getItem(), itemFile.getS3File().getFileUrl());
+        }
+
+        ReviewDto.MyReviewResponse reviewDto = new ReviewDto.MyReviewResponse(review, simpleItemDto);
+
+        return reviewDto;
     }
 
 

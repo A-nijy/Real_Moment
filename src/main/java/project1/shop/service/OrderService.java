@@ -40,6 +40,7 @@ public class OrderService {
     private final IamportClient iamportClient;
     private final OrderDetailRepository orderDetailRepository;
     private final GradeRepository gradeRepository;
+    private final ItemFileRepository itemFileRepository;
 
     @Value("${imp.api.key}")
     private String apiKey;
@@ -193,7 +194,7 @@ public class OrderService {
             List<OrderDetail> orderDetails = orderDetailRepository.findByOrder_OrderId(orderDto.getOrderId());
 
             List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
-                    .map(OrderDetailDto.response::new)
+                    .map(this::mapToDto)
                     .collect(Collectors.toList());
 
             orderDto.plusOrderDetails(orderDetailsDto);
@@ -202,6 +203,24 @@ public class OrderService {
         OrderDto.OrderPageResponse orderPageDto = new OrderDto.OrderPageResponse(ordersDto, orders.getTotalPages(), request.getNowPage());
 
         return orderPageDto;
+    }
+
+    // DTO 변환
+    public OrderDetailDto.response mapToDto (OrderDetail orderDetail){
+
+        ItemFile itemFile = itemFileRepository.searchFirstMainImg(orderDetail.getItem()).orElse(null);
+
+        ItemDto.SimpleItemResponse simpleItemDto = null;
+
+        if (itemFile == null){
+            simpleItemDto = new ItemDto.SimpleItemResponse(orderDetail.getItem(), null);
+        } else {
+            simpleItemDto = new ItemDto.SimpleItemResponse(orderDetail.getItem(), itemFile.getS3File().getFileUrl());
+        }
+
+        OrderDetailDto.response orderDetailDto = new OrderDetailDto.response(orderDetail, simpleItemDto);
+
+        return orderDetailDto;
     }
 
 
@@ -216,7 +235,7 @@ public class OrderService {
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
 
         List<OrderDetailDto.response> orderDetailsDto = orderDetails.stream()
-                .map(OrderDetailDto.response::new)
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
 
         orderResponse.plusOrderDetails(orderDetailsDto);

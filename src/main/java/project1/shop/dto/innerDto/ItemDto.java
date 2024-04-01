@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 import project1.shop.domain.entity.Item;
 
@@ -176,6 +177,7 @@ public class ItemDto {
     @NoArgsConstructor
     @Getter
     @Setter
+    @Slf4j
     public static class SimpleItemResponse {
         private Long itemId;
         private String name;
@@ -188,7 +190,7 @@ public class ItemDto {
 
 
         @QueryProjection
-        public SimpleItemResponse (Item item){
+        public SimpleItemResponse (Item item, String imgUrl){
             itemId = item.getItemId();
             name = item.getName();
             price = item.getPrice();
@@ -196,7 +198,7 @@ public class ItemDto {
             discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
             isSell = item.isSell();
-//            mainImg = item.getMainImg();
+            mainImg = imgUrl;
         }
     }
 
@@ -221,7 +223,7 @@ public class ItemDto {
 
 
         @QueryProjection
-        public SimpleItemAdminResponse (Item item){
+        public SimpleItemAdminResponse (Item item, String imgUrl){
             itemId = item.getItemId();
             name = item.getName();
             price = item.getPrice();
@@ -232,7 +234,7 @@ public class ItemDto {
             stock = item.getStock();
             revenue = item.getRevenue();
             isSell = item.isSell();
-//            mainImg = item.getMainImg();
+            mainImg = imgUrl;
         }
     }
 
@@ -278,11 +280,11 @@ public class ItemDto {
         private int stock;
         private boolean isSell;
         private boolean isDelete;
-        private String mainImg;
-        private String subImg;
+        private List<S3Dto.ImgDataResponse> mainImgDataList;
+        private List<S3Dto.ImgDataResponse> subImgDataList;
 
 
-        public FullItemResponse(Item item){
+        public FullItemResponse(Item item, List<S3Dto.ImgDataResponse> mainImgDataList, List<S3Dto.ImgDataResponse> subImgDataList){
             itemId = item.getItemId();
             name = item.getName();
             content = item.getContent();
@@ -295,8 +297,8 @@ public class ItemDto {
             stock = item.getStock();
             isSell = item.isSell();
             isDelete = item.isDelete();
-//            mainImg = item.getMainImg();
-//            serveImg = item.getServeImg();
+            this.mainImgDataList = mainImgDataList;
+            this.subImgDataList = subImgDataList;
         }
     }
 
@@ -321,11 +323,11 @@ public class ItemDto {
         private LocalDateTime lastModifiedDate;
         private boolean isSell;
         private boolean isDelete;
-        private String mainImg;
-        private String subImg;
+        private List<S3Dto.ImgDataResponse> mainImgDataList;
+        private List<S3Dto.ImgDataResponse> subImgDataList;
 
 
-        public FullItemAdminResponse(Item item){
+        public FullItemAdminResponse(Item item, List<S3Dto.ImgDataResponse> mainImgDataList, List<S3Dto.ImgDataResponse> subImgDataList){
             itemId = item.getItemId();
             name = item.getName();
             content = item.getContent();
@@ -340,8 +342,8 @@ public class ItemDto {
             lastModifiedDate = item.getLastModifiedDate();
             isSell = item.isSell();
             isDelete = item.isDelete();
-//            mainImg = item.getMainImg();
-//            serveImg = item.getServeImg();
+            this.mainImgDataList = mainImgDataList;
+            this.subImgDataList = subImgDataList;
         }
     }
 
