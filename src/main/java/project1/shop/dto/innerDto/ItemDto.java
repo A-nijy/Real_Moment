@@ -30,7 +30,7 @@ public class ItemDto {
         private int stock;
         private boolean isSell;
         private List<MultipartFile> mainImgList;
-        private List<MultipartFile> serveImgList;
+        private List<MultipartFile> subImgList;
     }
 
 
@@ -53,10 +53,10 @@ public class ItemDto {
         private boolean isSell;
         private boolean isDelete;
         private List<S3Dto.ImgDataResponse> mainImgDataList;
-        private List<S3Dto.ImgDataResponse> serveImgDataList;
+        private List<S3Dto.ImgDataResponse> subImgDataList;
 
 
-        public UpdateResponse(Item item, List<S3Dto.ImgDataResponse> mainImgDataList, List<S3Dto.ImgDataResponse> serveImgDataList){
+        public UpdateResponse(Item item, List<S3Dto.ImgDataResponse> mainImgDataList, List<S3Dto.ImgDataResponse> subImgDataList){
             itemId = item.getItemId();
             categoryId = item.getItemId();
             name = item.getName();
@@ -70,7 +70,7 @@ public class ItemDto {
             isDelete = item.isDelete();
 
             this.mainImgDataList = mainImgDataList;
-            this.serveImgDataList = serveImgDataList;
+            this.subImgDataList = subImgDataList;
         }
     }
 
@@ -93,10 +93,10 @@ public class ItemDto {
         private boolean isSell;
 
         private List<MultipartFile> mainImgList;
-        private List<MultipartFile> serveImgList;
+        private List<MultipartFile> subImgList;
 
         private List<S3Dto.ImgDataResponse> mainImgDataList;
-        private List<S3Dto.ImgDataResponse> serveImgDataList;
+        private List<S3Dto.ImgDataResponse> subImgDataList;
     }
 
 
@@ -119,33 +119,54 @@ public class ItemDto {
     }
 
 
-    // 상품 수정 요청 (상품 메인 이미지)
+    // 상품 메인 이미지 교체 요청 (상품 메인 이미지)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class UpdateMainImgRequest {
+    public static class ReplaceImgRequest {
 
         private Long itemId;
-        private List<MultipartFile> mainImgList;
-
-        // 삭제된 이미지 id
-        private List<Long> s3FileId;
+        private MultipartFile imgFile;       // 추가한 이미지 파일
+        private Long s3FileId;               // 삭제된 이미지 id
     }
 
 
-    // 상품 수정 요청 (상품 서브 이미지)
+    // 상품 메인 이미지 추가 요청 (상품 메인 이미지)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class UpdateServeImgRequest {
+    public static class AddImgRequest {
 
         private Long itemId;
-        private List<MultipartFile> serveImgList;
+        private MultipartFile imgFile;
+        private int number;
+    }
 
-        // 삭제된 이미지 id
-        private List<Long> s3FileId;
+
+    // 상품 메인 이미지 순서 교체 요청 (상품 메인 이미지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ChangeImgRequest {
+
+        private Long itemId;
+        private int number1;
+        private int number2;
+    }
+
+
+    // 상품 메인 이미지 삭제 요청 (상품 메인 이미지)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class DeleteImgRequest {
+
+        private Long itemId;
+        private Long s3FileId;     // 삭제된 이미지 id
     }
 
 
@@ -258,7 +279,7 @@ public class ItemDto {
         private boolean isSell;
         private boolean isDelete;
         private String mainImg;
-        private String serveImg;
+        private String subImg;
 
 
         public FullItemResponse(Item item){
@@ -301,7 +322,7 @@ public class ItemDto {
         private boolean isSell;
         private boolean isDelete;
         private String mainImg;
-        private String serveImg;
+        private String subImg;
 
 
         public FullItemAdminResponse(Item item){

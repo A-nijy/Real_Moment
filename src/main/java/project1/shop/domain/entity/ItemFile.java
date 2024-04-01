@@ -24,12 +24,26 @@ public class ItemFile {
     @JoinColumn(name = "s3_file_id")
     private S3File s3File;
 
-    private String mainOrServe;
+    private String mainOrSub;
+
+    private int number;
 
 
-    public ItemFile(Item item, S3File s3File, String mainOrServe){
+    public ItemFile(Item item, S3File s3File, String mainOrSub, int number){
         this.item = item;
         this.s3File = s3File;
-        this.mainOrServe = mainOrServe;
+        this.mainOrSub = mainOrSub;
+        this.number = number;
+    }
+
+
+    // 순서 증가
+    public void addNumber(){
+        number++;
+    }
+
+    // 순서 변경
+    public void changeNumber(int number) {
+        this.number = number;
     }
 }

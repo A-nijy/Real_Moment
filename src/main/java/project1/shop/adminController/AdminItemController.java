@@ -9,7 +9,6 @@ import project1.shop.dto.innerDto.ItemDto;
 import project1.shop.dto.innerDto.SearchDto;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,6 +42,7 @@ public class AdminItemController {
     @PostMapping("/admin/item")
     public String saveItem(ItemDto.SaveRequest request) throws IOException {
 
+        log.info("진입");
         adminItemService.saveItem(request);
 
         return "상품 등록 완료!";
@@ -69,23 +69,83 @@ public class AdminItemController {
     }
 
 
-    // 상품 수정 (메인 이미지)
-    @PatchMapping("/admin/item/mainImg")
-    public String updateItemMainImg(@RequestBody ItemDto.UpdateMainImgRequest request){
+    // 상품 이미지 교체 (메인 이미지)
+    @PatchMapping("/admin/item/mainImg/replace")
+    public String replaceItemMainImg(ItemDto.ReplaceImgRequest request) throws IOException {
 
-        adminItemService.updateItemMainImg(request);
+        adminItemService.replaceItemMainImg(request);
 
-        return "메인 이미지 수정 완료";
+        return "메인 이미지 교체 완료";
     }
 
 
-    // 상품 수정 (서브 이미지)
-    @PatchMapping("/admin/item/serveImg")
-    public String updateItemServeImg(@RequestBody ItemDto.UpdateServeImgRequest request) {
+    // 상품 이미지 추가 (메인 이미지)
+    @PatchMapping("/admin/item/mainImg/add")
+    public String addItemMainImg(ItemDto.AddImgRequest request) throws IOException {
 
-        adminItemService.updateItemServeImg(request);
+        adminItemService.addItemMainImg(request);
 
-        return "서브 이미지 수정 완료";
+        return "메인 이미지 추가 완료";
+    }
+
+
+    // 상품 이미지 순서교체 (메인 이미지)
+    @PatchMapping("/admin/item/mainImg/change")
+    public String changeItemMainImg(@RequestBody ItemDto.ChangeImgRequest request){
+
+        adminItemService.changeItemMainImg(request);
+
+        return "메인 이미지 순서 교체 완료";
+    }
+
+
+    // 상품 이미지 삭제 (메인 이미지)
+    @DeleteMapping("/admin/item/mainImg/delete")
+    public String deleteItemMainImg(ItemDto.DeleteImgRequest request){
+
+        adminItemService.deleteItemMainImg(request);
+
+        return "메인 이미지 삭제 완료";
+    }
+
+
+    // 상품 이미지 교체 (서브 이미지)
+    @PatchMapping("/admin/item/subImg/replace")
+    public String replaceItemSubImg(ItemDto.ReplaceImgRequest request) throws IOException {
+
+        adminItemService.replaceItemSubImg(request);
+
+        return "메인 이미지 교체 완료";
+    }
+
+
+    // 상품 이미지 추가 (서브 이미지)
+    @PatchMapping("/admin/item/subImg/add")
+    public String addItemSubImg(ItemDto.AddImgRequest request) throws IOException {
+
+        adminItemService.addItemSubImg(request);
+
+        return "메인 이미지 추가 완료";
+    }
+
+
+    // 상품 이미지 순서교체 (서브 이미지)
+    @PatchMapping("/admin/item/subImg/change")
+    public String changeItemSubImg(@RequestBody ItemDto.ChangeImgRequest request){
+
+        adminItemService.changeItemSubImg(request);
+
+        return "메인 이미지 순서 교체 완료";
+    }
+
+
+    // 상품 이미지 삭제 (서브 이미지)
+    @DeleteMapping("/admin/item/subImg/delete")
+    public String deleteItemSubImg(ItemDto.DeleteImgRequest request){
+
+        adminItemService.deleteItemSubImg(request);
+
+        return "메인 이미지 삭제 완료";
     }
 
 

@@ -78,15 +78,20 @@ public class AdminItemService {
     @Transactional
     public void saveItem(ItemDto.SaveRequest request) throws IOException {
 
+
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(IllegalArgumentException::new);
 
         Item item = new Item(category, request);
 
         // 메인 이미지 처리
-        S3DataSave(item, request.getMainImgList(), "main");
+        if(request.getMainImgList() != null && !request.getMainImgList().isEmpty()){
+            S3DataListSave(item, request.getMainImgList(), "main");
+        }
 
         // 서브 이미지 처리
-        S3DataSave(item, request.getServeImgList(), "serve");
+        if(request.getSubImgList() != null && !request.getSubImgList().isEmpty()){
+            S3DataListSave(item, request.getSubImgList(), "sub");
+        }
 
         itemRepository.save(item);
     }
@@ -128,22 +133,112 @@ public class AdminItemService {
     }
 
 
-    // 상품 수정 (메인 이미지)
+    // 상품 이미지 교체 (메인 이미지)
     @Transactional
-    public void updateItemMainImg(ItemDto.UpdateMainImgRequest request) {
+    public void replaceItemMainImg(ItemDto.ReplaceImgRequest request) throws IOException {
+
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        ItemFile itemFile = itemFileRepository.findByItemAndS3File_S3FileId(item, request.getS3FileId()).orElseThrow(IllegalArgumentException::new);
+
+        S3DataSave(item, request.getImgFile(), "main", itemFile.getNumber());
+
+        DeleteImg(item, itemFile.getItemFileId());
+    }
+
+
+    // 상품 이미지 추가 (메인 이미지)
+    @Transactional
+    public void addItemMainImg(ItemDto.AddImgRequest request) throws IOException {
+
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        List<ItemFile> itemFileList = itemFileRepository.findByNumberGreaterThanEqual(request.getNumber());
+
+        // 순서 한 칸씩 뒤로 이동하기
+        for (ItemFile itemFile : itemFileList){
+
+            itemFile.addNumber();
+        }
+
+        S3DataSave(item, request.getImgFile(), "main", request.getNumber());
+    }
+
+
+    // 상품 이미지 순서교체 (메인 이미지)
+    @Transactional
+    public void changeItemMainImg(ItemDto.ChangeImgRequest request) {
+
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        ItemFile itemFile1 = itemFileRepository.findByNumber(request.getNumber1()).orElseThrow(IllegalArgumentException::new);
+        ItemFile itemFile2 = itemFileRepository.findByNumber(request.getNumber2()).orElseThrow(IllegalArgumentException::new);
+
+        itemFile1.changeNumber(request.getNumber2());
+        itemFile2.changeNumber(request.getNumber1());
+    }
+
+
+    // 상품 이미지 삭제 (메인 이미지)
+    @Transactional
+    public void deleteItemMainImg(ItemDto.DeleteImgRequest request) {
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
         // 삭제된 이미지 관련(ItemFile, S3File, AWS S3) 삭제
         DeleteImg(item, request.getS3FileId());
-
-
     }
 
 
-    // 상품 수정 (서브 이미지)
+    // 상품 이미지 교체 (서브 이미지)
     @Transactional
-    public void updateItemServeImg(ItemDto.UpdateServeImgRequest request) {
+    public void replaceItemSubImg(ItemDto.ReplaceImgRequest request) throws IOException {
+
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        ItemFile itemFile = itemFileRepository.findByItemAndS3File_S3FileId(item, request.getS3FileId()).orElseThrow(IllegalArgumentException::new);
+
+        S3DataSave(item, request.getImgFile(), "sub", itemFile.getNumber());
+
+        DeleteImg(item, itemFile.getItemFileId());
+    }
+
+
+    // 상품 이미지 추가 (서브 이미지)
+    @Transactional
+    public void addItemSubImg(ItemDto.AddImgRequest request) throws IOException {
+
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        List<ItemFile> itemFileList = itemFileRepository.findByNumberGreaterThanEqual(request.getNumber());
+
+        // 순서 한 칸씩 뒤로 이동하기
+        for (ItemFile itemFile : itemFileList){
+
+            itemFile.addNumber();
+        }
+
+        S3DataSave(item, request.getImgFile(), "sub", request.getNumber());
+    }
+
+
+    // 상품 이미지 순서교체 (서브 이미지)
+    @Transactional
+    public void changeItemSubImg(ItemDto.ChangeImgRequest request) {
+
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        ItemFile itemFile1 = itemFileRepository.findByNumber(request.getNumber1()).orElseThrow(IllegalArgumentException::new);
+        ItemFile itemFile2 = itemFileRepository.findByNumber(request.getNumber2()).orElseThrow(IllegalArgumentException::new);
+
+        itemFile1.changeNumber(request.getNumber2());
+        itemFile2.changeNumber(request.getNumber1());
+    }
+
+
+    // 상품 이미지 삭제 (서브 이미지)
+    @Transactional
+    public void deleteItemSubImg(ItemDto.DeleteImgRequest request) {
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
@@ -215,12 +310,14 @@ public class AdminItemService {
     }
 
 
-    // S3에 저장된 파일 정보를 가지고 DB에 저장하기
-    public void S3DataSave(Item item, List<MultipartFile> multipartFileList, String mainOrServe) throws IOException {
+    // S3에 저장된 파일 정보를 가지고 DB에 저장하기 (리스트)
+    public void S3DataListSave(Item item, List<MultipartFile> multipartFileList, String mainOrSub) throws IOException {
 
         // 서브 이미지를 한 번에 처리(save)를 위한 리스트 초기화
         List<S3File> s3FileList = new ArrayList<>();
         List<ItemFile> itemFileList = new ArrayList<>();
+
+        int number = 0;
 
         // 여러 개인 서브 이미지 처리
         for (MultipartFile multipartFile : multipartFileList){
@@ -230,9 +327,11 @@ public class AdminItemService {
             S3File s3FileServe = new S3File(imgData.getUuidFileName(), imgData.getS3Url());
             s3FileList.add(s3FileServe);
 
-            ItemFile itemFileServe = new ItemFile(item, s3FileServe, mainOrServe);
+            ItemFile itemFileServe = new ItemFile(item, s3FileServe, mainOrSub, number);
 
             itemFileList.add(itemFileServe);
+
+            number++;
         }
 
         // 한 번에 저장
@@ -241,8 +340,43 @@ public class AdminItemService {
     }
 
 
-    // 제거된 이미지 삭제하기
-    public void DeleteImg(Item item, List<Long> s3FileIdList) {
+    // S3에 저장된 파일 정보를 가지고 DB에 저장하기
+    public void S3DataSave(Item item, MultipartFile multipartFile, String mainOrSub, int number) throws IOException {
+
+        // 파일 추출 및 처리 / S3에 업로드 / 파일 명 & 주소 객체 반환
+        ItemDto.S3Data imgData = S3Upload(multipartFile);
+
+        S3File s3File = new S3File(imgData.getUuidFileName(), imgData.getS3Url());
+
+        ItemFile itemFile = new ItemFile(item, s3File, mainOrSub, number);
+
+
+        // 한 번에 저장
+        s3FileRepository.save(s3File);
+        itemFileRepository.save(itemFile);
+    }
+
+
+    // 제거된 이미지 삭제하기  (처리)
+    public void DeleteImg(Item item, Long s3FileId) {
+
+        // 삭제된 이미지를 참조하고 있는 엔티티
+        ItemFile itemFile = itemFileRepository.findByItemAndS3File_S3FileId(item, s3FileId).orElseThrow(IllegalArgumentException::new);
+
+        // 삭제된 이미지 엔티티
+        S3File s3File = itemFile.getS3File();
+
+        // S3 이미지 삭제하기
+        amazonS3Client.deleteObject(bucket, s3File.getFileName());
+
+        // 한 번에 삭제
+        itemFileRepository.delete(itemFile);
+        s3FileRepository.delete(s3File);
+    }
+
+
+    // 제거된 이미지 삭제하기  (리스트 처리)
+    public void DeleteImgList(Item item, List<Long> s3FileIdList) {
 
         // 한 번에 삭제하기 위한 리스트 초기화
         List<ItemFile> itemFileList = new ArrayList<>();
@@ -264,8 +398,9 @@ public class AdminItemService {
 
         // 한 번에 삭제
 
-        itemFileRepository.saveAll(itemFileList);
-        s3FileRepository.saveAll(s3FileList);
+        itemFileRepository.deleteAll(itemFileList);
+        s3FileRepository.deleteAll(s3FileList);
     }
+
 
 }

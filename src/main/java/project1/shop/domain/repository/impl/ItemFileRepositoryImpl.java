@@ -24,7 +24,8 @@ public class ItemFileRepositoryImpl implements ItemFileRepositoryCustom {
         List<S3File> mainImgList = queryFactory.select(QItemFile.itemFile.s3File)
                 .from(QItemFile.itemFile)
                 .where(QItemFile.itemFile.item.eq(item),
-                        QItemFile.itemFile.mainOrServe.eq("main"))
+                        QItemFile.itemFile.mainOrSub.eq("main"))
+                .orderBy(QItemFile.itemFile.number.asc())
                 .fetch();
 
         return mainImgList;
@@ -38,7 +39,8 @@ public class ItemFileRepositoryImpl implements ItemFileRepositoryCustom {
         List<S3File> serveImgList = queryFactory.select(QItemFile.itemFile.s3File)
                 .from(QItemFile.itemFile)
                 .where(QItemFile.itemFile.item.eq(item),
-                        QItemFile.itemFile.mainOrServe.eq("serve"))
+                        QItemFile.itemFile.mainOrSub.eq("sub"))
+                .orderBy(QItemFile.itemFile.number.asc())
                 .fetch();
 
         return serveImgList;
