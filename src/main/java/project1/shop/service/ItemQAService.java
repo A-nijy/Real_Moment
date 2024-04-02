@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.*;
@@ -32,11 +31,11 @@ public class ItemQAService {
 
     // 상품 상세 정보에 응답할 특정 상품의 문의 목록 조회
     @Transactional
-    public ItemQADto.ItemQAPageResponse showItemQAList(SearchDto.ItemQAs request) {
+    public ItemQADto.ItemQAPageResponse showItemQAList(SearchDto.ItemInItemQA request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 5);
 
-        Page<ItemQA> itemQAs = itemQARepository.searchItemQAs(request, pageRequest);
+        Page<ItemQA> itemQAs = itemQARepository.searchItemInItemQAs(request, pageRequest);
 
         List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
                 .map(ItemQADto.ItemQAResponse::new)

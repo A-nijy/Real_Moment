@@ -7,7 +7,9 @@ import project1.shop.dto.innerDto.SearchDto;
 
 public interface ItemQARepositoryCustom {
 
-    Page<ItemQA> searchItemQAs(SearchDto.ItemQAs itemQAs, Pageable pageable);
+    Page<ItemQA> searchAdminItemQAs(SearchDto.AdminItemQA adminItemQA, Pageable pageable);
+
+    Page<ItemQA> searchItemInItemQAs(SearchDto.ItemInItemQA itemQA, Pageable pageable);
 
     Page<ItemQA> searchMyItemQAs(Long memberId, Pageable pageable);
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ItemRepositoryCustom {
 
-
     Page<Item> searchPageSimple(SearchDto.Items searchDto, Pageable pageable);
+
+    Page<Item> searchAdminPageSimple(SearchDto.AdminItems searchDto, Pageable pageable);
 }

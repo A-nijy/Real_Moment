@@ -21,7 +21,7 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
 
 
     @Override
-    public Page<ItemQA> searchItemQAs(SearchDto.ItemQAs searchDto, Pageable pageable) {
+    public Page<ItemQA> searchAdminItemQAs(SearchDto.AdminItemQA searchDto, Pageable pageable) {
 
         List<ItemQA> itemQAs = queryFactory.selectFrom(QItemQA.itemQA)
                 .join(QItemQA.itemQA.item, QItem.item)
@@ -40,6 +40,32 @@ public class ItemQARepositoryImpl implements ItemQARepositoryCustom {
                 .join(QItemQA.itemQA.item, QItem.item)
                 .where(itemIdEq(searchDto.getItemId()),
                         answerEq(searchDto.getIsAnswer()),
+                        QItem.item.isDelete.eq(false))
+                .fetchOne();
+
+
+        return new PageImpl<>(itemQAs, pageable, total);
+    }
+
+
+    @Override
+    public Page<ItemQA> searchItemInItemQAs(SearchDto.ItemInItemQA searchDto, Pageable pageable) {
+
+        List<ItemQA> itemQAs = queryFactory.selectFrom(QItemQA.itemQA)
+                .join(QItemQA.itemQA.item, QItem.item)
+                .where(itemIdEq(searchDto.getItemId()),
+                        QItem.item.isDelete.eq(false))
+                .orderBy(QItemQA.itemQA.createdDate.desc().nullsLast())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+
+        Long total = queryFactory
+                .select(QItemQA.itemQA.count())
+                .from(QItemQA.itemQA)
+                .join(QItemQA.itemQA.item, QItem.item)
+                .where(itemIdEq(searchDto.getItemId()),
                         QItem.item.isDelete.eq(false))
                 .fetchOne();
 

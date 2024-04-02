@@ -8,8 +8,6 @@ import project1.shop.dto.innerDto.ItemQADto;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.ItemQAService;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -21,7 +19,7 @@ public class ItemQAController {
 
     // 상품 상세 정보에 응답할 특정 상품의 문의 목록 조회
     @GetMapping("/QAList")
-    public ItemQADto.ItemQAPageResponse showItemQAList(SearchDto.ItemQAs request){
+    public ItemQADto.ItemQAPageResponse showItemQAList(SearchDto.ItemInItemQA request){
 
         ItemQADto.ItemQAPageResponse itemQAPageDto = itemQAService.showItemQAList(request);
 

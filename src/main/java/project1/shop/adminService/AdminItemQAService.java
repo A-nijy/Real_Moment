@@ -29,11 +29,11 @@ public class AdminItemQAService {
 
     // 모든 상품 Q&A 목록 조회
     @Transactional
-    public ItemQADto.ItemQAPageResponse showQAList(SearchDto.ItemQAs request) {
+    public ItemQADto.ItemQAPageResponse showQAList(SearchDto.AdminItemQA request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
-        Page<ItemQA> itemQAs = itemQARepository.searchItemQAs(request, pageRequest);
+        Page<ItemQA> itemQAs = itemQARepository.searchAdminItemQAs(request, pageRequest);
 
         List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
                 .map(ItemQADto.ItemQAResponse::new)

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class SearchDto {
 
@@ -17,6 +16,19 @@ public class SearchDto {
     @Getter
     @Setter
     public static class Items{
+        private String itemSort = "new";                // 정렬 = new, sell, low, high, sale
+        private Long categoryId = null;                // 카테고리
+        private String itemName = null;                // 상품 이름
+        private int nowPage = 1;                       // 페이지
+    }
+
+
+    // 상품 목록 조회 (관리자)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class AdminItems{
         private String itemSort = "new";                // 정렬 = new, sell, low, high, sale
         private Long categoryId = null;                // 카테고리
         private String itemName = null;                // 상품 이름
@@ -39,14 +51,25 @@ public class SearchDto {
 
 
 
-    // 상품 문의 목록 조회
+    // 상품 문의 목록 조회 (관리자)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class ItemQAs{
+    public static class AdminItemQA {
         private Long itemId = null;                      // 해당 상품
         private Boolean isAnswer = null;                 // 답변 여부
+        private int nowPage = 1;                // 페이지
+    }
+
+
+    // 상품 문의 목록 조회 (상품 상세)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ItemInItemQA{
+        private Long itemId = null;                      // 해당 상품
         private int nowPage = 1;                // 페이지
     }
 

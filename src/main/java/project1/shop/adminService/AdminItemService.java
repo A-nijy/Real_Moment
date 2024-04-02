@@ -46,11 +46,11 @@ public class AdminItemService {
 
     // 상품 목록 조회
     @Transactional
-    public ItemDto.SimpleItemPageAdminResponse showItems(SearchDto.Items request) {
+    public ItemDto.SimpleItemPageAdminResponse showItems(SearchDto.AdminItems request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 9);
 
-        Page<Item> items = itemRepository.searchPageSimple(request, pageRequest);
+        Page<Item> items = itemRepository.searchAdminPageSimple(request, pageRequest);
 
         List<ItemDto.SimpleItemAdminResponse> itemsDto = items.stream()
                 .map(this::mapToDto)

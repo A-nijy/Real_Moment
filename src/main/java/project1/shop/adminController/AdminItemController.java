@@ -20,7 +20,7 @@ public class AdminItemController {
 
     // (카테고리 or 검색 등) 상품 목록 조회
     @GetMapping("/admin/itemList")
-    public ItemDto.SimpleItemPageAdminResponse showItems(SearchDto.Items request){
+    public ItemDto.SimpleItemPageAdminResponse showItems(SearchDto.AdminItems request){
 
         ItemDto.SimpleItemPageAdminResponse itemPageDto = adminItemService.showItems(request);
 
