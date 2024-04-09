@@ -20,7 +20,7 @@ public class AdminReviewController {
 
 
     // 상품의 리뷰 목록 조회
-    @GetMapping("/admin/reviewList")
+    @GetMapping("/admin/reviewList/view")
     public ReviewDto.ReviewPageResponse showReviews(SearchDto.Reviews request){
 
         log.info("서비스 호출");

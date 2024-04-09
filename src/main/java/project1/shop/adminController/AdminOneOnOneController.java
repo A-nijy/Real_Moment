@@ -18,7 +18,7 @@ public class AdminOneOnOneController {
 
 
     // 1대1 문의 목록 조회
-    @GetMapping("/admin/oneOnOneList")
+    @GetMapping("/admin/oneOnOneList/view")
     private OneOnOneDto.PageResponse showOneOnOneList(SearchDto.OneOnOneSearch request){
 
         OneOnOneDto.PageResponse oneOnOneDto = adminOneOnOneService.showOneOnOneList(request);

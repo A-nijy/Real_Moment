@@ -18,7 +18,7 @@ public class AdminItemQAController {
 
 
     // 모든 상품 Q&A 목록 보기
-    @GetMapping("/admin/QAList")
+    @GetMapping("/admin/QAList/view")
     public ItemQADto.ItemQAPageResponse showQAList(SearchDto.AdminItemQA request){
 
         ItemQADto.ItemQAPageResponse itemQAPageDto = adminItemQAService.showQAList(request);

@@ -18,7 +18,7 @@ public class AdminCategoryController {
 
 
     // 카테고리 목록 조회
-    @GetMapping("/admin/category")
+    @GetMapping("/admin/category/view")
     public List<CategoryDto.Response> showCategory(){
 
         List<CategoryDto.Response> categoryDto = adminCategoryService.showCategory();

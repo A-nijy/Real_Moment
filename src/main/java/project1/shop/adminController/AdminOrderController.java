@@ -19,7 +19,7 @@ public class AdminOrderController {
     private final AdminOrderService adminOrderService;
 
     // 주문 내역 목록 조회
-    @GetMapping("/admin/orderList")
+    @GetMapping("/admin/orderList/view")
     public OrderDto.OrderPageResponse showOrders(SearchDto.OrdersSearch request){
 
         OrderDto.OrderPageResponse orderPageDto = adminOrderService.showOrders(request);
@@ -30,7 +30,7 @@ public class AdminOrderController {
 
 
     // 주문 내역 상세 조회
-    @GetMapping("/admin/order")
+    @GetMapping("/admin/order/view")
     public OrderDto.AdminOrderDetailResponse showOrder(@RequestParam("orderId") Long orderId){
 
         OrderDto.AdminOrderDetailResponse orderDetailResponse = adminOrderService.showOrder(orderId);

@@ -21,7 +21,7 @@ public class AdminMemberController {
 
 
     // 회원 목록 조회
-    @GetMapping("/admin/memberList")
+    @GetMapping("/admin/memberList/view")
     public MemberDto.MemberPageResponse showMembers(SearchDto.Members request){
 
         MemberDto.MemberPageResponse memberPageDto = adminMemberService.showMembers(request);
@@ -31,7 +31,7 @@ public class AdminMemberController {
 
 
     // 특정 회원 상세 조회
-    @GetMapping("/admin/member")
+    @GetMapping("/admin/member/view")
     public MemberDto.FullProfileResponse showMember(@RequestParam("memberId") Long memberId){
 
         MemberDto.FullProfileResponse memberDto = adminMemberService.showMember(memberId);

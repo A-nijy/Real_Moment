@@ -259,7 +259,7 @@ public class OrderDto {
         private int totalDiscountPrice;
         private int usePoint;
         private int getPoint;
-        private int buyPrice;
+        //private int buyPrice;
 
 
         public AdminOrderDetailResponse(AdminOrderResponse adminOrderResponse, Order order){
@@ -268,7 +268,7 @@ public class OrderDto {
             totalDiscountPrice = order.getTotalDiscountPrice();
             usePoint = order.getUsePoint();
             getPoint = order.getGetPoint();
-            buyPrice = order.getBuyPrice();
+            //buyPrice = order.getBuyPrice();
         }
     }
 

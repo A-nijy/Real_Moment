@@ -20,7 +20,7 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 목록 조회
-    @GetMapping("/admin/announcementList")
+    @GetMapping("/admin/announcementList/view")
     public AnnouncementDto.SimplePageResponse showAnnouncements(SearchDto.Page request) {
 
         AnnouncementDto.SimplePageResponse announcementPageDto = adminAnnouncementService.showAnnouncements(request);
@@ -30,7 +30,7 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 상세 조회
-    @GetMapping("/admin/announcement")
+    @GetMapping("/admin/announcement/view")
     public AnnouncementDto.FullResponse showAnnouncement(@RequestParam("announcementId") Long announcementId) {
 
         AnnouncementDto.FullResponse announcementDto = adminAnnouncementService.showAnnouncement(announcementId);
@@ -71,8 +71,8 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 삭제하기
-    @DeleteMapping("/admin/announcement")
-    public String deleteAnnouncement(@RequestParam("announcementId") Long announcementId){
+    @DeleteMapping("/admin/{id}announcement")
+    public String deleteAnnouncement(@PathVariable Long id, @RequestParam("announcementId") Long announcementId){
 
         adminAnnouncementService.deleteAnnouncement(announcementId);
 

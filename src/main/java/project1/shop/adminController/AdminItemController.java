@@ -19,7 +19,7 @@ public class AdminItemController {
 
 
     // (카테고리 or 검색 등) 상품 목록 조회
-    @GetMapping("/admin/itemList")
+    @GetMapping("/admin/itemList/view")
     public ItemDto.SimpleItemPageAdminResponse showItems(SearchDto.AdminItems request){
 
         ItemDto.SimpleItemPageAdminResponse itemPageDto = adminItemService.showItems(request);
@@ -29,7 +29,7 @@ public class AdminItemController {
 
 
     // 상품 상세 조회
-    @GetMapping("/admin/item")
+    @GetMapping("/admin/item/view")
     public ItemDto.FullItemAdminResponse showItem(@RequestParam("itemId") Long itemId){
 
         ItemDto.FullItemAdminResponse itemDto = adminItemService.showItem(itemId);
