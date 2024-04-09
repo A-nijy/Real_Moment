@@ -48,7 +48,7 @@ public class AdminQACommentController {
 
 
     // 상품 문의 댓글 삭제
-    @DeleteMapping("admin/{id]/QAComment")
+    @DeleteMapping("admin/{id}/QAComment")
     public String deleteQAComment(@PathVariable Long id, @RequestParam("qaCommentId") Long qaCommentId){
 
         adminQACommentService.deleteQAComment(qaCommentId);
