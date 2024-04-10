@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 import project1.shop.jwt.config.auth.CustomUserDetailsService;
 import project1.shop.jwt.config.filter.CustomJwtFilter;
@@ -67,8 +68,7 @@ public class SecurityConfig {
                             "/admin/*/comment")
                     .hasAnyRole("CUSTOMER", "REPRESENTATIVE")
                     // 공통 관리자
-                    .requestMatchers(HttpMethod.GET, "/admin/**/view")
-                    .hasAnyRole("REPRESENTATIVE", "OPERATOR", "CUSTOMER", "ADMIN")
+                    .requestMatchers(new AntPathRequestMatcher("/admin/**/view")).hasAnyRole("REPRESENTATIVE", "OPERATOR", "CUSTOMER", "ADMIN")
                     //------------------------------------------------------------------------------------------
                     .requestMatchers("/api/v1/user/**")
                     .hasAnyRole("USER", "MANAGER", "ADMIN") // 자동으로 앞에 "ROLE_"을 추가해서 체크한다.
