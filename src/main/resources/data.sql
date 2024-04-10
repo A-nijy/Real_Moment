@@ -9,15 +9,15 @@ INSERT INTO grade (grade_name, grade_price, reward_rate) VALUES
 
 
 
--- Member 회원 더미데이터
+-- Member 회원 더미데이터  ( 비밀번호 : Password@1 ~ 5 )
 
 INSERT INTO member (grade_id, login_id, login_password, email, name, tel, birth_date, gender, this_year_pay, point, is_delete, roles, created_date, last_modified_date, recently_login)
 VALUES
-(2, 'member11', 'Password1@', 'member1@gmail.com', 'A', '010-1111-1111', '1990-01-09', 'MAN', 100000, 100, false, 'ROLE_USER', '2020-10-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(4, 'member22', 'Password2@', 'member2@gmail.com', 'B', '010-2222-2222', '1993-05-06', 'WOMAN', 1000000, 1000, false, 'ROLE_USER', '2023-01-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(3, 'member33', 'Password3@', 'member3@gmail.com', 'C', '010-3333-3333', '1995-11-01', 'WOMAN', 500000, 500, false, 'ROLE_USER', '2019-04-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(5, 'member44', 'Password4@', 'member4@gmail.com', 'D', '010-4444-4444', '2000-01-01', 'MAN', 12500000, 12500, true, 'ROLE_USER', '2020-07-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
-(5, 'member55', 'Password5@', 'member5@gmail.com', 'E', '010-5555-5555', '1998-04-28', 'MAN', 10000000, 10000, false, 'ROLE_USER', '2021-06-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00');
+(2, 'member111', '$2a$10$zkoF4XDZ7PylcEWdnx61Ae/6RawQo0PYkQHK7R1gTtW3eZAM42Zt.', 'member1@gmail.com', 'A', '010-1111-1111', '1990-01-09', 'MAN', 100000, 100, false, 'ROLE_USER', '2020-10-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(4, 'member222', '$2a$10$iCih5MD1ovMQ5xbw3t//F.0bzT6LwhDsS63W2lEIlMoAsP76TGrK6', 'member2@gmail.com', 'B', '010-2222-2222', '1993-05-06', 'WOMAN', 1000000, 1000, false, 'ROLE_USER', '2023-01-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(3, 'member333', '$2a$10$2ZMkE.ASSYOSfJk1FysW.e.murDSExI9CdtFbHwkDkb2y7e0W/Jaq', 'member3@gmail.com', 'C', '010-3333-3333', '1995-11-01', 'WOMAN', 500000, 500, false, 'ROLE_USER', '2019-04-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(5, 'member444', '$2a$10$C0HySi8ebNzPGPDl1/vOXOF5k2kQJxDE0.iWqo0wNO6xhA42loBaq', 'member4@gmail.com', 'D', '010-4444-4444', '2000-01-01', 'MAN', 12500000, 12500, true, 'ROLE_USER', '2020-07-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00'),
+(5, 'member555', '$2a$10$kL5exOvbUoKL9utaJ4DFe.OcOfJlFPxtt142iYUe87Tz8ofndpapK', 'member5@gmail.com', 'E', '010-5555-5555', '1998-04-28', 'MAN', 10000000, 10000, false, 'ROLE_USER', '2021-06-01 12:00:00', '2023-11-01 12:00:00', '2023-11-01 12:00:00');
 
 
 
@@ -54,14 +54,14 @@ VALUES
 
 
 
--- Admin 관리자 더미데이터
+-- Admin 관리자 더미데이터  ( 비밀번호 : Password@1 ~ 4 )
 
 INSERT INTO admin (login_id, login_password, email, name, roles, is_delete, created_date, last_modified_date)
 VALUES
-('admin1', 'password1', 'admin1@gmail.com', '대표', 'ROLE_ADMIN', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
-('admin2', 'password2', 'admin2@gmail.com', '이사', 'ROLE_ADMIN', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
-('admin3', 'password3', 'admin3@gmail.com', '사원', 'ROLE_ADMIN', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
-('admin4', 'password4', 'admin4@gmail.com', '사원', 'ROLE_ADMIN', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00');
+('admin111', '$2a$10$zkoF4XDZ7PylcEWdnx61Ae/6RawQo0PYkQHK7R1gTtW3eZAM42Zt.', 'admin1@gmail.com', '대표', 'ROLE_REPRESENTATIVE', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin222', '$2a$10$iCih5MD1ovMQ5xbw3t//F.0bzT6LwhDsS63W2lEIlMoAsP76TGrK6', 'admin2@gmail.com', '이사', 'ROLE_OPERATOR', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin333', '$2a$10$2ZMkE.ASSYOSfJk1FysW.e.murDSExI9CdtFbHwkDkb2y7e0W/Jaq', 'admin3@gmail.com', '사원', 'ROLE_CUSTOMER', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00'),
+('admin444', '$2a$10$C0HySi8ebNzPGPDl1/vOXOF5k2kQJxDE0.iWqo0wNO6xhA42loBaq', 'admin4@gmail.com', '사원', 'ROLE_ADMIN', FALSE, '2022-01-03 12:30:00', '2022-01-03 12:30:00');
 
 
 

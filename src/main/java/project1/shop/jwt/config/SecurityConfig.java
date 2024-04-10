@@ -50,6 +50,8 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(authorize -> {
             authorize
+                    // 공통 관리자
+                    .requestMatchers(new AntPathRequestMatcher("/admin/**/view")).hasAnyRole("REPRESENTATIVE", "OPERATOR", "CUSTOMER", "ADMIN")
                     // 대표
                     .requestMatchers("/adminIdCheck",
                             "/adminJoin",
@@ -67,8 +69,6 @@ public class SecurityConfig {
                             "/admin/*/QAComment",
                             "/admin/*/comment")
                     .hasAnyRole("CUSTOMER", "REPRESENTATIVE")
-                    // 공통 관리자
-                    .requestMatchers(new AntPathRequestMatcher("/admin/**/view")).hasAnyRole("REPRESENTATIVE", "OPERATOR", "CUSTOMER", "ADMIN")
                     // 회원
                     .requestMatchers("/member/**")
                     .hasAnyRole("USER")
