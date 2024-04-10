@@ -53,6 +53,16 @@ public class CustomJwtFilter extends OncePerRequestFilter {
                 // 3-1. Member에 토큰의 정보에 알맞는 Member가 있으면 userDetails 생성
                 UserDetails userDetails = customUserDetailsService.loadUserByUsername(loginId);
 
+                // 토큰의 회원 id와 URI의 id가 일치한지 검증
+                String str = request.getRequestURI();
+                log.info("{}", str);
+                if(str.startsWith("/member")){
+                    // 토큰에서 회원 id 추출
+                    Long memberId = jwtFunction.getMemberId(jwtToken);
+                    // uri에서 id 추출과 동시에 id 비교
+                    getIdFromRequest(str, memberId);
+                }
+
                 System.out.println("커스텀 필터 3-2");
                 // 3-2. 잘 가져왔나 확인
                 if(userDetails != null){
@@ -89,5 +99,19 @@ public class CustomJwtFilter extends OncePerRequestFilter {
 
         System.out.println("이어서 하는 중");
         filterChain.doFilter(request, response);
+    }
+
+
+
+    // 토큰에서 id 추출하기
+    private void getIdFromRequest(String uri, Long id){
+
+        String[] str = uri.split("/");
+        log.info("{}", str[2]);
+        String tokenId = id.toString();
+
+        if (!str[2].equals(tokenId)){
+            throw new IllegalArgumentException("인증된 회원 id와 다른 id로 접근하였습니다.");
+        }
     }
 }
