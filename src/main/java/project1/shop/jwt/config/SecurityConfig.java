@@ -69,13 +69,16 @@ public class SecurityConfig {
                     .hasAnyRole("CUSTOMER", "REPRESENTATIVE")
                     // 공통 관리자
                     .requestMatchers(new AntPathRequestMatcher("/admin/**/view")).hasAnyRole("REPRESENTATIVE", "OPERATOR", "CUSTOMER", "ADMIN")
+                    // 회원
+                    .requestMatchers("/member/**")
+                    .hasAnyRole("USER")
                     //------------------------------------------------------------------------------------------
-                    .requestMatchers("/api/v1/user/**")
-                    .hasAnyRole("USER", "MANAGER", "ADMIN") // 자동으로 앞에 "ROLE_"을 추가해서 체크한다.
-                    .requestMatchers("/api/v1/manager/**")
-                    .hasAnyRole("MANAGER", "ADMIN")
-                    .requestMatchers("/api/v1/admin/**")
-                    .hasAnyRole("ADMIN")
+//                    .requestMatchers("/api/v1/user/**")
+//                    .hasAnyRole("USER", "MANAGER", "ADMIN") // 자동으로 앞에 "ROLE_"을 추가해서 체크한다.
+//                    .requestMatchers("/api/v1/manager/**")
+//                    .hasAnyRole("MANAGER", "ADMIN")
+//                    .requestMatchers("/api/v1/admin/**")
+//                    .hasAnyRole("ADMIN")
                     .anyRequest().permitAll();}
         );
 
