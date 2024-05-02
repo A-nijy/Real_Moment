@@ -59,7 +59,7 @@ public class ItemDto {
 
         public UpdateResponse(Item item, List<S3Dto.ImgDataResponse> mainImgDataList, List<S3Dto.ImgDataResponse> subImgDataList){
             itemId = item.getItemId();
-            categoryId = item.getItemId();
+            categoryId = item.getCategory().getCategoryId();
             name = item.getName();
             content = item.getContent();
             price = item.getPrice();

@@ -18,6 +18,4 @@ public class GlobalExceptionHandler {
         log.info("IllegalArgumentException 예외 발생 -> 전역 예외 처리 ");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: " + e.getMessage());
     }
-
-
 }

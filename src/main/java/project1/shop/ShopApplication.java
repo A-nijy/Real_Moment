@@ -17,6 +17,7 @@ import java.util.UUID;
 public class ShopApplication {
 
 
+	// 비밀번호를 암호화하여 데이터베이스에 저장하기 위해 BCryptPasswordEncoder 인스턴스를 빈으로 등록
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
@@ -26,6 +27,7 @@ public class ShopApplication {
 		SpringApplication.run(ShopApplication.class, args);
 	}
 
+	// @CreateDate, @CreateBy, @LastModifiedDate, @LastModifiedBy를 사용하기 위해 AuditorAware 인터페이스를 빈으로 등록
 	@Bean
 	public AuditorAware<String> auditorProvider() {
 		return () -> Optional.of(UUID.randomUUID().toString());

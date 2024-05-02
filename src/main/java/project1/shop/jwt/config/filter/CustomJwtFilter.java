@@ -103,7 +103,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
 
 
 
-    // 토큰에서 id 추출하기
+    // URI에 작성한 id와 토큰에서 id 추출하여 같은지 비교하기
     private void getIdFromRequest(String uri, Long id){
 
         String[] str = uri.split("/");
