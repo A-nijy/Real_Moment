@@ -20,6 +20,9 @@ public class CorsConfig {
         config.addAllowedHeader("*");                                                                // 모든 header에 응답을 허용
         config.addAllowedMethod("*");                                                                // 모든 http Method (post, get 등등)의 요청을 허용
 
+        config.addExposedHeader("Authorization");
+        config.addExposedHeader("Refresh_Token");
+
         source.registerCorsConfiguration("/**", config);                                     // /api/**로 들어오는 url에 대해서는 config대로 정의함
 
         System.out.println("Cors Filter 수행 완료");
