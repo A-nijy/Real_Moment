@@ -26,14 +26,5 @@ public class AdminItemQAController {
         return itemQAPageDto;
     }
 
-//    // 상품 Q&A 상세 보기
-//    @GetMapping("/admin/QA")
-//    public ItemQADto.ItemQAResponse showQA(@RequestParam("ItemQAId") Long ItemQAId){
-//
-//        ItemQADto.ItemQAResponse itemQADto = adminItemQAService.showQA(ItemQAId);
-//
-//        return itemQADto;
-//    }
-
 
 }

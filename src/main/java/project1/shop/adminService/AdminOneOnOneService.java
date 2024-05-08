@@ -28,26 +28,25 @@ public class AdminOneOnOneService {
     // 1대1 문의 목록 조회
     public OneOnOneDto.PageResponse showOneOnOneList(SearchDto.OneOnOneSearch request) {
 
-        log.info("1");
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
-        log.info("2");
+
         Page<OneOnOne> oneOnOneList = oneOnOneRepository.searchOneOnOne(request, pageRequest);
-        log.info("3");
+
         List<OneOnOneDto.Response> oneOnOneDtoList = oneOnOneList.stream()
                 .map(OneOnOneDto.Response::new)
                 .collect(Collectors.toList());
-        log.info("4");
+
         for (OneOnOneDto.Response oneOnOne : oneOnOneDtoList){
-            log.info("5");
+
             Comment comment = commentRepository.findByOneOnOne_OneOnOneId(oneOnOne.getOneOnOneId()).orElse(null);
-            log.info("6");
+
             if (comment != null){
                 oneOnOne.setComment(comment);
             }
         }
-        log.info("7");
+
         OneOnOneDto.PageResponse pageOneOnOne = new OneOnOneDto.PageResponse(oneOnOneDtoList, oneOnOneList.getTotalPages(), request.getNowPage());
-        log.info("8");
+
         return pageOneOnOne;
     }
 }

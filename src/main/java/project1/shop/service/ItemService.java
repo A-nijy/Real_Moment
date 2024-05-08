@@ -88,44 +88,4 @@ public class ItemService {
         return itemDto;
     }
 
-
-
-
-//    @Transactional
-//    public ItemDto.ItemPageResponse showItem(Long id) {
-//
-//        Item item = itemRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-//
-//        if(item.isDelete() == true){
-//            throw new IllegalArgumentException("해당 상품은 조회할 수 없습니다.");
-//        }
-//
-//        List<Review> reviews = reviewRepository.findByItem_ItemId(id);
-//
-//        List<ItemQA> itemQAs = itemQARepository.findByItem_ItemId(id);
-//
-//        ItemDto.FullItemResponse itemDto = new ItemDto.FullItemResponse(item);
-//
-//        List<ReviewDto.ReviewResponse> reviewDto = reviews.stream()
-//                .map(ReviewDto.ReviewResponse::new)
-//                .collect(Collectors.toList());
-//
-//        List<ItemQADto.ItemQAResponse> itemQADto = itemQAs.stream()
-//                .map(ItemQADto.ItemQAResponse::new)
-//                .collect(Collectors.toList());
-//
-//        for(ItemQADto.ItemQAResponse itemQA : itemQADto){
-//            QAComment qaComment = qaCommentRepository.findById(itemQA.getItemQAId()).orElse(null);
-//
-//            QACommentDto.Response qaCommentDto = new QACommentDto.Response(qaComment);
-//
-//            itemQA.setQAComment(qaCommentDto);
-//        }
-//
-//
-//        ItemDto.ItemPageResponse itemPageDto = new ItemDto.ItemPageResponse(itemDto, reviewDto, itemQADto);
-//
-//        return itemPageDto;
-//
-//    }
 }

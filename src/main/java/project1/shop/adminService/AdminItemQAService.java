@@ -56,14 +56,4 @@ public class AdminItemQAService {
         return itemQAPageDto;
     }
 
-
-//    // 상품 Q&A 상세 보기
-//    public ItemQADto.ItemQAResponse showQA(Long itemQAId) {
-//
-//        ItemQA itemQA = itemQARepository.findById(itemQAId).orElse(null);
-//
-//        ItemQADto.ItemQAResponse itemQADto = new ItemQADto.ItemQAResponse(itemQA);
-//
-//        return itemQADto;
-//    }
 }
