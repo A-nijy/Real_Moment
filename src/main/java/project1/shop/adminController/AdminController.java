@@ -129,7 +129,7 @@ public class AdminController {
 
     //--------------------------------------------------------------------
     // access 토큰 재발급 (+ RTR 방식으로 refresh 토큰도 재발급됨)
-    @GetMapping("/admin/reissue/accessToken")
+    @PostMapping("/admin/reissue/accessToken")
     public String reissueAccessTokoen(HttpServletRequest request, HttpServletResponse response){
 
         log.info("refresh 토큰 재요청중 / access 토큰 재발급");

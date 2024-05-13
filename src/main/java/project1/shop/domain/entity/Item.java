@@ -53,6 +53,7 @@ public class Item extends TimeAndByCheck {
         content = request.getContent();
         price = request.getPrice();
         discountRate = request.getDiscountRate();
+        discountPrice = request.getDiscountPrice();
         sellPrice = request.getSellPrice();
         stock = request.getStock();
         isSell = request.isSell();
