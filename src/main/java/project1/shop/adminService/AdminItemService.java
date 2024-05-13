@@ -189,7 +189,7 @@ public class AdminItemService {
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
-        List<ItemFile> itemFileList = itemFileRepository.findByNumberGreaterThanEqual(request.getNumber());
+        List<ItemFile> itemFileList = itemFileRepository.searchNumberMoveImgList(item, "main", request.getNumber());
 
         // 순서 한 칸씩 뒤로 이동하기
         for (ItemFile itemFile : itemFileList){
@@ -207,8 +207,8 @@ public class AdminItemService {
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
-        ItemFile itemFile1 = itemFileRepository.findByNumber(request.getNumber1()).orElseThrow(IllegalArgumentException::new);
-        ItemFile itemFile2 = itemFileRepository.findByNumber(request.getNumber2()).orElseThrow(IllegalArgumentException::new);
+        ItemFile itemFile1 = itemFileRepository.searchChangeImg(item, "main", request.getNumber1()).orElseThrow(IllegalArgumentException::new);
+        ItemFile itemFile2 = itemFileRepository.searchChangeImg(item, "main", request.getNumber1()).orElseThrow(IllegalArgumentException::new);
 
         itemFile1.changeNumber(request.getNumber2());
         itemFile2.changeNumber(request.getNumber1());
@@ -256,7 +256,7 @@ public class AdminItemService {
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
-        List<ItemFile> itemFileList = itemFileRepository.findByNumberGreaterThanEqual(request.getNumber());
+        List<ItemFile> itemFileList = itemFileRepository.searchNumberMoveImgList(item, "sub", request.getNumber());
 
         // 순서 한 칸씩 뒤로 이동하기
         for (ItemFile itemFile : itemFileList){
@@ -274,8 +274,8 @@ public class AdminItemService {
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
-        ItemFile itemFile1 = itemFileRepository.findByNumber(request.getNumber1()).orElseThrow(IllegalArgumentException::new);
-        ItemFile itemFile2 = itemFileRepository.findByNumber(request.getNumber2()).orElseThrow(IllegalArgumentException::new);
+        ItemFile itemFile1 = itemFileRepository.searchChangeImg(item, "sub", request.getNumber1()).orElseThrow(IllegalArgumentException::new);
+        ItemFile itemFile2 = itemFileRepository.searchChangeImg(item, "sub", request.getNumber1()).orElseThrow(IllegalArgumentException::new);
 
         itemFile1.changeNumber(request.getNumber2());
         itemFile2.changeNumber(request.getNumber1());

@@ -59,4 +59,28 @@ public class ItemFileRepositoryImpl implements ItemFileRepositoryCustom {
 
         return Optional.ofNullable(firstMainImg);
     }
+
+    @Override
+    public Optional<ItemFile> searchChangeImg(Item item, String mainOrSub, int number) {
+
+        ItemFile changeImg = queryFactory.selectFrom(QItemFile.itemFile)
+                .where(QItemFile.itemFile.item.eq(item),
+                        QItemFile.itemFile.mainOrSub.eq(mainOrSub),
+                        QItemFile.itemFile.number.eq(number))
+                .fetchOne();
+
+        return  Optional.ofNullable(changeImg);
+    }
+
+    @Override
+    public List<ItemFile> searchNumberMoveImgList(Item item, String mainOrSub, int number) {
+
+        List<ItemFile> moveImgList = queryFactory.selectFrom(QItemFile.itemFile)
+                .where(QItemFile.itemFile.item.eq(item),
+                        QItemFile.itemFile.mainOrSub.eq(mainOrSub),
+                        QItemFile.itemFile.number.goe(number))
+                .fetch();
+
+        return  moveImgList;
+    }
 }

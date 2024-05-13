@@ -14,4 +14,9 @@ public interface ItemFileRepositoryCustom {
     List<S3File> searchServeImgList(Item item);
 
     Optional<ItemFile> searchFirstMainImg(Item item);
+
+
+    Optional<ItemFile> searchChangeImg(Item item, String mainOrSub, int number);
+
+    List<ItemFile> searchNumberMoveImgList(Item item, String mainOrSub, int number);
 }
