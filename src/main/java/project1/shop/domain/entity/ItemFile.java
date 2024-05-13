@@ -42,6 +42,11 @@ public class ItemFile {
         number++;
     }
 
+    // 순서 감소
+    public void subNumber(){
+        number--;
+    }
+
     // 순서 변경
     public void changeNumber(int number) {
         this.number = number;

@@ -227,6 +227,18 @@ public class AdminItemService {
             throw new IllegalArgumentException("대표 이미지는 삭제가 불가능합니다. 위치 변경 or 이미지 교체만 가능합니다.");
         }
 
+        // 삭제된 이미지의 number 추출
+        int number = itemFile.getNumber();;
+
+        // 삭제된 이미지의 number보다 큰 이미지들 리스트 조회
+        List<ItemFile> itemFileList = itemFileRepository.searchNumberMoveImgList(item, "main", itemFile.getNumber());
+
+        // 순서 한 칸씩 뒤로 이동하기
+        for (ItemFile file : itemFileList){
+
+            file.subNumber();
+        }
+
         // 삭제된 이미지 관련(ItemFile, S3File, AWS S3) 삭제
         DeleteImg(item, request.getS3FileId());
     }
@@ -287,6 +299,21 @@ public class AdminItemService {
     public void deleteItemSubImg(ItemDto.DeleteImgRequest request) {
 
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        // 삭제된 이미지를 참조하고 있는 엔티티
+        ItemFile itemFile = itemFileRepository.findByItemAndS3File_S3FileId(item, request.getS3FileId()).orElseThrow(IllegalArgumentException::new);
+
+        // 삭제된 이미지의 number 추출
+        int number = itemFile.getNumber();;
+
+        // 삭제된 이미지의 number보다 큰 이미지들 리스트 조회
+        List<ItemFile> itemFileList = itemFileRepository.searchNumberMoveImgList(item, "sub", itemFile.getNumber());
+
+        // 순서 한 칸씩 뒤로 이동하기
+        for (ItemFile file : itemFileList){
+
+            file.subNumber();
+        }
 
         // 삭제된 이미지 관련(ItemFile, S3File, AWS S3) 삭제
         DeleteImg(item, request.getS3FileId());
