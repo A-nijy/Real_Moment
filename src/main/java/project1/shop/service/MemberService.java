@@ -68,7 +68,7 @@ public class MemberService {
 
     // 회원 로그인
     @Transactional
-    public void memberLogin(MemberDto.LoginRequest request, HttpServletResponse response) {
+    public MemberDto.MemberIdResponse memberLogin(MemberDto.LoginRequest request, HttpServletResponse response) {
 
         Member member = memberRepository.findByLoginId(request.getLoginId()).orElseThrow(IllegalArgumentException::new);
 
@@ -92,6 +92,10 @@ public class MemberService {
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
 
         member.loginStatus();
+
+        MemberDto.MemberIdResponse memberId = new MemberDto.MemberIdResponse(member.getMemberId());
+
+        return memberId;
     }
 
     // 회원 로그아웃

@@ -137,7 +137,7 @@ public class AdminService {
 
     // 관리자 로그인
     @Transactional
-    public void adminLogin(AdminDto.LoginRequest request, HttpServletResponse response) {
+    public AdminDto.AdminIdResponse adminLogin(AdminDto.LoginRequest request, HttpServletResponse response) {
 
         Admin admin = adminRepository.findByLoginId(request.getLoginId()).orElseThrow(IllegalArgumentException::new);
 
@@ -160,6 +160,9 @@ public class AdminService {
         response.addHeader(JWTProperties.HEADER_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
 
+        AdminDto.AdminIdResponse adminId = new AdminDto.AdminIdResponse(admin.getAdminId());
+
+        return adminId;
     }
 
 

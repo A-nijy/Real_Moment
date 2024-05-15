@@ -50,7 +50,6 @@ public class AdminController {
             throw new IllegalArgumentException("형식에 알맞게 입력해주세요");
         }
 
-        log.info("aaaaaaaa");
         adminService.createAdmin(request);
 
         return "관리자 가입 완료!";
@@ -58,11 +57,11 @@ public class AdminController {
 
     // 관리자 로그인
     @PostMapping("/adminLogin")
-    public String adminLogin(@RequestBody AdminDto.LoginRequest request, HttpServletResponse response){
+    public AdminDto.AdminIdResponse adminLogin(@RequestBody AdminDto.LoginRequest request, HttpServletResponse response){
 
-        adminService.adminLogin(request, response);
+        AdminDto.AdminIdResponse adminId = adminService.adminLogin(request, response);
 
-        return "관리자 로그인 완료!!";
+        return adminId;
     }
 
     // 관리자 로그아웃

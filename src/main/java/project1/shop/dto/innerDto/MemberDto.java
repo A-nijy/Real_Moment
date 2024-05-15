@@ -166,6 +166,15 @@ public class MemberDto {
 
 
 
+    // 로그인시 회원 고유 id 응답
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class MemberIdResponse{
+        private Long memberId;
+    }
+
 
     // 회원 개인정보 확인용 응답
     @AllArgsConstructor

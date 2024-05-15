@@ -51,9 +51,11 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public void memberLogin(@RequestBody MemberDto.LoginRequest request, HttpServletResponse response){
+    public MemberDto.MemberIdResponse memberLogin(@RequestBody MemberDto.LoginRequest request, HttpServletResponse response){
 
-        memberService.memberLogin(request, response);
+        MemberDto.MemberIdResponse memberId = memberService.memberLogin(request, response);
+
+        return memberId;
     }
 
 

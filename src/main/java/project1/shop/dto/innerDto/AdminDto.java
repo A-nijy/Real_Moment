@@ -127,4 +127,13 @@ public class AdminDto {
     public static class AdminIdRequest{
         private long adminId;
     }
+
+    // 로그인시 회원 고유 id 전달
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class AdminIdResponse{
+        private Long adminId;
+    }
 }
