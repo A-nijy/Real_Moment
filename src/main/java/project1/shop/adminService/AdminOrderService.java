@@ -221,6 +221,9 @@ public class AdminOrderService {
 
         // 상품 재고 다시 되돌리기
         plusStock(order);
+
+        // 주문 상태 "결제 취소"로 변경
+        order.updateStatus(PaymentStatus.CANCEL);
     }
 
 

@@ -48,7 +48,7 @@ public class AnnouncementDto {
     @Getter
     @Setter
     public static class SimplePageResponse{
-        private List<SimpleResponse> announementList;
+        private List<SimpleResponse> announcementList;
         private int totalPage;
         private int nowPage;
     }
