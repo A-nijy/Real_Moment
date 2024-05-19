@@ -71,7 +71,7 @@ public class AdminAnnouncementController {
 
 
     // 공지사항 삭제하기
-    @DeleteMapping("/admin/{id}announcement")
+    @DeleteMapping("/admin/{id}/announcement")
     public String deleteAnnouncement(@PathVariable Long id, @RequestParam("announcementId") Long announcementId){
 
         adminAnnouncementService.deleteAnnouncement(announcementId);
