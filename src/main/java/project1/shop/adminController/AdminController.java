@@ -95,6 +95,16 @@ public class AdminController {
     }
 
 
+    // 관리자 마이페이지 조회
+    @GetMapping("/admin/{id}/myPage/view")
+    public AdminDto.Response myPageAdmin(@PathVariable Long id){
+
+        AdminDto.Response adminDto = adminService.myPageAdmin(id);
+
+        return adminDto;
+    }
+
+
     // 관리자 본인 정보 수정
     @PatchMapping("/admin/{id}")
     public AdminDto.Response updateAdmin(@PathVariable Long id, @RequestBody AdminDto.UpdateRequest request){

@@ -3,7 +3,9 @@ package project1.shop.jwt.config.util;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import project1.shop.domain.entity.Admin;
 import project1.shop.domain.entity.Member;
 

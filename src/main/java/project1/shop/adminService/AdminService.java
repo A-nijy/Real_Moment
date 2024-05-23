@@ -104,6 +104,17 @@ public class AdminService {
     }
 
 
+    @Transactional
+    public AdminDto.Response myPageAdmin(Long adminId) {
+
+        Admin admin = adminRepository.findById(adminId).orElseThrow(IllegalArgumentException::new);
+
+        AdminDto.Response adminDto = new AdminDto.Response(admin);
+
+        return adminDto;
+    }
+
+
     // 아이디 중복 검사
     @Transactional
     public boolean idCheck(AdminDto.IdCheckRequest request) {
@@ -196,4 +207,6 @@ public class AdminService {
         response.addHeader(JWTProperties.HEADER_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
     }
+
+
 }
