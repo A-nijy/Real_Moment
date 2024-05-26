@@ -4,7 +4,6 @@ package project1.shop.jwt.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
+import project1.shop.exception.CustomAccessDeniedException;
+import project1.shop.exception.CustomAccessDeniedHandler;
 import project1.shop.jwt.config.auth.CustomUserDetailsService;
 import project1.shop.jwt.config.filter.CustomJwtFilter;
 import project1.shop.jwt.config.util.JwtFunction;
@@ -27,6 +28,7 @@ public class SecurityConfig {
     private final CorsFilter corsFilter;
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtFunction jwtFunction;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
 
     @Bean
@@ -82,6 +84,7 @@ public class SecurityConfig {
                     .anyRequest().permitAll();}
         );
 
+        http.exceptionHandling(exception -> exception.accessDeniedHandler(customAccessDeniedHandler));
 
         return http.build();
     }
