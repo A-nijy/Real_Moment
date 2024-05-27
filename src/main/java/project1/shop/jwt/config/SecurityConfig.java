@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
-import project1.shop.exception.CustomAccessDeniedException;
 import project1.shop.exception.CustomAccessDeniedHandler;
 import project1.shop.jwt.config.auth.CustomUserDetailsService;
 import project1.shop.jwt.config.filter.CustomJwtFilter;
@@ -74,13 +73,6 @@ public class SecurityConfig {
                     // 회원
                     .requestMatchers("/member/**")
                     .hasAnyRole("USER")
-                    //------------------------------------------------------------------------------------------
-//                    .requestMatchers("/api/v1/user/**")
-//                    .hasAnyRole("USER", "MANAGER", "ADMIN") // 자동으로 앞에 "ROLE_"을 추가해서 체크한다.
-//                    .requestMatchers("/api/v1/manager/**")
-//                    .hasAnyRole("MANAGER", "ADMIN")
-//                    .requestMatchers("/api/v1/admin/**")
-//                    .hasAnyRole("ADMIN")
                     .anyRequest().permitAll();}
         );
 

@@ -19,15 +19,4 @@ public class GlobalExceptionHandler {
         log.info("IllegalArgumentException 예외 발생 -> 전역 예외 처리 ");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: " + e.getMessage());
     }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException e){
-
-        return new ResponseEntity<>("NOT_AUTHORIZATION", HttpStatus.FORBIDDEN);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGlobalException(Exception e){
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }
