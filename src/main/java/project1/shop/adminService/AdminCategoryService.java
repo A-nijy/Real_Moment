@@ -11,6 +11,7 @@ import project1.shop.domain.repository.CategoryRepository;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.dto.innerDto.CategoryDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,11 +28,28 @@ public class AdminCategoryService {
     @Transactional
     public List<CategoryDto.Response> showCategory() {
 
-        List<Category> category = categoryRepository.findAll();
+        List<Category> parentCatergoryList = categoryRepository.findByParent(null);
 
-        List<CategoryDto.Response> categoryDto = category.stream()
-                .map(CategoryDto.Response::new)
+        List<CategoryDto.Response> categoryList = new ArrayList<>();
+
+        for (Category parentCategory : parentCatergoryList){
+
+            categoryList.add(getChildcategory(parentCategory));
+        }
+
+        return categoryList;
+    }
+
+    // 특정 자식 카테고리 리스트 반환용 (부모카테고리 매개변수)
+    public CategoryDto.Response getChildcategory(Category category) {
+
+        List<Category> categoryList = categoryRepository.findByParent(category);
+
+        List<CategoryDto.ChildCategory> childCategoryList = categoryList.stream()
+                .map(CategoryDto.ChildCategory::new)
                 .collect(Collectors.toList());
+
+        CategoryDto.Response categoryDto = new CategoryDto.Response(category, childCategoryList);
 
         return categoryDto;
     }

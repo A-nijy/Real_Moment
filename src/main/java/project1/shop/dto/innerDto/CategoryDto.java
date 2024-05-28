@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project1.shop.domain.entity.Category;
 
+import java.util.List;
+
 public class CategoryDto {
 
 
@@ -40,8 +42,30 @@ public class CategoryDto {
         private String name;
         private Long parentId;
 
+        private List<ChildCategory> child;
 
-        public Response(Category category){
+
+        public Response(Category category, List<ChildCategory> childCategory){
+            categoryId = category.getCategoryId();
+            name = category.getName();
+            parentId = (category.getParent() != null) ? category.getParent().getCategoryId() : null;
+            child = childCategory;
+        }
+    }
+
+
+    // 자식 카테고리 목록
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ChildCategory{
+        private Long categoryId;
+        private String name;
+        private Long parentId;
+
+
+        public ChildCategory(Category category){
             categoryId = category.getCategoryId();
             name = category.getName();
             parentId = (category.getParent() != null) ? category.getParent().getCategoryId() : null;
