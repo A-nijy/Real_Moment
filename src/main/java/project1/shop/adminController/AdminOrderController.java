@@ -22,6 +22,15 @@ public class AdminOrderController {
     @GetMapping("/admin/orderList/view")
     public OrderDto.OrderPageResponse showOrders(SearchDto.OrdersSearch request){
 
+        log.info("진입");
+        if (request.getLastDate().equals("")){
+            log.info("빈 문자열");
+        } else if (request.getLastDate() == null){
+            log.info("null");
+        } else {
+            log.info("기타");
+        }
+
         OrderDto.OrderPageResponse orderPageDto = adminOrderService.showOrders(request);
 
         return orderPageDto;
