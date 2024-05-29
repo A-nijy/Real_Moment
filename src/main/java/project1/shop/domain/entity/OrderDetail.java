@@ -27,6 +27,8 @@ public class OrderDetail {
     private int itemCount;                  // 결제 당시 구매 개수
     private int totalPrice;                 // 결제 당시 총 구매가
 
+    private boolean isReviewStatus = false;           // 리뷰작성 여부
+
 
     public OrderDetail(Order order, Item item, int itemCount){
 
@@ -37,5 +39,13 @@ public class OrderDetail {
         discountPrice = item.getDiscountPrice();
         sellPrice = item.getSellPrice();
         this.itemCount = itemCount;
+    }
+
+    public void writeReview(){
+        isReviewStatus = true;
+    }
+
+    public void deleteReview() {
+        isReviewStatus = false;
     }
 }

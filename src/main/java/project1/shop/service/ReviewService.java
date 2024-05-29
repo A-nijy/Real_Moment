@@ -109,6 +109,8 @@ public class ReviewService {
 
         Review review = new Review(member, item, request);
 
+        orderDetail.writeReview();
+
         reviewRepository.save(review);
 
     }

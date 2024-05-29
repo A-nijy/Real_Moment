@@ -24,6 +24,8 @@ public class OrderDetailDto {
         private int itemCount;                  // 결제 당시 구매 개수
         private int totalPrice;                 // 결제 당시 총 구매가
 
+        private boolean isReviewStatus;         // 리뷰 작성 여부
+
 
         public response(OrderDetail orderDetail, ItemDto.SimpleItemResponse simpleItemResponse){
 
@@ -35,6 +37,8 @@ public class OrderDetailDto {
             sellPrice = orderDetail.getSellPrice();
             itemCount = orderDetail.getItemCount();
             totalPrice = orderDetail.getTotalPrice();
+
+            isReviewStatus = orderDetail.isReviewStatus();
         }
     }
 }
