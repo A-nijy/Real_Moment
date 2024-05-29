@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project1.shop.domain.entity.Address;
+import project1.shop.enumeration.Location;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class AddressDto {
     @Getter
     @Setter
     public static class SaveRequest {
+        private String location;
         private String name;
         private String tel;
         private String mainAddress;
@@ -33,6 +35,7 @@ public class AddressDto {
     @Setter
     public static class UpdateRequest {
         private Long addressId;
+        private String location;
         private String name;
         private String tel;
         private String mainAddress;
@@ -48,6 +51,7 @@ public class AddressDto {
     @Setter
     public static class AddressResponse {
         private Long addressId;
+        private String location;
         private String name;
         private String tel;
         private String mainAddress;
@@ -57,6 +61,7 @@ public class AddressDto {
 
         public AddressResponse(Address address){
             addressId = address.getAddressId();
+            location = address.getLocation().getLocation();
             name = address.getName();
             tel = address.getTel();
             this.mainAddress = address.getMainAddress();

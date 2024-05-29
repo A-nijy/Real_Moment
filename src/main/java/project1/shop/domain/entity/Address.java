@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project1.shop.dto.innerDto.AddressDto;
+import project1.shop.enumeration.Location;
 
 
 @Entity
@@ -16,6 +17,8 @@ public class Address {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
     private Long addressId;
+    @Enumerated(EnumType.STRING)
+    private Location location;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -27,6 +30,7 @@ public class Address {
 
     public Address(AddressDto.SaveRequest request, Member member){
         this.member = member;
+        location = Location.fromString(request.getLocation());
         name = request.getName();
         tel = request.getTel();
         mainAddress = request.getMainAddress();
@@ -35,6 +39,7 @@ public class Address {
     }
 
     public void update(AddressDto.UpdateRequest request){
+        location = Location.fromString(request.getLocation());
         name = request.getName();
         tel = request.getTel();
         mainAddress = request.getMainAddress();

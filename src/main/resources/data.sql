@@ -23,16 +23,16 @@ VALUES
 
 -- Address 주소 더미데이터
 
-INSERT INTO address (member_id, name, main_address, det_address, is_default)
+INSERT INTO address (location, member_id, name, main_address, det_address, is_default)
 VALUES
-(1, 'A', '대전 유성구', '101동 503호', true),
-(1, 'A-2', '대전 화구', '202동 703호', FALSE),
-(2, 'B', '서울 파구', '301동 507호', FALSE),
-(3, 'C', '광주 피구', '601동 604호', FALSE),
-(3, 'C-2', '서울 뭐구', '201동 203호', FALSE),
-(4, 'D', '대전 서구', '801동 503호', TRUE),
-(5, 'E', '대전 당구', '1101동 603호', FALSE),
-(5, 'E-2', '부산 바다구', '301동 201호', FALSE);
+('HOME', 1, 'A', '대전 유성구', '101동 503호', true),
+('COMPANY', 1, 'A-2', '대전 화구', '202동 703호', FALSE),
+('HOME', 2, 'B', '서울 파구', '301동 507호', FALSE),
+('HOME', 3, 'C', '광주 피구', '601동 604호', FALSE),
+('ECT', 3, 'C-2', '서울 뭐구', '201동 203호', FALSE),
+('HOME', 4, 'D', '대전 서구', '801동 503호', TRUE),
+('HOME', 5, 'E', '대전 당구', '1101동 603호', FALSE),
+('COMPANY', 5, 'E-2', '부산 바다구', '301동 201호', FALSE);
 
 
 
