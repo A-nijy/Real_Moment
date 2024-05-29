@@ -36,6 +36,7 @@ public class OrderDto {
         private String tel;                             // 전화번호
         private String mainAddress;                     // 메인 주소
         private String detAddress;                      // 세부 주소
+        private String zipCode;                         // 우편번호
 
         private String requestText;                     // 요청 사항
 
@@ -106,6 +107,7 @@ public class OrderDto {
         private int buyPrice;
         private String mainAddress;
         private String detAddress;
+        private String zipCode;
         private String requestText;
         private String tel;
         private String status;
@@ -120,6 +122,7 @@ public class OrderDto {
             buyPrice = order.getBuyPrice();
             mainAddress = order.getMainAddress();
             detAddress = order.getDetAddress();
+            zipCode = order.getZipCode();
             requestText = order.getRequestText();
             tel = order.getTel();
             status = order.getStatus().getPaymentStatus();
@@ -219,6 +222,7 @@ public class OrderDto {
         private int buyPrice;
         private String mainAddress;
         private String detAddress;
+        private String zipCode;
         private String requestText;
         private String tel;
         private String status;
@@ -234,6 +238,7 @@ public class OrderDto {
             buyPrice = order.getBuyPrice();
             mainAddress = order.getMainAddress();
             detAddress = order.getDetAddress();
+            zipCode = order.getZipCode();
             requestText = order.getRequestText();
             tel = order.getTel();
             status = order.getStatus().getPaymentStatus();

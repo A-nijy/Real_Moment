@@ -33,6 +33,7 @@ public class Order {
     private String name;
     private String mainAddress;
     private String detAddress;
+    private String zipCode;
     private String requestText;
     private String tel;
 

@@ -24,6 +24,7 @@ public class AddressDto {
         private String tel;
         private String mainAddress;
         private String detAddress;
+        private String zipCode;
         private boolean isDefault;
     }
 
@@ -40,6 +41,7 @@ public class AddressDto {
         private String tel;
         private String mainAddress;
         private String detAddress;
+        private String zipCode;
         private boolean isDefault;
     }
 
@@ -56,6 +58,7 @@ public class AddressDto {
         private String tel;
         private String mainAddress;
         private String detAddress;
+        private String zipCode;
         private boolean isDefault;
 
 
@@ -66,6 +69,7 @@ public class AddressDto {
             tel = address.getTel();
             this.mainAddress = address.getMainAddress();
             detAddress = address.getDetAddress();
+            zipCode = address.getZipCode();
             isDefault = address.isDefault();
         }
     }

@@ -26,6 +26,7 @@ public class Address {
     private String tel;
     private String mainAddress;
     private String detAddress;
+    private String zipCode;
     private boolean isDefault;
 
     public Address(AddressDto.SaveRequest request, Member member){
@@ -35,6 +36,7 @@ public class Address {
         tel = request.getTel();
         mainAddress = request.getMainAddress();
         detAddress = request.getDetAddress();
+        zipCode = request.getZipCode();
         isDefault = request.isDefault();
     }
 
@@ -44,6 +46,7 @@ public class Address {
         tel = request.getTel();
         mainAddress = request.getMainAddress();
         detAddress = request.getDetAddress();
+        zipCode = request.getZipCode();
         isDefault = request.isDefault();
     }
 
