@@ -67,6 +67,13 @@ public class MemberController {
     }
 
 
+    // 마이페이지 조회 ( 그냥 토큰 검증용 )
+    @GetMapping("/member/{id}")
+    public void memberMyPage(@PathVariable Long id){
+
+    }
+
+
     // 회원 정보 관리 페이지 이동 (회원 정보 가져오기)
     @GetMapping("/member/{id}/profile")
     public MemberDto.ProfileResponse memberProfile(@PathVariable Long id){
