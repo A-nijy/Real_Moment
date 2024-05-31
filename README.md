@@ -28,6 +28,19 @@
     init:
       mode: always
 
+  mail:
+    host: smtp.gmail.com #SMTP 서버 호스트
+    port: 587 #SMTP 서버 포트
+    username: #SMTP 서버 로그인 아이디 (발신자) (예시 aaa@gmail.com 이라면 aaa부분 해당)
+    password: #SMTP 서버 로그인 패스워드 (앱 비밀번호)
+    properties:
+      mail:
+        smtp:
+          auth: true #사용자 인증 시도 여부 (기본값 = false)
+          timeout: 5000 #Socket Read Timeout 시간(ms) (기본값 = 무한)
+          starttls:
+            enable: true #StartTLS 활성화 여부 (기본값 = false)
+
 
 logging.level:
   org.hibernate.SQL: debug

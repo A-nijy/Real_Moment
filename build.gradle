@@ -59,6 +59,13 @@ dependencies {
 
 	// JAXB is unavailable 경고 발생으로 java9 이상에서 JAXB SE의 일부가 아니게 되면서 발생함 의존성 추가로 해결
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+	// 이메일 전송 라이브러리 (Gmail의 SMTP 서버 라이브러리)
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// 타임리프 (전송할 이메일 html 작성용)
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 }
 
 tasks.named('test') {
