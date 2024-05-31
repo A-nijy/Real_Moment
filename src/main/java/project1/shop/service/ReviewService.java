@@ -59,12 +59,14 @@ public class ReviewService {
 
         Page<Review> reviews = reviewRepository.searchMyReviews(memberId, pageRequest);
 
+        List<Review> reviewList = reviewRepository.findByMember_MemberId(memberId);
+
         log.info("엔티티 -> dto 변환");
         List<ReviewDto.MyReviewResponse> reviewsDto = reviews.stream()
                                                             .map(this::mapToDto)
                                                             .collect(Collectors.toList());
 
-        ReviewDto.MyReviewPageResponse reviewPageDto = new ReviewDto.MyReviewPageResponse(reviewsDto, reviews.getTotalPages(), request.getNowPage());
+        ReviewDto.MyReviewPageResponse reviewPageDto = new ReviewDto.MyReviewPageResponse(reviewsDto,reviewList.size(), reviews.getTotalPages(), request.getNowPage());
 
         log.info("컨트롤러로 반환");
         return reviewPageDto;

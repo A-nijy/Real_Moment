@@ -130,6 +130,7 @@ public class ReviewDto {
     @Setter
     public static class MyReviewPageResponse{
         private List<MyReviewResponse> reviewList;
+        private int totalReview;
         private int totalPage;
         private int nowPage;
     }
