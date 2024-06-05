@@ -1,6 +1,7 @@
 package project1.shop.domain.repository.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,7 +26,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
     @Override
     public Page<Item> searchPageSimple(SearchDto.Items searchDto,  Pageable pageable) {
 
-        System.out.println("실행중");
         List<Item> items;
 
         if (searchDto.getItemSort().equals("new")){
@@ -226,9 +226,27 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 
     private BooleanExpression categoryIdEq(Long categoryId) {
 
+        if (categoryId == null){
+            return null;
+        } else {
 
+            // 카테고리 id가 부모 카테고리 id인지 확인 / true면 부모 카테고리 id
+            Boolean isParentCategory = queryFactory.selectFrom(QCategory.category)
+                    .where(QCategory.category.categoryId.eq(categoryId).and(QCategory.category.parent.isNull()))
+                    .fetchFirst() != null;
 
-        return categoryId == null ? null : QCategory.category.categoryId.eq(categoryId);
+            if (isParentCategory){
+                return QItem.item.category.categoryId.in(
+                        JPAExpressions.select(QCategory.category.categoryId)
+                                .from(QCategory.category)
+                                .where(QCategory.category.parent.categoryId.eq(categoryId))
+                );
+            } else {
+                return QCategory.category.categoryId.eq(categoryId);
+            }
+        }
+
+//        return categoryId == null ? null : QCategory.category.categoryId.eq(categoryId);
     }
 
     private BooleanExpression itemDeleteCheck(Boolean deleteCheck) {

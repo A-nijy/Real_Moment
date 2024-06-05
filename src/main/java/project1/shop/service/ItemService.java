@@ -24,6 +24,7 @@ public class ItemService {
     private final ItemQARepository itemQARepository;
     private final QACommentRepository qaCommentRepository;
     private final ItemFileRepository itemFileRepository;
+    private final CategoryRepository categoryRepository;
 
 
     // 상품 목록 조회
