@@ -28,6 +28,14 @@ public class Item extends TimeAndByCheck {
     private int stock;
     private int sellCount = 0;
     private long revenue = 0;
+
+    private int fiveStar = 0;
+    private int fourStar = 0;
+    private int threeStar = 0;
+    private int twoStar = 0;
+    private int oneStar = 0;
+    private double averageStar = 0.0;
+
     private boolean isSell;
     private boolean isDelete = false;
 
@@ -98,6 +106,47 @@ public class Item extends TimeAndByCheck {
     public void subRevenue(int price){
 
         this.revenue -= price;
+    }
+
+    // 리뷰 별점 저장 (리뷰 추가 및 수정)
+    public void saveStar(int star){
+
+        if (star == 1){
+            oneStar++;
+        } else if(star == 2){
+            twoStar++;
+        } else if(star == 3){
+            threeStar++;
+        } else if(star == 4){
+            fourStar++;
+        } else if(star == 5){
+            fiveStar++;
+        } else {
+            throw new IllegalArgumentException("올바른 평점이 아닙니다.");
+        }
+    }
+
+    // 리뷰 별점 삭제 (리뷰 삭제 및 수정)
+    public void deleteStar(int star){
+
+        if (star == 1){
+            oneStar--;
+        } else if(star == 2){
+            twoStar--;
+        } else if(star == 3){
+            threeStar--;
+        } else if(star == 4){
+            fourStar--;
+        } else if(star == 5){
+            fiveStar--;
+        } else {
+            throw new IllegalArgumentException("올바른 평점이 아닙니다.");
+        }
+    }
+
+    // 리뷰 평점 계산
+    public void aveStarCalculate(){
+        averageStar = (double)((fiveStar * 5) + (fourStar * 4) + (threeStar * 3) + (twoStar * 2) + oneStar) / (fiveStar + fourStar + threeStar + twoStar + oneStar);
     }
 
 

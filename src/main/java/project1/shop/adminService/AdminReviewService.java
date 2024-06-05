@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project1.shop.domain.entity.Item;
 import project1.shop.domain.entity.Review;
+import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.ReviewRepository;
 import project1.shop.dto.innerDto.ReviewDto;
 import project1.shop.dto.innerDto.SearchDto;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class AdminReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ItemRepository itemRepository;
 
 
     // 상품 리뷰 목록 조회
@@ -35,7 +38,9 @@ public class AdminReviewService {
                 .map(ReviewDto.ReviewResponse::new)
                 .collect(Collectors.toList());
 
-        ReviewDto.ReviewPageResponse reviewPageDto = new ReviewDto.ReviewPageResponse(reviewsDto, reviews.getTotalPages(), request.getNowPage());
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        ReviewDto.ReviewPageResponse reviewPageDto = new ReviewDto.ReviewPageResponse(reviewsDto, item, reviews.getTotalPages(), request.getNowPage());
 
         return reviewPageDto;
     }

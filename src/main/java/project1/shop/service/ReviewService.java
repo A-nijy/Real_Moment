@@ -43,7 +43,9 @@ public class ReviewService {
                 .map(ReviewDto.ReviewResponse::new)
                 .collect(Collectors.toList());
 
-        ReviewDto.ReviewPageResponse reviewPageDto = new ReviewDto.ReviewPageResponse(reviewsDto, reviews.getTotalPages(), request.getNowPage());
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+
+        ReviewDto.ReviewPageResponse reviewPageDto = new ReviewDto.ReviewPageResponse(reviewsDto, item, reviews.getTotalPages(), request.getNowPage());
 
         return reviewPageDto;
     }
@@ -115,6 +117,8 @@ public class ReviewService {
 
         reviewRepository.save(review);
 
+        item.saveStar(request.getStar());
+        review.getItem().aveStarCalculate();
     }
 
 
@@ -144,6 +148,10 @@ public class ReviewService {
             throw new IllegalArgumentException("다른 회원의 리뷰입니다.");
         }
 
+        review.getItem().deleteStar(review.getStar());
+        review.getItem().saveStar(request.getStar());
+        review.getItem().aveStarCalculate();
+
         review.Update(request);
 
     }
@@ -157,6 +165,9 @@ public class ReviewService {
         if(id != review.getMember().getMemberId()){
             throw new IllegalArgumentException("다른 회원의 리뷰입니다.");
         }
+
+        review.getItem().deleteStar(review.getStar());
+        review.getItem().aveStarCalculate();
 
         reviewRepository.delete(review);
     }

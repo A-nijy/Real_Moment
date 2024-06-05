@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project1.shop.domain.entity.Item;
 import project1.shop.domain.entity.Review;
 
 import java.time.LocalDateTime;
@@ -89,8 +90,28 @@ public class ReviewDto {
     @Setter
     public static class ReviewPageResponse{
         private List<ReviewResponse> reviewList;
+
+        private int fiveStar;
+        private int fourStar;
+        private int threeStar;
+        private int twoStar;
+        private int oneStar;
+        private double averageStar;
+
         private int totalPage;
         private int nowPage;
+
+        public ReviewPageResponse(List<ReviewResponse> reviewList, Item item, int totalPage, int nowPage){
+            this.reviewList = reviewList;
+            fiveStar = item.getFiveStar();
+            fourStar = item.getFourStar();
+            threeStar = item.getThreeStar();
+            twoStar = item.getTwoStar();
+            oneStar = item.getOneStar();
+            averageStar = item.getAverageStar();
+            this.totalPage = totalPage;
+            this.nowPage = nowPage;
+        }
     }
 
 

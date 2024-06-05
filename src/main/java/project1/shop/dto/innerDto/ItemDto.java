@@ -185,6 +185,7 @@ public class ItemDto {
         private int discountRate;
         private int discountPrice;
         private int sellPrice;
+        private double averageStar;
         private boolean isSell;
         private String mainImg;
 
@@ -197,6 +198,7 @@ public class ItemDto {
             discountRate = item.getDiscountRate();
             discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
+            averageStar = item.getAverageStar();
             isSell = item.isSell();
             mainImg = imgUrl;
         }
@@ -210,6 +212,7 @@ public class ItemDto {
     @Setter
     public static class SimpleItemAdminResponse {
         private Long itemId;
+        private double averageStar;
         private String name;
         private int price;
         private int discountRate;
@@ -225,6 +228,7 @@ public class ItemDto {
         @QueryProjection
         public SimpleItemAdminResponse (Item item, String imgUrl){
             itemId = item.getItemId();
+            averageStar = item.getAverageStar();
             name = item.getName();
             price = item.getPrice();
             discountRate = item.getDiscountRate();
@@ -270,6 +274,7 @@ public class ItemDto {
     public static class FullItemResponse{
         private Long itemId;
         private String name;
+        private double averageStar;
         private String content;
         private int price;
         private int discountRate;
@@ -286,6 +291,7 @@ public class ItemDto {
 
         public FullItemResponse(Item item, List<S3Dto.ImgDataResponse> mainImgDataList, List<S3Dto.ImgDataResponse> subImgDataList){
             itemId = item.getItemId();
+            averageStar = item.getAverageStar();
             name = item.getName();
             content = item.getContent();
             price = item.getPrice();
@@ -310,6 +316,7 @@ public class ItemDto {
     @Setter
     public static class FullItemAdminResponse{
         private Long itemId;
+        private double averageStar;
         private String name;
         private String content;
         private int price;
@@ -329,6 +336,7 @@ public class ItemDto {
 
         public FullItemAdminResponse(Item item, List<S3Dto.ImgDataResponse> mainImgDataList, List<S3Dto.ImgDataResponse> subImgDataList){
             itemId = item.getItemId();
+            averageStar = item.getAverageStar();
             name = item.getName();
             content = item.getContent();
             price = item.getPrice();
