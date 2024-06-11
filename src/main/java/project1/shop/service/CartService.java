@@ -67,7 +67,7 @@ public class CartService {
     @Transactional
     public void saveCart(Long memberId, CartDto.CartSaveRequest request) {
 
-        Cart cartCheck = cartRepository.findByItem_ItemId(request.getItemId()).orElse(null);
+        Cart cartCheck = cartRepository.findByMember_MemberIdAndItem_ItemId(memberId, request.getItemId()).orElse(null);
 
         if(cartCheck != null){
             throw new IllegalArgumentException("이미 장바구니에 존재한 상품입니다.");
