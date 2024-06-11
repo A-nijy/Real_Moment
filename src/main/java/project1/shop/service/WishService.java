@@ -73,6 +73,12 @@ public class WishService {
     @Transactional
     public void saveWishList(Long id, WishDto.WishRequest request) {
 
+        Wish wish = wishRepository.findByMember_memberIdAndItem_ItemId(id, request.getItemId()).orElse(null);
+
+        if (wish != null){
+            throw new IllegalArgumentException("이미 찜에 등록되어 있습니다.");
+        }
+
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
 
