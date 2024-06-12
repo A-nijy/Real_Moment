@@ -34,6 +34,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                                             .join(QItem.item.category, QCategory.category)
                                             .where(itemNameContains(searchDto.getItemName()),
                                                     categoryIdEq(searchDto.getCategoryId()),
+                                                    QItem.item.isSell.eq((true)),
                                                     QItem.item.isDelete.eq(false))
                                             .orderBy(QItem.item.createdDate.desc().nullsLast())
                                             .offset(pageable.getOffset())
@@ -46,6 +47,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                                             .join(QItem.item.category, QCategory.category)
                                             .where(itemNameContains(searchDto.getItemName()),
                                                     categoryIdEq(searchDto.getCategoryId()),
+                                                    QItem.item.isSell.eq((true)),
                                                     QItem.item.isDelete.eq(false))
                                             .orderBy(QItem.item.sellCount.desc(), QItem.item.createdDate.desc().nullsLast())
                                             .offset(pageable.getOffset())
@@ -58,6 +60,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                     .join(QItem.item.category, QCategory.category)
                     .where(itemNameContains(searchDto.getItemName()),
                             categoryIdEq(searchDto.getCategoryId()),
+                            QItem.item.isSell.eq((true)),
                             QItem.item.isDelete.eq(false))
                     .orderBy(QItem.item.sellPrice.asc(), QItem.item.createdDate.desc().nullsLast())
                     .offset(pageable.getOffset())
@@ -70,6 +73,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                     .join(QItem.item.category, QCategory.category)
                     .where(itemNameContains(searchDto.getItemName()),
                             categoryIdEq(searchDto.getCategoryId()),
+                            QItem.item.isSell.eq((true)),
                             QItem.item.isDelete.eq(false))
                     .orderBy(QItem.item.sellPrice.desc(), QItem.item.createdDate.desc().nullsLast())
                     .offset(pageable.getOffset())
@@ -82,6 +86,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                     .join(QItem.item.category, QCategory.category)
                     .where(itemNameContains(searchDto.getItemName()),
                             categoryIdEq(searchDto.getCategoryId()),
+                            QItem.item.isSell.eq((true)),
                             QItem.item.isDelete.eq(false))
                     .orderBy(QItem.item.discountRate.desc(), QItem.item.createdDate.desc().nullsLast())
                     .offset(pageable.getOffset())
@@ -94,6 +99,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                                             .join(QItem.item.category, QCategory.category)
                                             .where(itemNameContains(searchDto.getItemName()),
                                                     categoryIdEq(searchDto.getCategoryId()),
+                                                    QItem.item.isSell.eq((true)),
                                                     QItem.item.isDelete.eq(false))
                                             .orderBy(QItem.item.createdDate.desc().nullsLast())
                                             .offset(pageable.getOffset())
@@ -108,6 +114,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .join(QItem.item.category, QCategory.category)
                 .where(itemNameContains(searchDto.getItemName()),
                         categoryIdEq(searchDto.getCategoryId()),
+                        QItem.item.isSell.eq((true)),
                         QItem.item.isDelete.eq(false))
                 .fetchOne();
 
