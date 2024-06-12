@@ -23,6 +23,9 @@ public class PortOneDto {
         private String buyerName;               // 구매자 이름
         private String buyerEmail;              // 구매자 이메일
         private String buyerAddress;            // 구매자 주소
+        private String buyerTel;
+        private String zipCode;
+
 
 
         public InicisResponse(Order order){
@@ -33,6 +36,8 @@ public class PortOneDto {
             buyerName = order.getName();
             buyerEmail = order.getMember().getEmail();
             buyerAddress = order.getMainAddress() + " " + order.getDetAddress();
+            buyerTel = order.getTel();
+            zipCode = order.getZipCode();
         }
     }
 
