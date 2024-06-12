@@ -186,6 +186,7 @@ public class ItemDto {
         private int discountPrice;
         private int sellPrice;
         private double averageStar;
+        private int stock;
         private boolean isSell;
         private String mainImg;
 
@@ -199,6 +200,7 @@ public class ItemDto {
             discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
             averageStar = item.getAverageStar();
+            stock = item.getStock();
             isSell = item.isSell();
             mainImg = imgUrl;
         }
