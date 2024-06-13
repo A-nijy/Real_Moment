@@ -83,11 +83,15 @@ public class AdminImageService {
     @Transactional
     public void changeImage(ImageDto.ChangeNumberImageList request) {
 
+        int num = 0;
+
         for (ImageDto.ChangeNumberImage image : request.getChangeNumberImageList()){
 
             PageFile pageFile = pageFileRepository.findById(image.getPageFileId()).orElseThrow(IllegalArgumentException::new);
 
-            pageFile.changeNumber(image.getNumber());
+            pageFile.changeNumber(num);
+
+            num++;
         }
     }
 

@@ -20,12 +20,10 @@ public class ImageDto {
     public static class ImageResponse {
         private Long pageFileId;
         private String imgUrl;
-        private int number;
 
         public ImageResponse(PageFile pageFile){
             pageFileId = pageFile.getPageFileId();
             imgUrl = pageFile.getS3File().getFileUrl();
-            number = pageFile.getNumber();
         }
     }
 
@@ -84,7 +82,6 @@ public class ImageDto {
     @Setter
     public static class ChangeNumberImage{
         private Long pageFileId;
-        private int number;
     }
 
     // 이미지 순서 변경 데이터 요청 리스트
