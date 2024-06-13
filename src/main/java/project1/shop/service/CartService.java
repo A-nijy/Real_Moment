@@ -34,7 +34,7 @@ public class CartService {
     @Transactional
     public List<CartDto.CartResponse> showCart(Long id) {
 
-        List<Cart> carts = cartRepository.findByMember_MemberId(id);
+        List<Cart> carts = cartRepository.findByMember_MemberIdOrderByCartIdDesc(id);
 
         List<CartDto.CartResponse> cartsDto = carts.stream()
                 .map(this::mapToDto)
