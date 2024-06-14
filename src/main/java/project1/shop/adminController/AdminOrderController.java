@@ -49,7 +49,7 @@ public class AdminOrderController {
 
 
 
-    // 주문 상태 변경하기   [ 결제준비, 결제완료, 배송준비, 배송중, 배송완료, 결제취소, 환불완료]
+    // 주문 상태 변경하기   [결제완료, 배송준비, 배송중, 배송완료]
     @PatchMapping("/admin/order")
     public String updateOrderStatus(@RequestBody OrderDto.AdminOrderStatus request){
 
@@ -65,6 +65,15 @@ public class AdminOrderController {
 
         adminOrderService.orderCancel(request);
 
-        return "결제 취소하기 위한 토큰 발금이 완료되었습니다.";
+        return "결제가 취소되었습니다.";
+    }
+
+    // 환불하기
+    @PostMapping("/admin/order/refund")
+    public String orderRefund(@RequestBody OrderDto.CancelRequest request) throws IOException {
+
+        adminOrderService.orderRefund(request);
+
+        return "환불되었습니다.";
     }
 }
