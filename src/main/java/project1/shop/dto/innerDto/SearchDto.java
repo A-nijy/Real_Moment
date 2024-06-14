@@ -157,7 +157,7 @@ public class SearchDto {
     }
 
 
-    // 페이지만 조회 (공지사항, 내가 작성한 리뷰, 문의 등)
+    // 페이지만 조회 (공지사항, 내가 작성한 리뷰, 문의, 포인트 내역 등)
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter

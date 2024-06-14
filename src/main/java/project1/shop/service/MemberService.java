@@ -5,21 +5,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project1.shop.domain.entity.Admin;
-import project1.shop.domain.entity.Grade;
-import project1.shop.domain.entity.Member;
-import project1.shop.domain.entity.RefreshToken;
-import project1.shop.domain.repository.AdminRepository;
-import project1.shop.domain.repository.GradeRepository;
-import project1.shop.domain.repository.MemberRepository;
-import project1.shop.domain.repository.RefreshTokenRepository;
+import project1.shop.domain.entity.*;
+import project1.shop.domain.repository.*;
 import project1.shop.dto.innerDto.GradeDto;
 import project1.shop.dto.innerDto.MemberDto;
+import project1.shop.dto.innerDto.PointDto;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.jwt.config.util.JWTProperties;
 import project1.shop.jwt.config.util.JwtFunction;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtFunction jwtFunction;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final PointRepository pointRepository;
 
 
     // 아이디 중복 체크
@@ -108,6 +110,25 @@ public class MemberService {
 
         refreshTokenRepository.delete(refreshToken);
     }
+
+    // 포인트 내역 조회
+    public PointDto.PointHistoryListResponse showPointHistory(Long id, SearchDto.Page request) {
+
+        PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
+
+        Page<Point> points = pointRepository.searchPointHistory(id, pageRequest);
+
+        List<PointDto.PointHistoryResponse> pointsDto = points.stream()
+                .map(PointDto.PointHistoryResponse::new)
+                .collect(Collectors.toList());
+
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        PointDto.PointHistoryListResponse response = new PointDto.PointHistoryListResponse(pointsDto, member.getPoint(), points.getTotalPages(), request.getNowPage());
+
+        return response;
+    }
+
 
     // 회원 정보 가져오기 (비밀번호 제외)
     @Transactional
@@ -216,7 +237,5 @@ public class MemberService {
         response.addHeader(JWTProperties.HEADER_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
     }
-
-
 
 }

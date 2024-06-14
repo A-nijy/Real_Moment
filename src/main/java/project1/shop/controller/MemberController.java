@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import project1.shop.dto.innerDto.MemberDto;
+import project1.shop.dto.innerDto.PointDto;
+import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.service.MemberService;
 
 @RestController
@@ -71,6 +73,16 @@ public class MemberController {
     @GetMapping("/member/{id}")
     public void memberMyPage(@PathVariable Long id){
 
+    }
+
+
+    // 포인트 내역 조회
+    @GetMapping("/member/{id}/point")
+    public PointDto.PointHistoryListResponse showPointHistory(@PathVariable Long id, SearchDto.Page request){
+
+        PointDto.PointHistoryListResponse response = memberService.showPointHistory(id, request);
+
+        return response;
     }
 
 

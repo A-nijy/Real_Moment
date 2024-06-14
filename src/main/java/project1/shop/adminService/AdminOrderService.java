@@ -10,10 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project1.shop.domain.entity.Item;
-import project1.shop.domain.entity.ItemFile;
-import project1.shop.domain.entity.OrderDetail;
-import project1.shop.domain.entity.Order;
+import project1.shop.domain.entity.*;
 import project1.shop.domain.repository.ItemFileRepository;
 import project1.shop.domain.repository.ItemRepository;
 import project1.shop.domain.repository.OrderDetailRepository;
@@ -23,6 +20,7 @@ import project1.shop.dto.innerDto.OrderDetailDto;
 import project1.shop.dto.innerDto.OrderDto;
 import project1.shop.dto.innerDto.SearchDto;
 import project1.shop.enumeration.PaymentStatus;
+import project1.shop.enumeration.PointStatus;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -119,7 +117,7 @@ public class AdminOrderService {
     }
 
 
-    // 주문 상태 변경하기 [ 결제준비, 결제완료, 배송준비, 배송중, 배송완료, 환불완료 ]
+    // 주문 상태 변경하기 [결제준비, 결제완료, 배송준비, 배송중, 배송완료]
     @Transactional
     public void updateOrderStatus(OrderDto.AdminOrderStatus request) {
 
@@ -221,6 +219,13 @@ public class AdminOrderService {
 
         // 상품 재고 다시 되돌리기
         plusStock(order);
+
+        // 사용한 포인트 되돌리기
+        Member member = order.getMember();
+        member.usePointCancel(order);
+
+        // 포인트 내역에 등록하기
+        Point point = new Point(member, PointStatus.PURCHASE_CANCEL, "+"+order.getUsePoint());
 
         // 주문 상태 "결제 취소"로 변경
         order.updateStatus(PaymentStatus.CANCEL);

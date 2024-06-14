@@ -101,6 +101,12 @@ public class Member extends TimeCheck {
         thisYearPay += order.getTotalPrice();
     }
 
+    // 구매 취소시 사용한 포인트 되돌리기
+    public void usePointCancel(Order order){
+
+        point += order.getUsePoint();
+    }
+
     // 회원 등급 재정의
     public void updateGrade(Grade grade){
         this.grade = grade;

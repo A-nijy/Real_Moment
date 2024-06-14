@@ -19,6 +19,7 @@ import project1.shop.domain.entity.*;
 import project1.shop.domain.repository.*;
 import project1.shop.dto.innerDto.*;
 import project1.shop.enumeration.PaymentStatus;
+import project1.shop.enumeration.PointStatus;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -41,6 +42,7 @@ public class OrderService {
     private final OrderDetailRepository orderDetailRepository;
     private final GradeRepository gradeRepository;
     private final ItemFileRepository itemFileRepository;
+    private final PointRepository pointRepository;
 
     @Value("${imp.api.key}")
     private String apiKey;
@@ -160,10 +162,13 @@ public class OrderService {
                         order.getImpUid(), order.getMerchantUid());
             }
 
-            Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+            Member member = order.getMember();
 
             // 사용한 적립금 차감
             member.deletePoint(order.getUsePoint());
+
+            // 포인트 내역에 등록하기
+            Point point = new Point(member, PointStatus.PURCHASE_USE, "-"+order.getUsePoint());
 
             // 상품 재고 차감
             subStock(order);
@@ -336,11 +341,20 @@ public class OrderService {
 
 
         // 데이터 수정하기
-        // 주문 테이블 상태 변경하기
-        PaymentStatus status = PaymentStatus.CANCEL;
+//        // 주문 테이블 상태 변경하기
+//        PaymentStatus status = PaymentStatus.CANCEL;
+        // 주문 상태 "결제 취소"로 변경
+        order.updateStatus(PaymentStatus.CANCEL);
 
         // 상품 재고 다시 되돌리기
         plusStock(order);
+
+        // 사용한 포인트 되돌리기
+        Member member = order.getMember();
+        member.usePointCancel(order);
+
+        // 포인트 내역에 등록하기
+        Point point = new Point(member, PointStatus.PURCHASE_CANCEL, "+"+order.getUsePoint());
 
         // 결제 취소 사유 저장하기
         order.updateReasonText(request.getReasonText());
@@ -390,6 +404,9 @@ public class OrderService {
         // 회원에 적립금, 올해 총 구매 금액 적용
         Member member = memberRepository.findById(order.getMember().getMemberId()).orElseThrow(IllegalArgumentException::new);
         member.updateOrderMember(order);
+
+        // 포인트 내역에 등록하기
+        Point point = new Point(member, PointStatus.PURCHASE_DONE, "+"+order.getGetPoint());
 
         // 회원의 올해 총 구매 금액에 따라 등급 재정의
         Grade grade = gradeRepository.findHighestGrade(member.getThisYearPay());
