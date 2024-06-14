@@ -111,8 +111,8 @@ public class OrderService {
             throw new IllegalArgumentException("보유한 적립금보다 많은 적립금을 사용하려고 합니다.");
         }
 
-        // 사용한 적립금 차감
-        member.deletePoint(request.getUsePoint());
+//        // 사용한 적립금 차감
+//        member.deletePoint(request.getUsePoint());
 
         // orders 객체 생성
         Order order = new Order(member, request);
@@ -162,6 +162,11 @@ public class OrderService {
                 log.info("결제 완료 확인!, payment_uid={}, order_uid={}",
                         order.getImpUid(), order.getMerchantUid());
             }
+
+            Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+            // 사용한 적립금 차감
+            member.deletePoint(order.getUsePoint());
 
             // 상품 재고 차감
             subStock(order);
