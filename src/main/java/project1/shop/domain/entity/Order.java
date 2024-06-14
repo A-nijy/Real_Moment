@@ -62,6 +62,7 @@ public class Order {
         detAddress = request.getDetAddress();
         requestText = request.getRequestText();
         tel = request.getTel();
+        zipCode = request.getZipCode();
         status = PaymentStatus.PAYMENT_READY;
         merchantUid = UUID.randomUUID().toString();         // 임시로 일단 랜덤 값 부여 (나중에 규칙 정하면 수정 에정)
     }
