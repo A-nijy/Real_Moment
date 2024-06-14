@@ -117,19 +117,15 @@ public class AdminOrderService {
     }
 
 
-    // 주문 상태 변경하기 [결제준비, 결제완료, 배송준비, 배송중, 배송완료]
+    // 주문 상태 변경하기 [결제완료, 배송준비, 배송중, 배송완료]
     @Transactional
     public void updateOrderStatus(OrderDto.AdminOrderStatus request) {
 
-        Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
+        if (!(request.getStatus() == "결제완료" || request.getStatus() == "배송준비" || request.getStatus() == "배송중" || request.getStatus() == "배송완료")){
+            throw new IllegalArgumentException("해당 상태로는 변경이 불가능합니다.");
+        }
 
-//        // 주문 상태가 배송 완료인지 확인
-//        if(!PaymentStatus.DELIVERY_DONE.equals(order.getStatus()) && request.getStatus().equals("구매확정")){
-//            throw new IllegalArgumentException("구매 확정이 불가능한 주문 상태입니다.");
-//        }
-//        if(!PaymentStatus.DELIVERY_DONE.equals(order.getStatus()) && request.getStatus().equals("")){
-//            throw new IllegalArgumentException("구매 확정이 불가능한 주문 상태입니다.");
-//        }
+        Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
         PaymentStatus status = PaymentStatus.fromString(request.getStatus());
 
