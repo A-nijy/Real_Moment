@@ -111,9 +111,6 @@ public class OrderService {
             throw new IllegalArgumentException("보유한 적립금보다 많은 적립금을 사용하려고 합니다.");
         }
 
-//        // 사용한 적립금 차감
-//        member.deletePoint(request.getUsePoint());
-
         // orders 객체 생성
         Order order = new Order(member, request);
         orderRepository.save(order);
@@ -432,7 +429,7 @@ public class OrderService {
         int price = order.getBuyPrice();
 
         // 포트원에 결제된 가격
-        long portOnePrice = iamportResponse.getResponse().getAmount().longValue();
+        int portOnePrice = (int)iamportResponse.getResponse().getAmount().longValue();
 
         // 주문 금액과 결제 금액이 동일한지 검증 (만약 다르다면)
         if(!Objects.equals(portOnePrice, price)){
