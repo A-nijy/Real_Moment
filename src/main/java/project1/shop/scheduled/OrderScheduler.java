@@ -6,11 +6,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import project1.shop.domain.entity.*;
-import project1.shop.domain.repository.GradeRepository;
-import project1.shop.domain.repository.MemberRepository;
-import project1.shop.domain.repository.OrderDetailRepository;
-import project1.shop.domain.repository.OrderRepository;
+import project1.shop.domain.repository.*;
 import project1.shop.enumeration.PaymentStatus;
+import project1.shop.enumeration.PointStatus;
 
 import java.util.List;
 
@@ -22,6 +20,7 @@ public class OrderScheduler {
     private final MemberRepository memberRepository;
     private final GradeRepository gradeRepository;
     private final OrderDetailRepository orderDetailRepository;
+    private final PointRepository pointRepository;
 
 
     // 매일 자정에 실행되는 스케줄러 (배송 완료 이후 7일이 지난 status는 자동으로 구매 확정으로 변경)
@@ -39,6 +38,10 @@ public class OrderScheduler {
             StatusDoneSetting(order);
             // 상품 판매수량 업데이트
             List<OrderDetail> orderDetailList = orderDetailRepository.findByOrder(order);
+
+            Member member = order.getMember();
+            // 포인트 내역에 등록하기
+            Point point = new Point(member, PointStatus.PURCHASE_DONE, "+"+order.getGetPoint());
 
             for (OrderDetail orderDetail : orderDetailList){
 
