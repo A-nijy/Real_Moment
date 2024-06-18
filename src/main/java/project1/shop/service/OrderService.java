@@ -43,6 +43,7 @@ public class OrderService {
     private final GradeRepository gradeRepository;
     private final ItemFileRepository itemFileRepository;
     private final PointRepository pointRepository;
+    private final CartRepository cartRepository;
 
     @Value("${imp.api.key}")
     private String apiKey;
@@ -175,6 +176,9 @@ public class OrderService {
 
             // 주문일 정의
             order.updateOrderedDate();
+
+            // 주문한 상품 장바구니에서 제거하기
+            deleteCartList(order);
 
             return iamportResponse;
 
@@ -580,5 +584,21 @@ public class OrderService {
     }
 
 
+    // 구매시 장바구니 제거하기
+    public void deleteCartList(Order order){
+
+        Member member = order.getMember();
+
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
+
+        for (OrderDetail orderDetail : orderDetails){
+
+            Cart cart = cartRepository.findByMemberAndItem(member, orderDetail.getItem()).orElse(null);
+
+            if (cart != null){
+                cartRepository.delete(cart);
+            }
+        }
+    }
 
 }
