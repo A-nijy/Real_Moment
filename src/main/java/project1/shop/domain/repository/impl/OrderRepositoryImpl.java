@@ -13,6 +13,7 @@ import project1.shop.enumeration.PaymentStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Slf4j
@@ -198,12 +199,15 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         }
 
         if (lastDate != null){
-            lastDateTime = lastDate.atStartOfDay();
+//            lastDateTime = lastDate.atStartOfDay().plusDays(1);
+            lastDateTime = LocalDateTime.of(lastDate, LocalTime.of(23, 59, 59));
         }
 
         if (lastDate == null){
-            lastDateTime = LocalDateTime.now();
+//            lastDateTime = LocalDateTime.now().plusDays(1);
+            lastDateTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59));
         }
+
         if(startDate == null){
             startDateTime = lastDateTime.minusMonths(3);
         }
