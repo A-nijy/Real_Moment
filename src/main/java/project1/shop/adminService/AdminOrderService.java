@@ -121,7 +121,7 @@ public class AdminOrderService {
     @Transactional
     public void updateOrderStatus(OrderDto.AdminOrderStatus request) {
 
-        if (!(request.getStatus() == "결제완료" || request.getStatus() == "배송준비" || request.getStatus() == "배송중" || request.getStatus() == "배송완료")){
+        if (!(request.getStatus().equals("결제완료") || request.getStatus().equals("배송준비") || request.getStatus().equals("배송중") || request.getStatus().equals("배송완료"))){
             throw new IllegalArgumentException("해당 상태로는 변경이 불가능합니다.");
         }
 
