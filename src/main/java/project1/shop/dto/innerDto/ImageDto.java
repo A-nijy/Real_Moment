@@ -21,9 +21,15 @@ public class ImageDto {
         private Long pageFileId;
         private String imgUrl;
 
+        private String linkUrl;
+        private boolean isShow;
+
         public ImageResponse(PageFile pageFile){
             pageFileId = pageFile.getPageFileId();
             imgUrl = pageFile.getS3File().getFileUrl();
+
+            linkUrl = pageFile.getLinkUrl();
+            isShow = pageFile.isShow();
         }
     }
 
@@ -45,15 +51,15 @@ public class ImageDto {
         private String imageLocation;
     }
 
-    // 이미지 저장 (초기)
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class saveImageRequest {
-        private String imageLocation;
-        private List<MultipartFile> imgList;
-    }
+//    // 이미지 저장 (초기)
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Getter
+//    @Setter
+//    public static class saveImageRequest {
+//        private String imageLocation;
+//        private List<MultipartFile> imgList;
+//    }
 
     // 이미지 추가
     @AllArgsConstructor
@@ -62,6 +68,8 @@ public class ImageDto {
     @Setter
     public static class AddImageRequest {
         private String imageLocation;
+        private String linkUrl;
+        private boolean show;
         private MultipartFile img;
     }
 

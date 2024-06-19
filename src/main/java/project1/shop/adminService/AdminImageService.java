@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import project1.shop.domain.entity.Item;
-import project1.shop.domain.entity.ItemFile;
 import project1.shop.domain.entity.PageFile;
 import project1.shop.domain.entity.S3File;
 import project1.shop.domain.repository.PageFileRepository;
@@ -19,7 +17,6 @@ import project1.shop.dto.innerDto.ImageDto;
 import project1.shop.enumeration.ImageLocation;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -53,16 +50,16 @@ public class AdminImageService {
     }
 
 
-    // 이미지 저장
-    @Transactional
-    public void saveImage(ImageDto.saveImageRequest request) throws IOException {
-
-        if (request.getImgList() == null || request.getImgList().isEmpty()){
-            throw new IllegalArgumentException("추가할 이미지가 존재하지 않습니다.");
-        }
-
-        S3DataListSave(request.getImgList(), request.getImageLocation());
-    }
+//    // 이미지 저장
+//    @Transactional
+//    public void saveImage(ImageDto.saveImageRequest request) throws IOException {
+//
+//        if (request.getImgList() == null || request.getImgList().isEmpty()){
+//            throw new IllegalArgumentException("추가할 이미지가 존재하지 않습니다.");
+//        }
+//
+//        S3DataListSave(request.getImgList(), request.getImageLocation());
+//    }
 
 
     // 이미지 추가
@@ -75,7 +72,7 @@ public class AdminImageService {
 
         int number = pageFileList.size();
 
-        S3DataSave(request.getImg(), request.getImageLocation(), number);
+        S3DataSave(request, number);
     }
 
 
@@ -152,48 +149,48 @@ public class AdminImageService {
     }
 
     // S3에 저장된 파일 정보를 가지고 DB에 저장하기 (단일)
-    public void S3DataSave(MultipartFile multipartFile, String imageLocation, int number) throws IOException {
+    public void S3DataSave(ImageDto.AddImageRequest request, int number) throws IOException {
 
         // 파일 추출 및 처리 / S3에 업로드 / 파일 명 & 주소 객체 반환
-        ImageDto.S3Data imgData = S3Upload(multipartFile);
+        ImageDto.S3Data imgData = S3Upload(request.getImg());
 
         S3File s3File = new S3File(imgData.getUuidFileName(), imgData.getS3Url());
 
-        PageFile pageFile = new PageFile(s3File, imageLocation, number);
+        PageFile pageFile = new PageFile(s3File, request.getImageLocation(), request.getLinkUrl(), request.isShow(), number);
 
         // 한 번에 저장
         s3FileRepository.save(s3File);
         pageFileRepository.save(pageFile);
     }
 
-    // S3에 저장된 파일 정보를 가지고 DB에 저장하기 (리스트)
-    public void S3DataListSave(List<MultipartFile> multipartFileList, String imageLocation) throws IOException {
-
-        // 서브 이미지를 한 번에 처리(save)를 위한 리스트 초기화
-        List<S3File> s3FileList = new ArrayList<>();
-        List<PageFile> pageFileList = new ArrayList<>();
-
-        int number = 0;
-
-        // 여러 개인 서브 이미지 처리
-        for (MultipartFile multipartFile : multipartFileList){
-
-            ImageDto.S3Data imgData = S3Upload(multipartFile);
-
-            S3File s3File = new S3File(imgData.getUuidFileName(), imgData.getS3Url());
-            s3FileList.add(s3File);
-
-            PageFile pageFile = new PageFile(s3File, imageLocation, number);
-
-            pageFileList.add(pageFile);
-
-            number++;
-        }
-
-        // 한 번에 저장
-        s3FileRepository.saveAll(s3FileList);
-        pageFileRepository.saveAll(pageFileList);
-    }
+//    // S3에 저장된 파일 정보를 가지고 DB에 저장하기 (리스트)
+//    public void S3DataListSave(List<MultipartFile> multipartFileList, String imageLocation) throws IOException {
+//
+//        // 서브 이미지를 한 번에 처리(save)를 위한 리스트 초기화
+//        List<S3File> s3FileList = new ArrayList<>();
+//        List<PageFile> pageFileList = new ArrayList<>();
+//
+//        int number = 0;
+//
+//        // 여러 개인 서브 이미지 처리
+//        for (MultipartFile multipartFile : multipartFileList){
+//
+//            ImageDto.S3Data imgData = S3Upload(multipartFile);
+//
+//            S3File s3File = new S3File(imgData.getUuidFileName(), imgData.getS3Url());
+//            s3FileList.add(s3File);
+//
+//            PageFile pageFile = new PageFile(s3File, imageLocation, number);
+//
+//            pageFileList.add(pageFile);
+//
+//            number++;
+//        }
+//
+//        // 한 번에 저장
+//        s3FileRepository.saveAll(s3FileList);
+//        pageFileRepository.saveAll(pageFileList);
+//    }
 
 
 

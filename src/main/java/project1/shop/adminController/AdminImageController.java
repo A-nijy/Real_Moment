@@ -16,7 +16,7 @@ public class AdminImageController {
 
     private final AdminImageService adminImageService;
 
-    // 이미지 조회
+    // 이미지 조회 (show의 값이 true, false 모두 조회)
     @GetMapping("/admin/image")
     public ImageDto.ImageListResponse showImages(ImageDto.ImageRequest request){
 
@@ -25,14 +25,15 @@ public class AdminImageController {
         return imageList;
     }
 
-    // 이미지 저장 (처음)
-    @PostMapping("/admin/save/image")
-    public String saveImage(ImageDto.saveImageRequest request) throws IOException {
-
-        adminImageService.saveImage(request);
-
-        return "이미지 등록 완료";
-    }
+//    // 이미지 저장 (리스트 (처음 추가용)) [클라이언트에서 구현 안함 (한개씩 추가하는 방식 사용함)]
+//    @PostMapping("/admin/save/image")
+//    public String saveImage(ImageDto.saveImageRequest request) throws IOException {
+//
+//        adminImageService.saveImage(request);
+//
+//        return "이미지 등록 완료";
+//    }
+    
 
     // 이미지 수정 (추가)
     @PostMapping("/admin/add/image")

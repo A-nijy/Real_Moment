@@ -27,7 +27,7 @@ public class ImageService {
 
         ImageLocation imageLocation = ImageLocation.fromString(request.getImageLocation());
 
-        List<PageFile> pageFileList = pageFileRepository.findByImageLocationOrderByNumberAsc(imageLocation);
+        List<PageFile> pageFileList = pageFileRepository.findByImageLocationAndIsShowOrderByNumberAsc(imageLocation, true);
 
         List<ImageDto.ImageResponse> imageList = pageFileList.stream()
                 .map(ImageDto.ImageResponse::new)
