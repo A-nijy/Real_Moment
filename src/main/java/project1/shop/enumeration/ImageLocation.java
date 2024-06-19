@@ -4,7 +4,9 @@ public enum ImageLocation {
 
     BRAND("로고"),
     MAIN_IMAGE("홍보"),
-    BACK_GROUND("배경")
+    BACK_GROUND("배경"),
+    SALE("세일"),
+    NEW_ITEM("신상")
     ;
 
 
