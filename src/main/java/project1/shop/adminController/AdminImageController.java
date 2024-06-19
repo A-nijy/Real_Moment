@@ -53,6 +53,24 @@ public class AdminImageController {
         return "이미지 순서 변경 완료";
     }
 
+    // 이미지 수정 (링크)
+    @PostMapping("/admin/change/image/link")
+    public String changeImageLink(@RequestBody ImageDto.ChangeImageLink request){
+
+        adminImageService.changeImageLink(request);
+
+        return "이미지 링크 변경 완료";
+    }
+
+    // 이미지 보이기 여부 수정
+    @PostMapping("/admin/change/image/show")
+    public String changeImageShow(@RequestBody ImageDto.ChangeImageShow request){
+
+        adminImageService.changeImageShow(request);
+
+        return "이미지 보이기 여부 변경 완료";
+    }
+
     // 이미지 삭제
     @DeleteMapping("/admin/delete/image")
     public String deleteImage(ImageDto.deleteImage request){

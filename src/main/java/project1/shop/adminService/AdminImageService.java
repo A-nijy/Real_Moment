@@ -92,6 +92,24 @@ public class AdminImageService {
         }
     }
 
+    // 이미지 링크 URL 변경
+    @Transactional
+    public void changeImageLink(ImageDto.ChangeImageLink request) {
+
+        PageFile pageFile = pageFileRepository.findById(request.getPageFileId()).orElseThrow(IllegalArgumentException::new);
+
+        pageFile.changeLinkUrl(request.getLinkUrl());
+    }
+
+    // 이미지 보이기 여부 변경
+    @Transactional
+    public void changeImageShow(ImageDto.ChangeImageShow request) {
+
+        PageFile pageFile = pageFileRepository.findById(request.getPageFileId()).orElseThrow(IllegalArgumentException::new);
+
+        pageFile.changeShow(request.isShow());
+    }
+
 
     // 이미지 삭제
     @Transactional
@@ -162,6 +180,9 @@ public class AdminImageService {
         s3FileRepository.save(s3File);
         pageFileRepository.save(pageFile);
     }
+
+
+
 
 //    // S3에 저장된 파일 정보를 가지고 DB에 저장하기 (리스트)
 //    public void S3DataListSave(List<MultipartFile> multipartFileList, String imageLocation) throws IOException {

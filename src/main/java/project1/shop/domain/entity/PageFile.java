@@ -48,4 +48,14 @@ public class PageFile {
     public void subNumber(){
         number--;
     }
+
+    // 링크 URL 변경
+    public void changeLinkUrl(String linkUrl){
+        this.linkUrl = linkUrl;
+    }
+
+    // 보이기 여부 변경
+    public void changeShow(boolean isShow){
+        this.isShow = isShow;
+    }
 }

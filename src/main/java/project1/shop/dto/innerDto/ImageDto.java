@@ -69,7 +69,7 @@ public class ImageDto {
     public static class AddImageRequest {
         private String imageLocation;
         private String linkUrl;
-        private boolean show;
+        private boolean isShow;
         private MultipartFile img;
     }
 
@@ -99,6 +99,26 @@ public class ImageDto {
     @Setter
     public static class ChangeNumberImageList{
         private List<ChangeNumberImage> changeNumberImageList;
+    }
+
+    // 이미지 링크 url 수정 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ChangeImageLink{
+        private Long pageFileId;
+        private String linkUrl;
+    }
+
+    // 이미지 보여주기 여부 수정 요청
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class ChangeImageShow{
+        private Long pageFileId;
+        private boolean isShow;
     }
 
     // 이미지 삭제 요청
