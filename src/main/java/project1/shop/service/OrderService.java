@@ -411,6 +411,7 @@ public class OrderService {
 
         // 포인트 내역에 등록하기
         Point point = new Point(member, PointStatus.PURCHASE_DONE, "+"+order.getGetPoint());
+        pointRepository.save(point);
 
         // 회원의 올해 총 구매 금액에 따라 등급 재정의
         Grade grade = gradeRepository.findHighestGrade(member.getThisYearPay());

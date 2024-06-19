@@ -42,6 +42,7 @@ public class OrderScheduler {
             Member member = order.getMember();
             // 포인트 내역에 등록하기
             Point point = new Point(member, PointStatus.PURCHASE_DONE, "+"+order.getGetPoint());
+            pointRepository.save(point);
 
             for (OrderDetail orderDetail : orderDetailList){
 
