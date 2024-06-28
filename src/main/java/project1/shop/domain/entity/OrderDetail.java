@@ -39,6 +39,7 @@ public class OrderDetail {
         discountPrice = item.getDiscountPrice();
         sellPrice = item.getSellPrice();
         this.itemCount = itemCount;
+        totalPrice = sellPrice * itemCount;
     }
 
     public void writeReview(){
