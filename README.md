@@ -52,6 +52,9 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+  # 스프링 부트가 오류 응답을 생성할 때 오류 메시지를 포함할지 여부 (오류 메시지를 클라이언트에 전달할지)
+  error:
+    include-message: always
 
 
 
