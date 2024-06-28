@@ -10,6 +10,7 @@ import project1.shop.dto.innerDto.CommentDto;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/api")
 public class AdminCommentController {
 
     private final AdminCommentService adminCommentService;

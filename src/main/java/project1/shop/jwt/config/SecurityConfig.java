@@ -52,26 +52,26 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> {
             authorize
                     // 공통 관리자
-                    .requestMatchers(new AntPathRequestMatcher("/admin/**/view")).hasAnyRole("REPRESENTATIVE", "OPERATOR", "CUSTOMER", "ADMIN")
+                    .requestMatchers(new AntPathRequestMatcher("/api/admin/**/view")).hasAnyRole("REPRESENTATIVE", "OPERATOR", "CUSTOMER", "ADMIN")
                     // 대표
-                    .requestMatchers("/adminIdCheck",
-                            "/adminJoin",
-                            "/admin/admin/List",
-                            "/admin/admin/**",
-                            "/admin/grade/**")
+                    .requestMatchers("/api/adminIdCheck",
+                            "/api/adminJoin",
+                            "/api/admin/admin/List",
+                            "/api/admin/admin/**",
+                            "/api/admin/grade/**")
                     .hasAnyRole("REPRESENTATIVE")
                     // 운영 관리자
-                    .requestMatchers("/admin/order/**",
-                            "/admin/item/**",
-                            "/admin/category/**")
+                    .requestMatchers("/api/admin/order/**",
+                            "/api/admin/item/**",
+                            "/api/admin/category/**")
                     .hasAnyRole("OPERATOR", "REPRESENTATIVE")
                     // 고객 관리자
-                    .requestMatchers("/admin/*/announcement/**",
-                            "/admin/*/QAComment",
-                            "/admin/*/comment")
+                    .requestMatchers("/api/admin/*/announcement/**",
+                            "/api/admin/*/QAComment",
+                            "/api/admin/*/comment")
                     .hasAnyRole("CUSTOMER", "REPRESENTATIVE")
                     // 회원
-                    .requestMatchers("/member/**")
+                    .requestMatchers("/api/member/**")
                     .hasAnyRole("USER")
                     .anyRequest().permitAll();}
         );

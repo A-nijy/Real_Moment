@@ -11,6 +11,7 @@ import project1.shop.service.ItemQAService;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/api")
 public class ItemQAController {
 
     private final ItemQAService itemQAService;

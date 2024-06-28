@@ -11,6 +11,7 @@ import project1.shop.dto.innerDto.QACommentDto;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/api")
 public class AdminQACommentController {
 
     private final AdminQACommentService adminQACommentService;

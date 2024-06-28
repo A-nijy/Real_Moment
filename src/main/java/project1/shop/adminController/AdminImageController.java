@@ -12,6 +12,7 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/api")
 public class AdminImageController {
 
     private final AdminImageService adminImageService;

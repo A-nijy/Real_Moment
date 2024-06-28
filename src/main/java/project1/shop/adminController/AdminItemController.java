@@ -13,6 +13,7 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/api")
 public class AdminItemController {
 
     private final AdminItemService adminItemService;

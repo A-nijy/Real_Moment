@@ -16,6 +16,7 @@ import project1.shop.service.MemberService;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/api")
 public class MemberController {
 
     private final MemberService memberService;

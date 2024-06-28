@@ -11,6 +11,7 @@ import project1.shop.service.AddressService;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/api")
 public class AddressController {
 
     private final AddressService addressService;
