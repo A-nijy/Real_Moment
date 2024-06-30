@@ -4,6 +4,7 @@ package project1.shop.jwt.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import project1.shop.jwt.config.util.JWTProperties;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -15,6 +16,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true)
-                .exposedHeaders("Authorization", "Refresh_Token");
+                .exposedHeaders(JWTProperties.ACCESS_STRING, JWTProperties.REFRESH_STRING);
     }
 }

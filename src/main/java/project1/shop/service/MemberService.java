@@ -90,7 +90,7 @@ public class MemberService {
             refreshTokenRepository.save(refreshTokenEntity);
         }
 
-        response.addHeader(JWTProperties.HEADER_STRING, accessToken);
+        response.addHeader(JWTProperties.ACCESS_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
 
         member.loginStatus();
@@ -234,7 +234,7 @@ public class MemberService {
 
         refresh.updateToken(refreshToken);
 
-        response.addHeader(JWTProperties.HEADER_STRING, accessToken);
+        response.addHeader(JWTProperties.ACCESS_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
     }
 

@@ -30,7 +30,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
 
         System.out.println("커스텀 필터 0");
         // 0. 헤더에 "Authorization"와 "Refresh_Token"에 담긴 값을 가져온다. (토큰)
-        String header_access = request.getHeader(JWTProperties.HEADER_STRING);
+        String header_access = request.getHeader(JWTProperties.ACCESS_STRING);
         String header_refresh = request.getHeader(JWTProperties.REFRESH_STRING);
 
         System.out.println("커스텀 필터 1");

@@ -168,7 +168,7 @@ public class AdminService {
             refreshTokenRepository.save(refreshTokenEntity);
         }
 
-        response.addHeader(JWTProperties.HEADER_STRING, accessToken);
+        response.addHeader(JWTProperties.ACCESS_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
 
         AdminDto.AdminIdResponse adminId = new AdminDto.AdminIdResponse(admin.getAdminId());
@@ -204,7 +204,7 @@ public class AdminService {
 
         refresh.updateToken(refreshToken);
 
-        response.addHeader(JWTProperties.HEADER_STRING, accessToken);
+        response.addHeader(JWTProperties.ACCESS_STRING, accessToken);
         response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
     }
 
