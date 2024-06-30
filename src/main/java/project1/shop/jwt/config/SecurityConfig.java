@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +19,8 @@ import project1.shop.exception.CustomAccessDeniedHandler;
 import project1.shop.jwt.config.auth.CustomUserDetailsService;
 import project1.shop.jwt.config.filter.CustomJwtFilter;
 import project1.shop.jwt.config.util.JwtFunction;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +42,7 @@ public class SecurityConfig {
         http.authenticationManager(authenticationManager);
 
         http.csrf(cs -> cs.disable());
-        http.addFilter(corsFilter);
+//        http.addFilter(corsFilter);
 
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -77,6 +80,9 @@ public class SecurityConfig {
         );
 
         http.exceptionHandling(exception -> exception.accessDeniedHandler(customAccessDeniedHandler));
+
+        // Spring Security와 통합된 CORS 설정
+        http.cors(withDefaults());
 
         return http.build();
     }
