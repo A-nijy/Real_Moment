@@ -388,7 +388,7 @@ public class ItemDto {
         private int totalSellPrice;
 
 
-        public OrderPageItemResponse(Item item, int count){
+        public OrderPageItemResponse(Item item, int count, String imgUrl){
             itemId = item.getItemId();
             name = item.getName();
             price = item.getPrice();
@@ -396,7 +396,7 @@ public class ItemDto {
             discountPrice = item.getDiscountPrice();
             sellPrice = item.getSellPrice();
             isSell = item.isSell();
-//            mainImg = item.getMainImg();
+            mainImg = imgUrl;
             this.count = count;
             totalSellPrice = item.getSellPrice() * count;
         }

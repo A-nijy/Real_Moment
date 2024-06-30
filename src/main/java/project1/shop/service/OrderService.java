@@ -74,11 +74,12 @@ public class OrderService {
         for(OrderDto.OrderPageItemRequest request : requestList){
 
             Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
+            ItemFile itemFile = itemFileRepository.searchFirstMainImg(item).orElse(null);
 
             priceAndPoint.plusTotalPrice(item.getPrice() * request.getCount());
             priceAndPoint.plusTotalDiscountPrice(item.getDiscountPrice() * request.getCount());
 
-            ItemDto.OrderPageItemResponse orderItem = new ItemDto.OrderPageItemResponse(item, request.getCount());
+            ItemDto.OrderPageItemResponse orderItem = new ItemDto.OrderPageItemResponse(item, request.getCount(), itemFile.getS3File().getFileUrl());
 
             orderItems.add(orderItem);
         }
