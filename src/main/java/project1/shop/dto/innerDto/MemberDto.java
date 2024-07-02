@@ -27,7 +27,7 @@ public class MemberDto {
     public static class CreateRequest{
 
         @NotBlank(message = "아이디를 입력해주세요")
-        @Size(min = 8, max = 20, message = "아이디는 8자 이상 20자 이하로 입력해주세요.")
+        @Size(min = 5, max = 20, message = "아이디는 5자 이상 20자 이하로 입력해주세요.")
         @Pattern(regexp = "^[a-zA-Z0-9]{5,20}$", message = "아이디는 영문 대소문자, 숫자입력이 가능합니다.")
         private String loginId;
 
@@ -69,7 +69,7 @@ public class MemberDto {
     @Setter
     public static class IdCheckRequest {
         @NotBlank(message = "아이디를 입력해주세요")
-        @Size(min = 8, max = 20, message = "아이디는 8자 이상 20자 이하로 입력해주세요.")
+        @Size(min = 5, max = 20, message = "아이디는 5자 이상 20자 이하로 입력해주세요.")
         @Pattern(regexp = "^[a-zA-Z0-9]{5,20}$", message = "아이디는 영문 대소문자, 숫자입력이 가능합니다.")
         private String loginId;
     }
