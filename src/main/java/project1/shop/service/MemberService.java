@@ -61,7 +61,7 @@ public class MemberService {
         request.setLoginPassword(bCryptPasswordEncoder.encode(request.getLoginPassword()));
         request.setRoles("ROLE_USER");
 
-        Grade grade = gradeRepository.findByGradeName("WHITE").orElseThrow(IllegalArgumentException::new);
+        Grade grade = gradeRepository.findByGradePrice(0).orElseThrow(IllegalArgumentException::new);
 
         Member member = new Member(request, grade);
 
