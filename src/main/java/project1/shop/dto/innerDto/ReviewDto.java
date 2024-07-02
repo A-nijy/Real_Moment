@@ -115,6 +115,18 @@ public class ReviewDto {
     }
 
 
+    // 리뷰 목록 조회 (관리자)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class AllReviewResponse{
+        private List<ReviewResponse> reviewList;
+        private int totalPage;
+        private int nowPage;
+    }
+
+
     // 내 리뷰 목록 조회
     @AllArgsConstructor
     @NoArgsConstructor

@@ -23,12 +23,11 @@ import java.util.stream.Collectors;
 public class AdminReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final ItemRepository itemRepository;
 
 
     // 상품 리뷰 목록 조회
     @Transactional
-    public ReviewDto.ReviewPageResponse showReviews(SearchDto.Reviews request) {
+    public ReviewDto.AllReviewResponse showReviews(SearchDto.Reviews request) {
 
         PageRequest pageRequest = PageRequest.of(request.getNowPage() - 1, 10);
 
@@ -38,9 +37,7 @@ public class AdminReviewService {
                 .map(ReviewDto.ReviewResponse::new)
                 .collect(Collectors.toList());
 
-        Item item = itemRepository.findById(request.getItemId()).orElseThrow(IllegalArgumentException::new);
-
-        ReviewDto.ReviewPageResponse reviewPageDto = new ReviewDto.ReviewPageResponse(reviewsDto, item, reviews.getTotalPages(), request.getNowPage());
+        ReviewDto.AllReviewResponse reviewPageDto = new ReviewDto.AllReviewResponse(reviewsDto, reviews.getTotalPages(), request.getNowPage());
 
         return reviewPageDto;
     }
