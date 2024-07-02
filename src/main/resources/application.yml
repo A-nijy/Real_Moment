@@ -1,0 +1,83 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_URL:localhost}:${DB_PORT:5432}/${DB_NAME:mydb}
+    username: ${DB_USERNAME:myuser}
+    password: ${DB_PASSWORD:mypassword}
+    driver-class-name: org.postgresql.Driver
+      #datasource:
+    #initialization-mode: never
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  sql:
+    init:
+      mode: always
+
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_NAME:email-username-null}
+    password: ${EMAIL_PASSWORD:email-password-null}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+
+
+logging.level:
+  org.hibernate.SQL: debug
+#  org.springframework: debug
+#  org.springframework.web: debug
+
+server:
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  error:
+    include-message: always
+
+
+
+# 아임포트 가맹점 번호 / 키 / 비밀키
+imp:
+  code: ${PORTONE_CODE:portone-code-null}
+  api:
+    key: ${PORTONE_KEY:portone-key-null}
+    secret_key: ${PORTONE_SECRET_KEY:portone-secret-key-null}
+
+
+# AWS S3
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_BUCKET_NAME:s3-bucket-null}
+    credentials:
+      access-key: ${S3_KEY:s3-key-null}
+      secret-key: ${S3_SECRET_KEY:s3-secret-key-null}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
