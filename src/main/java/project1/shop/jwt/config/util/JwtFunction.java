@@ -2,6 +2,7 @@ package project1.shop.jwt.config.util;
 
 
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -12,8 +13,11 @@ import project1.shop.domain.entity.Member;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class JwtFunction {
+
+    private final JWTProperties jwtProperties;
 
     // 회원 access 토큰 생성
     public String createAccessToken(Member member)
@@ -25,13 +29,13 @@ public class JwtFunction {
 
         String accessToken = Jwts.builder()
                 .setClaims(claims)
-                .setIssuer(JWTProperties.ISSUER)
+                .setIssuer(jwtProperties.getISSUER())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWTProperties.ACCESS_TIME))
-                .signWith(JWTProperties.ACCESS_KEY, SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getACCESS_TIME()))
+                .signWith(jwtProperties.getACCESS_KEY(), SignatureAlgorithm.HS256)
                 .compact();
 
-        accessToken = JWTProperties.TOKEN_PREFIX + accessToken;
+        accessToken = jwtProperties.getTOKEN_PREFIX() + accessToken;
 
         return accessToken;
     }
@@ -41,13 +45,13 @@ public class JwtFunction {
     {
 
         String refreshToken = Jwts.builder()
-                .setIssuer(JWTProperties.ISSUER)
+                .setIssuer(jwtProperties.getISSUER())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWTProperties.REFRESH_TIME))
-                .signWith(JWTProperties.REFRESH_KEY, SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getREFRESH_TIME()))
+                .signWith(jwtProperties.getREFRESH_KEY(), SignatureAlgorithm.HS256)
                 .compact();
 
-        refreshToken = JWTProperties.TOKEN_PREFIX + refreshToken;
+        refreshToken = jwtProperties.getTOKEN_PREFIX() + refreshToken;
 
         return refreshToken;
     }
@@ -63,13 +67,13 @@ public class JwtFunction {
 
         String accessToken = Jwts.builder()
                 .setClaims(claims)
-                .setIssuer(JWTProperties.ISSUER)
+                .setIssuer(jwtProperties.getISSUER())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWTProperties.ACCESS_TIME))
-                .signWith(JWTProperties.ACCESS_KEY, SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getACCESS_TIME()))
+                .signWith(jwtProperties.getACCESS_KEY(), SignatureAlgorithm.HS256)
                 .compact();
 
-        accessToken = JWTProperties.TOKEN_PREFIX + accessToken;
+        accessToken = jwtProperties.getTOKEN_PREFIX() + accessToken;
 
         return accessToken;
     }
@@ -79,13 +83,13 @@ public class JwtFunction {
     {
 
         String refreshToken = Jwts.builder()
-                .setIssuer(JWTProperties.ISSUER)
+                .setIssuer(jwtProperties.getISSUER())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWTProperties.REFRESH_TIME))
-                .signWith(JWTProperties.REFRESH_KEY, SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getREFRESH_TIME()))
+                .signWith(jwtProperties.getREFRESH_KEY(), SignatureAlgorithm.HS256)
                 .compact();
 
-        refreshToken = JWTProperties.TOKEN_PREFIX + refreshToken;
+        refreshToken = jwtProperties.getTOKEN_PREFIX() + refreshToken;
 
         return refreshToken;
     }
@@ -95,7 +99,7 @@ public class JwtFunction {
     public boolean validateAccessToken(String token){
 
         try {
-            Jwts.parserBuilder().setSigningKey(JWTProperties.ACCESS_KEY).build().parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(jwtProperties.getACCESS_KEY()).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e){
             log.info("잘못된 JWT access 토큰 형식입니다.");
@@ -115,7 +119,7 @@ public class JwtFunction {
     public boolean validateRefreshToken(String token){
 
         try {
-            Jwts.parserBuilder().setSigningKey(JWTProperties.REFRESH_KEY).build().parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(jwtProperties.getREFRESH_KEY()).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e){
             log.info("잘못된 JWT refresh 토큰 형식입니다.");
@@ -150,7 +154,7 @@ public class JwtFunction {
     // JWT access토큰에서 Claims 추출하기
     public Claims parseClaims(String accessToken){
         try {
-            return Jwts.parserBuilder().setSigningKey(JWTProperties.ACCESS_KEY).build().parseClaimsJws(accessToken).getBody();
+            return Jwts.parserBuilder().setSigningKey(jwtProperties.getACCESS_KEY()).build().parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException e){
             return e.getClaims();
         }
