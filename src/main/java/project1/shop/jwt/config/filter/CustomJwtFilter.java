@@ -23,6 +23,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtFunction jwtFunction;
+    private final JWTProperties jwtProperties;
 
 
     @Override
@@ -30,12 +31,12 @@ public class CustomJwtFilter extends OncePerRequestFilter {
 
         System.out.println("커스텀 필터 0");
         // 0. 헤더에 "Authorization"와 "Refresh_Token"에 담긴 값을 가져온다. (토큰)
-        String header_access = request.getHeader(JWTProperties.ACCESS_STRING);
-        String header_refresh = request.getHeader(JWTProperties.REFRESH_STRING);
+        String header_access = request.getHeader(jwtProperties.getACCESS_STRING());
+        String header_refresh = request.getHeader(jwtProperties.getREFRESH_STRING());
 
         System.out.println("커스텀 필터 1");
         // 1. 헤더에 토큰이 존재하는지 검사 (Authorization에 값이 있고, 그 값이 "Bearer "로 시작하는가? + Refresh_Token에는 값이 없는가) = access 토큰만 요청 받았는가?
-        if(header_access != null && header_access.startsWith(JWTProperties.TOKEN_PREFIX) && header_refresh == null){
+        if(header_access != null && header_access.startsWith(jwtProperties.getTOKEN_PREFIX()) && header_refresh == null){
 
             System.out.println("커스텀 필터 1-1");
             // 1-1. 앞에 "Bearer " 문자열을 빼고 온전히 토큰만 가져온다.
@@ -84,7 +85,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
 
         System.out.println("(refresh)커스텀 필터 1");
         // 1. access 토큰이 만료되어 refresh 토큰을 재요청한 상태 / 헤더에 access와 refresh 토큰 모두 가지고 있는가?
-        if(header_refresh != null && header_refresh.startsWith(JWTProperties.TOKEN_PREFIX) && header_access == null){
+        if(header_refresh != null && header_refresh.startsWith(jwtProperties.getTOKEN_PREFIX()) && header_access == null){
 
             System.out.println("(refresh)커스텀 필터 1-1");
             // 1-1. 앞에 "Bearer " 문자열을 빼고 온전히 토큰만 가져온다.

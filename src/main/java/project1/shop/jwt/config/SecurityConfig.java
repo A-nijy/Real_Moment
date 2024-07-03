@@ -18,6 +18,7 @@ import org.springframework.web.filter.CorsFilter;
 import project1.shop.exception.CustomAccessDeniedHandler;
 import project1.shop.jwt.config.auth.CustomUserDetailsService;
 import project1.shop.jwt.config.filter.CustomJwtFilter;
+import project1.shop.jwt.config.util.JWTProperties;
 import project1.shop.jwt.config.util.JwtFunction;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -31,6 +32,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtFunction jwtFunction;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final JWTProperties jwtProperties;
 
 
     @Bean
@@ -49,7 +51,7 @@ public class SecurityConfig {
         http.formLogin(f -> f.disable());
         http.httpBasic(AbstractHttpConfigurer::disable);
 
-        http.addFilterBefore(new CustomJwtFilter(customUserDetailsService, jwtFunction), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomJwtFilter(customUserDetailsService, jwtFunction, jwtProperties), UsernamePasswordAuthenticationFilter.class);
 
 
         http.authorizeHttpRequests(authorize -> {

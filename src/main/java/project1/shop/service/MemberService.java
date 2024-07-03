@@ -34,6 +34,7 @@ public class MemberService {
     private final JwtFunction jwtFunction;
     private final RefreshTokenRepository refreshTokenRepository;
     private final PointRepository pointRepository;
+    private final JWTProperties jwtProperties;
 
 
     // 아이디 중복 체크
@@ -90,8 +91,8 @@ public class MemberService {
             refreshTokenRepository.save(refreshTokenEntity);
         }
 
-        response.addHeader(JWTProperties.ACCESS_STRING, accessToken);
-        response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
+        response.addHeader(jwtProperties.getACCESS_STRING(), accessToken);
+        response.addHeader(jwtProperties.getREFRESH_STRING(), refreshToken);
 
         member.loginStatus();
 
@@ -223,7 +224,7 @@ public class MemberService {
     @Transactional
     public void reissueAccessToken(HttpServletRequest request, HttpServletResponse response) {
 
-        String header_refresh = request.getHeader(JWTProperties.REFRESH_STRING);
+        String header_refresh = request.getHeader(jwtProperties.getREFRESH_STRING());
 
         RefreshToken refresh = refreshTokenRepository.findByToken(header_refresh).orElseThrow(() -> new IllegalArgumentException("해당 refresh토큰이 DB에 존재하지 않습니다."));
 
@@ -234,8 +235,8 @@ public class MemberService {
 
         refresh.updateToken(refreshToken);
 
-        response.addHeader(JWTProperties.ACCESS_STRING, accessToken);
-        response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
+        response.addHeader(jwtProperties.getACCESS_STRING(), accessToken);
+        response.addHeader(jwtProperties.getREFRESH_STRING(), refreshToken);
     }
 
 }

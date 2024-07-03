@@ -1,6 +1,7 @@
 package project1.shop.jwt.config;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -9,7 +10,10 @@ import org.springframework.web.filter.CorsFilter;
 import project1.shop.jwt.config.util.JWTProperties;
 
 @Configuration
+@RequiredArgsConstructor
 public class CorsConfig {
+
+    private final JWTProperties jwtProperties;
 
     @Bean
     public CorsFilter corsFilter() {
@@ -21,8 +25,8 @@ public class CorsConfig {
         config.addAllowedHeader("*");                                                                // 모든 header에 응답을 허용
         config.addAllowedMethod("*");                                                                // 모든 http Method (post, get 등등)의 요청을 허용
 
-        config.addExposedHeader(JWTProperties.ACCESS_STRING);                                                    // 리액트(브라우저)에서 헤더에 담긴 토큰접근 허용
-        config.addExposedHeader(JWTProperties.REFRESH_STRING);
+        config.addExposedHeader(jwtProperties.getACCESS_STRING());                                                    // 리액트(브라우저)에서 헤더에 담긴 토큰접근 허용
+        config.addExposedHeader(jwtProperties.getREFRESH_STRING());
 
         source.registerCorsConfiguration("/**", config);                                     // /api/**로 들어오는 url에 대해서는 config대로 정의함
 

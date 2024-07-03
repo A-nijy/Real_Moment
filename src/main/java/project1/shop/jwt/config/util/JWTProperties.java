@@ -15,7 +15,7 @@ import java.security.Key;
 public class JWTProperties {
 
     @Value("${jwt.access}")
-    private String ACCESS_SECRET;   // 우리 서버만 알고 있는 비밀 값
+    public String ACCESS_SECRET;   // 우리 서버만 알고 있는 비밀 값
 
     @Value("${jwt.refresh}")
     private String REFRESH_SECRET;

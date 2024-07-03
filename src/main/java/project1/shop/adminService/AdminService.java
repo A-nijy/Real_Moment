@@ -34,6 +34,7 @@ public class AdminService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtFunction jwtFunction;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final JWTProperties jwtProperties;
 
 
 
@@ -168,8 +169,8 @@ public class AdminService {
             refreshTokenRepository.save(refreshTokenEntity);
         }
 
-        response.addHeader(JWTProperties.ACCESS_STRING, accessToken);
-        response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
+        response.addHeader(jwtProperties.getACCESS_STRING(), accessToken);
+        response.addHeader(jwtProperties.getREFRESH_STRING(), refreshToken);
 
         AdminDto.AdminIdResponse adminId = new AdminDto.AdminIdResponse(admin.getAdminId());
 
@@ -193,7 +194,7 @@ public class AdminService {
     @Transactional
     public void reissueAccessToken(HttpServletRequest request, HttpServletResponse response) {
 
-        String header_refresh = request.getHeader(JWTProperties.REFRESH_STRING);
+        String header_refresh = request.getHeader(jwtProperties.getREFRESH_STRING());
 
         RefreshToken refresh = refreshTokenRepository.findByToken(header_refresh).orElseThrow(() -> new IllegalArgumentException("해당 refresh토큰이 DB에 존재하지 않습니다."));
 
@@ -204,8 +205,8 @@ public class AdminService {
 
         refresh.updateToken(refreshToken);
 
-        response.addHeader(JWTProperties.ACCESS_STRING, accessToken);
-        response.addHeader(JWTProperties.REFRESH_STRING, refreshToken);
+        response.addHeader(jwtProperties.getACCESS_STRING(), accessToken);
+        response.addHeader(jwtProperties.getREFRESH_STRING(), refreshToken);
     }
 
 
