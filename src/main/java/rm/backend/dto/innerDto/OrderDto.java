@@ -224,6 +224,7 @@ public class OrderDto {
         private String detAddress;
         private String zipCode;
         private String requestText;
+        private String reasonText;
         private String tel;
         private String status;
         private String merchantUid;
@@ -240,6 +241,7 @@ public class OrderDto {
             detAddress = order.getDetAddress();
             zipCode = order.getZipCode();
             requestText = order.getRequestText();
+            reasonText = order.getReasonText();
             tel = order.getTel();
             status = order.getStatus().getPaymentStatus();
             merchantUid = order.getMerchantUid();

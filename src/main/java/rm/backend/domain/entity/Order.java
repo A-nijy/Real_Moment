@@ -37,14 +37,14 @@ public class Order {
     private String mainAddress;
     private String detAddress;
     private String zipCode;
-    private String requestText;
+    private String requestText = null;
     private String tel;
 
 //    private String status;
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
-    private String merchantUid;
+    private String merchantUid = null;
     private String impUid = null;
 
     private String reasonText = null;
