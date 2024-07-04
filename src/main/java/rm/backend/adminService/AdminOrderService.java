@@ -235,6 +235,7 @@ public class AdminOrderService {
 
 
     // 환불하기 (결제 취소랑 구조 동일)
+    @Transactional
     public void orderRefund(OrderDto.CancelRequest request) throws IOException {
 
         Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
