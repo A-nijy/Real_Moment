@@ -21,6 +21,12 @@ RUN gradle clean build -x test --no-daemon
 # 런타임 이미지로 OpenJDK 11-jre-slim 지정
 FROM openjdk:17-jdk-slim
 
+# Timezone 설정을 위해 tzdata 패키지 설치
+RUN apt-get update && apt-get install -y tzdata
+
+# Timezone 설정
+ENV TZ=Asia/Seoul
+
 # 애플리케이션을 실행할 작업 디렉토리를 생성
 WORKDIR /app
 
