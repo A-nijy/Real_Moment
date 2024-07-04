@@ -229,6 +229,8 @@ public class AdminOrderService {
 
         // 주문 상태 "결제 취소"로 변경
         order.updateStatus(PaymentStatus.CANCEL);
+
+        order.updateReasonText(request.getReasonText());
     }
 
 

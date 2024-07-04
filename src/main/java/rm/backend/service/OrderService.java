@@ -382,6 +382,8 @@ public class OrderService {
         }
 
         order.updateStatus(PaymentStatus.REFUND_REQUEST);
+
+        order.updateReasonText(request.getReasonText());
     }
 
 
