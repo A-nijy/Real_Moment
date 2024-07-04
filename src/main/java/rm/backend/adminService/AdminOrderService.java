@@ -140,6 +140,10 @@ public class AdminOrderService {
 
         Order order = orderRepository.findById(request.getOrderId()).orElseThrow(IllegalArgumentException::new);
 
+        if (!(order.getStatus().equals(PaymentStatus.PAYMENT_DONE) || order.getStatus().equals(PaymentStatus.DELIVERY_READY) || order.getStatus().equals(PaymentStatus.DELIVERY_DOING) || order.getStatus().equals(PaymentStatus.DELIVERY_DONE))){
+            throw new IllegalArgumentException("해당 상태로는 변경이 불가능합니다.");
+        }
+
 
         // 1. 토큰 발급받기
 
